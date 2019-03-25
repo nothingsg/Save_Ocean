@@ -1,12 +1,10 @@
-#include <graphics.h>
-#include <iostream>
+
+#include "Game.h"
 
 int main()
 {
-	initgraph(1440, 720);   // 创建绘图窗口，大小为 640x480 像素
-	circle(200, 200, 100); // 画圆，圆心(200, 200)，半径 100
-	circle(200, 100, 100);
-	circle(300, 300, 200);  //21321351443
-	getchar();
+	Game Save_Ocean(50, 50, 1440, 720);
+	Save_Ocean.oc_GameInit();
+	Save_Ocean.oc_GameLoop();
 	return 0;
 }

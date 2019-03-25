@@ -1,4 +1,4 @@
-#include "Game.h"
+ï»¿#include "Game.h"
 
 Game::Game(int posx, int posy, int width, int height)
 {
@@ -13,7 +13,7 @@ Game::~Game()
 
 }
 
-//ÓÎÏ·³õÊ¼»¯
+//æ¸¸æˆåˆå§‹åŒ–
 void Game::oc_GameInit()
 {		
 	initgraph(oc_cxGame, oc_cyGame, SHOWCONSOLE);
@@ -26,20 +26,20 @@ void Game::oc_GameInit()
 }		
 void Game::oc_GameLoop()
 {
-	//Ö÷Ñ­»·
+	//ä¸»å¾ªç¯
 	while (1)
 	{
-		Frame_Begin();		//¿ªÊ¼µ±Ç°Ö¡
+		Frame_Begin();		//å¼€å§‹å½“å‰å¸§
 		
 
-		oc_Update(dt);		//Êı¾İ¸üĞÂ
-		BeginBatchDraw();	//¿ªÊ¼ÅúÁ¿»æÍ¼
-		oc_Draw();			//äÖÈ¾
-		FlushBatchDraw();	//ÏÔÊ¾µ±Ç°Ö¡
-		Lock_FPS(120);		//Ö¡Êı¿ØÖÆ
+		oc_Update(dt);		//æ•°æ®æ›´æ–°
+		BeginBatchDraw();	//å¼€å§‹æ‰¹é‡ç»˜å›¾
+		oc_Draw();			//æ¸²æŸ“
+		FlushBatchDraw();	//æ˜¾ç¤ºå½“å‰å¸§
+		Lock_FPS(60);		//å¸§æ•°æ§åˆ¶
 
 
-		Frame_End();		//½áÊøµ±Ç°Ö¡
+		Frame_End();		//ç»“æŸå½“å‰å¸§
 	}
 	
 }	 
@@ -52,8 +52,8 @@ void Game::oc_Update(float dt)
 
 void Game::oc_Draw()
 {
-	cleardevice();				//ÇåÆÁ
-	Debug_text_output();		//Êä³öµ÷ÊÔÊı¾İ
+	cleardevice();				//æ¸…å±
+	Debug_text_output();		//è¾“å‡ºè°ƒè¯•æ•°æ®
 
 	circle(200, 500, 100);
 
@@ -71,40 +71,42 @@ void Game::oc_MouseProc()
 }
 
 
-clock_t timer_temp;	//Ö¡Êı¼ÆËãÁÙÊ±¼ÆÊ±Æ÷
+clock_t timer_temp;	//å¸§æ•°è®¡ç®—ä¸´æ—¶è®¡æ—¶å™¨
 
-void Game::Frame_Begin()	//¿ªÊ¼Ò»Ö¡
+void Game::Frame_Begin()	//å¼€å§‹ä¸€å¸§
 {
 	timer_temp = clock();
 }
 
-void Game::Frame_End()		//½áÊøÒ»Ö¡
+void Game::Frame_End()		//ç»“æŸä¸€å¸§
 {
-	static int fps_i = 0;	//Á½¸ö¾²Ì¬±äÁ¿ÓÃÓë¼ÆËãÖ¡Êı
+	static int fps_i = 0;	//ä¸¤ä¸ªé™æ€å˜é‡ç”¨ä¸è®¡ç®—å¸§æ•°
 	static int fps_t = 0;
 	
-	dt = clock() - timer_temp;	//¼ÆËãÖ¡¼ä¸ôÊ±¼ädt
+	
+	oc_timer += clock() - timer_temp;
+	fps_t += clock() - timer_temp;
 	fps_i++;
-	oc_timer += dt;
-	fps_t += dt;
-	if (fps_i == 50)		//ÀÛ»ı10Ö¡ÔÙ½øĞĞ¼ÆËã£¬·ñÔòÊ±¼ä¿ÉÄÜºÜ¶Ì
+	
+	if (fps_i == 100)		//ç´¯ç§¯10å¸§å†è¿›è¡Œè®¡ç®—ï¼Œå¦åˆ™æ—¶é—´å¯èƒ½å¾ˆçŸ­
 	{
-		oc_FPS = 50000.0f / fps_t;
+		oc_FPS = 100000.0f / fps_t;
 		fps_i = 0;
 		fps_t = 0;
 	}
+	dt = clock() - timer_temp;	//è®¡ç®—å¸§é—´éš”æ—¶é—´dt
 }
 
 void Game::Lock_FPS(int fps)
 {
 	if (fps <= 0)return;
-	int t = (1000.0f / fps) - clock() + timer_temp;
+	int t = 1000.0f / fps - clock() + timer_temp;
 	if (t < 0)return;
 	Sleep(t);
 }
 
 
-void Game::Debug_text_output()		//µ÷ÊÔÊı¾İÊä³ö
+void Game::Debug_text_output()		//è°ƒè¯•æ•°æ®è¾“å‡º
 {
 	wchar_t output_text[50];
 	swprintf(output_text, 50, L"FPS:%d Time:%f", oc_FPS, oc_timer/1000.0f);

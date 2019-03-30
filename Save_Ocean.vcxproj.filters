@@ -48,4 +48,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="C:\Users\Clear\Desktop\海洋游戏\分镜1-椰子树.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

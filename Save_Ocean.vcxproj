@@ -127,6 +127,9 @@
     <ClInclude Include="Vect2.h" />
     <ClInclude Include="Vect3.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="C:\Users\Clear\Desktop\海洋游戏\分镜1-椰子树.jpg" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

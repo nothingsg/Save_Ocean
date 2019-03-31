@@ -98,9 +98,9 @@ void Game::Frame_End()		//结束一帧
 	fps_t += clock() - timer_temp;
 	fps_i++;
 	
-	if (fps_i == 100)		//累积100帧再进行计算，否则时间可能很短
+	if (fps_i == 10)		//累积10帧再进行计算，否则时间可能很短
 	{
-		oc_FPS = 100000.0f / fps_t;
+		oc_FPS = 10000.0f / fps_t;
 		fps_i = 0;
 		fps_t = 0;
 	}

@@ -30,13 +30,14 @@ void Game::oc_GameInit()
 void Game::oc_GameLoad()
 {
 	loadimage(&test_img, L"D:\\工程\\VS\\工作室游戏\\Save_Ocean\\资源文件\\测试图片.png", oc_cxGame, oc_cyGame, false);
+	setbkmode(TRANSPARENT);	//设置文字输出是背景颜色为透明
 }
 
 void Game::oc_GameLoop()
 {
 	//主循环
 	mciSendString(L"open D:\\工程\\VS\\工作室游戏\\Save_Ocean\\资源文件\\background.wav alias backmusic", NULL, 0, NULL);
-	mciSendString(L"play backmusic", NULL, 0, NULL);
+	mciSendString(L"play backmusic wait", NULL, 0, NULL);
 	while (1)
 	{
 		Frame_Begin();		//开始当前帧

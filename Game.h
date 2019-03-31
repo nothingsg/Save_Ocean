@@ -6,9 +6,7 @@
 #include <graphics.h>
 #pragma once
 #include "tool.h"
-#include "GameObject.h"
-
-#define PI 3.141592653589793238462643383249901429f
+//#include "GameObject.h"
 
 
 

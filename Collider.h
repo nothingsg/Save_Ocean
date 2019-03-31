@@ -2,9 +2,9 @@
 
 #include "GameObject.h"
 
-/*class Collider : public GameObject_phy
+class Collider : public GameObject_phy
 {
 public:
 	Collider();
 	~Collider();
-};*/
+};

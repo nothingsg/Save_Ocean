@@ -123,8 +123,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\项目开发\课程设计\Game\Game\Camera.cpp" />
-    <ClCompile Include="..\..\..\项目开发\课程设计\Game\Game\Collider.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gmae.cpp" />
     <ClCompile Include="main.cpp" />

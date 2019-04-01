@@ -33,10 +33,10 @@
     <ClCompile Include="tool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\项目开发\课程设计\Game\Game\Collider.cpp">
+    <ClCompile Include="Collider.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\项目开发\课程设计\Game\Game\Camera.cpp">
+    <ClCompile Include="Camera.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

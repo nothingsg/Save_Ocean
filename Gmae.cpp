@@ -1,4 +1,5 @@
 ﻿#include "Game.h"
+#pragma comment(lib,"Winmm.lib")
 
 Game::Game(int posx, int posy, int width, int height)
 {
@@ -23,10 +24,20 @@ void Game::oc_GameInit()
 	oc_timer = 0;
 	dt = 0;
 	oc_bPause = false;
-}		
+	oc_GameLoad();
+}
+
+void Game::oc_GameLoad()
+{
+	loadimage(&test_img, L"D:\\工程\\VS\\工作室游戏\\Save_Ocean\\资源文件\\测试图片.png", oc_cxGame, oc_cyGame, false);
+	setbkmode(TRANSPARENT);	//设置文字输出是背景颜色为透明
+}
+
 void Game::oc_GameLoop()
 {
 	//主循环
+	mciSendString(L"open D:\\工程\\VS\\工作室游戏\\Save_Ocean\\资源文件\\background.wav alias backmusic", NULL, 0, NULL);
+	mciSendString(L"play backmusic wait", NULL, 0, NULL);
 	while (1)
 	{
 		Frame_Begin();		//开始当前帧
@@ -37,7 +48,6 @@ void Game::oc_GameLoop()
 		oc_Draw();			//渲染
 		FlushBatchDraw();	//显示当前帧
 		Lock_FPS(60);		//帧数控制
-
 
 		Frame_End();		//结束当前帧
 	}
@@ -53,10 +63,11 @@ void Game::oc_Update(float dt)
 void Game::oc_Draw()
 {
 	cleardevice();				//清屏
-	Debug_text_output();		//输出调试数据
-
+	putimage(0, 0, &test_img);
 	circle(200, 500, 100);
 
+
+	Debug_text_output();		//输出调试数据
 }
 
 

@@ -4,15 +4,9 @@
 #include <vector>
 #include <iostream>
 #include <graphics.h>
-#include <ctime>
-
-#include "Vect2.h"
-#include "Vect3.h"
-#include "Matrix2.h"
-#include "Matrix2.h"
-#include "Random.h"
-
-#define	PI 3.1415926535897932384626433f
+#pragma once
+#include "tool.h"
+//#include "GameObject.h"
 
 
 
@@ -21,7 +15,9 @@ class Game
 public:
 	Game(int posx, int posy, int width, int height);
 	~Game();
+	
 	void oc_GameInit();			//游戏初始化
+	void oc_GameLoad();			//游戏加载
 	void oc_GameLoop();			//游戏主循环
 
 	void oc_Update(float dt);	//更新
@@ -47,6 +43,8 @@ private:
 	int oc_posxGmae;	//游戏窗口位置x
 	int oc_posyGame;	//游戏窗口位置y
 	bool oc_bPause;		//指示游戏是否暂停
+
+	IMAGE test_img;		//测试图片
 };
 
 

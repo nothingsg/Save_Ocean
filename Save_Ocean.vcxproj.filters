@@ -39,6 +39,9 @@
     <ClCompile Include="Camera.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="people.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix2.h">
@@ -69,6 +72,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="people.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

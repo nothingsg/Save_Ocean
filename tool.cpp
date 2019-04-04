@@ -2,9 +2,9 @@
 
 
 //»­Ïß
-void Draw_line(Vect2 start, Vect2 end)
+void Draw_line(const Vect2 &start, const Vect2 &end)
 {
-	line(start.x, -start.y, end.x, -end.y);
+	line(start.x, start.y, end.x, end.y);
 }
 
 //ÏÔÊ¾×Ö

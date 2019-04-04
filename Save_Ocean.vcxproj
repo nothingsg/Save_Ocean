@@ -128,6 +128,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gmae.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="people.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="tool.cpp" />
   </ItemGroup>
@@ -138,6 +139,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Matrix2.h" />
     <ClInclude Include="Matrix3.h" />
+    <ClInclude Include="people.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="tool.h" />
     <ClInclude Include="Vect2.h" />

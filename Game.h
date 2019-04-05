@@ -6,7 +6,10 @@
 #include <graphics.h>
 #pragma once
 #include "tool.h"
-//#include "GameObject.h"
+#include "GameObject.h"
+#include "Camera.h"
+#include "people.h"
+#include "terrain.h"
 
 
 
@@ -21,7 +24,9 @@ public:
 	void oc_GameLoop();			//游戏主循环
 
 	void oc_Update(float dt);	//更新
-	void oc_Draw();				//渲染
+	void oc_Draw(const Camera &cam);	//渲染
+	void oc_UI_Upedate();		//UI界面更新方法
+	void oc_UI_Draw();			//UI界面渲染方法
 	void oc_KeyPrco();			//键盘消息处理函数
 	void oc_MouseProc();		//鼠标消息处理函数
 
@@ -44,7 +49,11 @@ private:
 	int oc_posyGame;	//游戏窗口位置y
 	bool oc_bPause;		//指示游戏是否暂停
 
+
+	/*所有游戏对象*/
 	IMAGE test_img;		//测试图片
+	Camera main_cam;
+	
 };
 
 

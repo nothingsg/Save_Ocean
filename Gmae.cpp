@@ -45,7 +45,7 @@ void Game::oc_GameLoop()
 
 		oc_Update(dt);		//数据更新
 		BeginBatchDraw();	//开始批量绘图
-		oc_Draw();			//渲染
+		oc_Draw(main_cam);	//渲染
 		FlushBatchDraw();	//显示当前帧
 		Lock_FPS(60);		//帧数控制
 
@@ -57,18 +57,39 @@ void Game::oc_GameLoop()
 
 void Game::oc_Update(float dt)
 {
-
+	oc_MouseProc();
 }
 
-void Game::oc_Draw()
+void Game::oc_Draw(const Camera &cam)
 {
 	cleardevice();				//清屏
-	putimage(0, 0, &test_img);
-	circle(200, 500, 100);
+	int x = 0, y = 0, xm = -oc_cxGame / 2, ym = oc_cyGame / 2;
+	xm = xm - cam.position.x + oc_cxGame / 2;
+	ym = -(ym - cam.position.y) + oc_cyGame / 2;
+	putimage(xm, ym, &test_img);
+	/*测试 摄像机*/
+	
+	x = x - cam.position.x + oc_cxGame / 2;
+	y = -(y - cam.position.y) + oc_cyGame / 2;
+
+	circle(x, y, 100);
 
 
 	Debug_text_output();		//输出调试数据
 }
+
+
+/*cy完成*/
+void Game::oc_UI_Upedate()
+{
+
+}
+
+void Game::oc_UI_Draw()
+{
+
+}
+/*end*/
 
 
 void Game::oc_KeyPrco()
@@ -78,7 +99,18 @@ void Game::oc_KeyPrco()
 
 void Game::oc_MouseProc()
 {
+	static Vect2 last_mouse_pos;
+	Vect2 mouse_pos = GetMousePos();
 
+	if (is_key_down(VK_LBUTTON))
+	{
+		Vect2 add = mouse_pos - last_mouse_pos;
+		add.y = -add.y;
+		main_cam.position = main_cam.position - add;
+	}
+
+
+	last_mouse_pos = mouse_pos;
 }
 
 

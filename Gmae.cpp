@@ -1,4 +1,5 @@
 ﻿#include "Game.h"
+#include"graphics.h"
 #pragma comment(lib,"Winmm.lib")
 
 Game::Game(int posx, int posy, int width, int height)
@@ -44,8 +45,10 @@ void Game::oc_GameLoop()
 		
 
 		oc_Update(dt);		//数据更新
+		oc_UI_Upedate();
 		BeginBatchDraw();	//开始批量绘图
 		oc_Draw(main_cam);	//渲染
+		oc_UI_Draw();
 		FlushBatchDraw();	//显示当前帧
 		Lock_FPS(60);		//帧数控制
 
@@ -80,14 +83,36 @@ void Game::oc_Draw(const Camera &cam)
 
 
 /*cy完成*/
+int flag = 0;//是否进入图鉴
 void Game::oc_UI_Upedate()
 {
-
+	void FlushMouseMsgBuffer();//清空鼠标消息缓冲区
+	struct MOUSEMSG mou;
+	if (MouseHit())
+	{
+		mou=GetMouseMsg();//获取鼠标消息
+		if (flag==0&&mou.x >100&&mou.x<180&&mou.y>30&&mou.y < 60&&mou.mkLButton)//鼠标左键点击在按钮范围内
+	    {
+			flag = 1;//进入图鉴
+			loadimage(&test_img, L".\\资源文件\\图鉴\\0封面.png", oc_cxGame, oc_cyGame, false);
+	    }
+		else if (flag&&mou.x > 1250 && mou.x < 1330 && mou.y>340 && mou.y < 370 && mou.mkLButton)
+		{
+			loadimage(&test_img, L".\\资源文件\\图鉴\\1.png", oc_cxGame, oc_cyGame, false);
+		}
+	}
 }
 
 void Game::oc_UI_Draw()
 {
-
+	if(flag==0)
+		bar3d(100, 30, 180, 60, 3, true);
+	else
+	{
+		bar3d(50, 340, 130, 370, 3, true);//上页
+		bar3d(1250, 340, 1330,370, 3, true);//下页
+	}
+		
 }
 /*end*/
 

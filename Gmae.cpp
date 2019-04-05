@@ -1,7 +1,7 @@
 ﻿#include "Game.h"
 #pragma comment(lib,"Winmm.lib")
 
-Game::Game(int posx, int posy, int width, int height)
+Game::Game(int posx, int posy, int width, int height) : main_cam(width, height)
 {
 	oc_cxGame = width;
 	oc_cyGame = height;
@@ -29,6 +29,7 @@ void Game::oc_GameInit()
 
 void Game::oc_GameLoad()
 {
+	player.load_frame();
 	loadimage(&test_img, L".\\资源文件\\测试图片.png", oc_cxGame, oc_cyGame, false);
 	setbkmode(TRANSPARENT);	//设置文字输出是背景颜色为透明
 }
@@ -44,8 +45,10 @@ void Game::oc_GameLoop()
 		
 
 		oc_Update(dt);		//数据更新
+		oc_UI_Upedate();
 		BeginBatchDraw();	//开始批量绘图
 		oc_Draw(main_cam);	//渲染
+		oc_UI_Draw();
 		FlushBatchDraw();	//显示当前帧
 		Lock_FPS(60);		//帧数控制
 
@@ -58,6 +61,7 @@ void Game::oc_GameLoop()
 void Game::oc_Update(float dt)
 {
 	oc_MouseProc();
+	player.Update(dt);
 }
 
 void Game::oc_Draw(const Camera &cam)
@@ -74,7 +78,7 @@ void Game::oc_Draw(const Camera &cam)
 
 	circle(x, y, 100);
 
-
+	player.DrawInCamera(cam);
 	Debug_text_output();		//输出调试数据
 }
 
@@ -87,7 +91,7 @@ void Game::oc_UI_Upedate()
 
 void Game::oc_UI_Draw()
 {
-
+	circle(100, 100, 100);
 }
 /*end*/
 

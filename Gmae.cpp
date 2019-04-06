@@ -1,5 +1,6 @@
 ﻿#include "Game.h"
 #include"graphics.h"
+#define is_key_down(key) ((GetAsyncKeyState(key)&0x80000)?1:0)
 #pragma comment(lib,"Winmm.lib")
 
 Game::Game(int posx, int posy, int width, int height):main_cam(width, height)
@@ -90,28 +91,28 @@ int flag = 0;//是否进入图鉴
 void Game::oc_UI_Upedate()
 {
 	const int N = 3;//图鉴内图片数量
-	void FlushMouseMsgBuffer();//清空鼠标消息缓冲区
-	struct MOUSEMSG mou;
 	wchar_t out_text[50];
-	static int out_i=1;
+	static int out_i=0;
 	swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.png", out_i);
-	if (MouseHit())
-	{
-		mou=GetMouseMsg();//获取鼠标消息
-		if (flag==0&&mou.x >100&&mou.x<180&&mou.y>30&&mou.y < 60&&mou.mkLButton)//鼠标左键点击在按钮范围内
+	void FlushMouseMsgBuffer();//清空鼠标消息缓冲区
+	if (is_key_down(VK_LBUTTON))//判断是否存在鼠标消息
+	{   
+		if (flag==0&&mou.x >100&&mou.x<180&&mou.y>30&&mou.y < 60)//鼠标左键点击在按钮范围内
 	    {
 			flag = 1;//进入图鉴
 			loadimage(&test_img, L".\\资源文件\\图鉴\\0.png", oc_cxGame, oc_cyGame, false);
 	    }
-		else if (flag&&mou.x > 1250 && mou.x < 1330 && mou.y>340 && mou.y < 370 && mou.mkLButton&&out_i<=N)
+		else if (flag&&mou.x > 1250 && mou.x < 1330 && mou.y>340 && mou.y < 370 &&out_i<N)
 		{
-			loadimage(&test_img, out_text, oc_cxGame, oc_cyGame, false);
 			out_i++;
-		}
-		else if (flag&&mou.x > 50 && mou.x < 130 && mou.y>340 && mou.y < 370 && mou.mkLButton&&out_i>0)
-		{
 			loadimage(&test_img, out_text, oc_cxGame, oc_cyGame, false);
+		}
+		else if (flag&&mou.x > 50 && mou.x < 130 && mou.y>340 && mou.y < 370 &&out_i>0)
+		{
 			out_i--;
+			loadimage(&test_img, out_text, oc_cxGame, oc_cyGame, false);
+			if (out_i == 0)
+				flag = 0;
 		}
 	}
 }
@@ -141,7 +142,7 @@ void Game::oc_MouseProc()
 	
 	Vect2 mouse_pos(mou_msg.x, mou_msg.y);
 
-	if (mou_msg.mkLButton)
+	if (is_key_down(VK_LBUTTON))
 	{
 		Vect2 add = mouse_pos - last_mouse_pos;
 		add.y = -add.y;

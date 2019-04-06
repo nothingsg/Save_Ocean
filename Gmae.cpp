@@ -91,10 +91,11 @@ void Game::oc_UI_Upedate()
 {
 	const int N = 3;//图鉴内图片数量
 	wchar_t out_text[50];
-	static int out_i=1;
-	swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.png", out_i);
+	static int out_i=0;
 	void FlushMouseMsgBuffer();//清空鼠标消息缓冲区
-	if (is_key_down(VK_LBUTTON))//判断是鼠标左键是否按下
+	static bool last = 0;
+	bool now= is_key_down(VK_LBUTTON);
+	if (!last&&now)//判断是鼠标左键是否按下
 	{   
 		Vect2 mou= GetMousePos(oc_hWnd);
 		if (flag==0&&mou.x >100&&mou.x<180&&mou.y>30&&mou.y < 60)//鼠标左键点击在按钮范围内
@@ -102,17 +103,24 @@ void Game::oc_UI_Upedate()
 			flag = 1;//进入图鉴
 			loadimage(&test_img, L".\\资源文件\\图鉴\\0.png", oc_cxGame, oc_cyGame, false);
 	    }
-		else if (flag&&mou.x > 1250 && mou.x < 1330 && mou.y>340 && mou.y < 370 &&out_i<=N)
+		else if (flag&&mou.x > 1250 && mou.x < 1330 && mou.y>340 && mou.y < 370 &&out_i<N)
 		{
-			loadimage(&test_img, out_text, oc_cxGame, oc_cyGame, false);
 			out_i++;
+			if (out_i <=0)
+				out_i = 1;
+			swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.png", out_i);
+			loadimage(&test_img, out_text, oc_cxGame, oc_cyGame, false);
 		}
 		else if (flag&&mou.x > 50 && mou.x < 130 && mou.y>340 && mou.y < 370 &&out_i>=0)
 		{
-			loadimage(&test_img, out_text, oc_cxGame, oc_cyGame, false);
 			out_i--;
+			if (out_i>= N )
+				out_i = N - 1;
+			swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.png", out_i);
+			loadimage(&test_img, out_text, oc_cxGame, oc_cyGame, false);
 		}
 	}
+	last = now;
 }
 
 void Game::oc_UI_Draw()

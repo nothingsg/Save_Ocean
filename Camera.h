@@ -5,7 +5,9 @@ class Camera
 {
 public:
 	Vect2 position;
-	Camera();
+	int xClient;
+	int yClient;
+	Camera(int xC, int yC);
 	~Camera();
 
 };

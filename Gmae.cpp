@@ -31,6 +31,7 @@ void Game::oc_GameInit()
 
 void Game::oc_GameLoad()
 {
+	player.load_frame();
 	loadimage(&test_img, L".\\资源文件\\测试图片.png", oc_cxGame, oc_cyGame, false);
 	setbkmode(TRANSPARENT);	//设置文字输出是背景颜色为透明
 }
@@ -79,7 +80,7 @@ void Game::oc_Draw(const Camera &cam)
 
 	circle(x, y, 100);
 
-	player.DrawInCamera(main_cam);
+	player.DrawInCamera(cam);
 	Debug_text_output();		//输出调试数据
 }
 
@@ -90,7 +91,9 @@ void Game::oc_UI_Upedate()
 {
 	void FlushMouseMsgBuffer();//清空鼠标消息缓冲区
 	struct MOUSEMSG mou;
-	static int i = 0;
+	wchar_t out_text[50];
+	static int out_i=0;
+	swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.png", out_i);
 	if (MouseHit())
 	{
 		mou=GetMouseMsg();//获取鼠标消息
@@ -101,22 +104,21 @@ void Game::oc_UI_Upedate()
 	    }
 		else if (flag&&mou.x > 1250 && mou.x < 1330 && mou.y>340 && mou.y < 370 && mou.mkLButton)
 		{
-			loadimage(&test_img, L".\\资源文件\\图鉴\\1.png", oc_cxGame, oc_cyGame, false);
-			i = i + 1;
+			out_i = out_i + 1;
+			loadimage(&test_img, out_text, oc_cxGame, oc_cyGame, false);
 		}
 	}
 }
 
 void Game::oc_UI_Draw()
 {
-	if(flag==0)
+	if (flag == 0)
 		bar3d(100, 30, 180, 60, 3, true);
 	else
 	{
-		bar3d(50, 340, 130, 370, 3, true);//上页
-		bar3d(1250, 340, 1330,370, 3, true);//下页
+		bar3d(1250, 340, 1330, 370, 3, true);
+		bar3d(50, 340, 130, 370, 3, true);
 	}
-		
 }
 /*end*/
 

@@ -41,7 +41,6 @@ public:
 private:
 	HWND oc_hWnd;		//游戏窗口句柄
 	int oc_FPS;			//帧数
-	clock_t oc_timer;	//计时器
 	float dt;			//每帧的时间
 	int oc_cxGame;		//游戏窗口宽
 	int oc_cyGame;		//游戏窗口高
@@ -49,6 +48,9 @@ private:
 	int oc_posyGame;	//游戏窗口位置y
 	bool oc_bPause;		//指示游戏是否暂停
 
+	/*游戏世界数据*/
+	clock_t oc_timer;	//计时器
+	Vect2 gravity;
 
 	/*所有游戏对象*/
 	IMAGE test_img;		//测试图片

@@ -1,9 +1,8 @@
 ﻿#include "Game.h"
 #include"graphics.h"
-#define is_key_down(key) ((GetAsyncKeyState(key)&0x80000)?1:0)
 #pragma comment(lib,"Winmm.lib")
 
-Game::Game(int posx, int posy, int width, int height):main_cam(width, height)
+Game::Game(int posx, int posy, int width, int height) :main_cam(width, height), gravity(0, -0)
 {
 	oc_cxGame = width;
 	oc_cyGame = height;
@@ -57,9 +56,18 @@ void Game::oc_GameLoad()
 		loadimage(&img_mask, sourse_file_name, 60, 80, false);
 		player.load_frame(People::sou_run_R, img_t, img_mask);
 
-		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\runL_%d.bmp", i);
+		/*swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\runL_%d.bmp", i);
 		loadimage(&img_t, sourse_file_name, 60, 80, false);
 		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\runL_%d_mask.bmp", i);
+		loadimage(&img_mask, sourse_file_name, 60, 80, false);
+		player.load_frame(People::sou_run_L, img_t, img_mask);*/
+	}
+	for (int i = 0; i < 14; i++)
+	{
+		IMAGE img_t, img_mask;
+		swprintf(sourse_file_name, 50, L".\\资源文件\\很丑的人\\人物行走动画_%d.png", i);
+		loadimage(&img_t, sourse_file_name, 60, 80, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\很丑的人\\人物行走动画_%d_mask.png", i);
 		loadimage(&img_mask, sourse_file_name, 60, 80, false);
 		player.load_frame(People::sou_run_L, img_t, img_mask);
 	}
@@ -80,10 +88,10 @@ void Game::oc_GameLoop()
 		
 
 		oc_Update(dt);		//数据更新
-		oc_UI_Upedate();
+		oc_UI_Upedate();	//UI数据更新
 		BeginBatchDraw();	//开始批量绘图
 		oc_Draw(main_cam);	//渲染
-		oc_UI_Draw();
+		oc_UI_Draw();		//UI渲染
 		FlushBatchDraw();	//显示当前帧
 		Lock_FPS(60);		//帧数控制
 
@@ -97,6 +105,7 @@ void Game::oc_Update(float dt)
 {
 	oc_MouseProc();
 	oc_KeyPrco();
+	player.acceleration = player.acceleration + gravity;
 	player.Update(dt);
 }
 
@@ -175,17 +184,17 @@ void Game::oc_KeyPrco()
 	if (is_key_down('A'))
 	{
 		player.set_state(People::sta_runL);
-		player.physical_set_velo(Vect2(-200, 0));
+		player.velocity.x = -35;
 	}
 	else if (is_key_down('D'))
 	{
 		player.set_state(People::sta_runR);
-		player.physical_set_velo(Vect2(200, 0));
+		player.velocity.x = 200;
 	}
 	else
 	{
 		player.set_state(People::sta_stand);
-		player.physical_set_velo(Vect2(0, 0));
+		player.velocity.x = 0;
 	}
 }
 

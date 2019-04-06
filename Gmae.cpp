@@ -2,7 +2,7 @@
 #include"graphics.h"
 #pragma comment(lib,"Winmm.lib")
 
-Game::Game(int posx, int posy, int width, int height) : main_cam(width, height)
+Game::Game(int posx, int posy, int width, int height):main_cam(width, height)
 {
 	oc_cxGame = width;
 	oc_cyGame = height;
@@ -26,6 +26,7 @@ void Game::oc_GameInit()
 	dt = 0;
 	oc_bPause = false;
 	oc_GameLoad();
+	player.load_frame();
 }
 
 void Game::oc_GameLoad()
@@ -136,17 +137,18 @@ void Game::oc_KeyPrco()
 void Game::oc_MouseProc()
 {
 	static Vect2 last_mouse_pos;
-	Vect2 mouse_pos = GetMousePos();
+	MOUSEMSG mou_msg = GetMouseMsg();
+	
+	Vect2 mouse_pos(mou_msg.x, mou_msg.y);
 
-	if (is_key_down(VK_LBUTTON))
+	if (mou_msg.mkLButton)
 	{
 		Vect2 add = mouse_pos - last_mouse_pos;
 		add.y = -add.y;
 		main_cam.position = main_cam.position - add;
 	}
-
-
 	last_mouse_pos = mouse_pos;
+
 }
 
 

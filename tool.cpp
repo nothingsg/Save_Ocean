@@ -42,15 +42,3 @@ void Draw_UI(std::vector<Vect2> UI, Vect2 position, Matrix2 rotate, float scale,
 
 }
 
-//获得鼠标位置
-Vect2 GetMousePos()
-{
-	LPPOINT p;
-	p = new POINT;
-	GetCursorPos(p);
-	ScreenToClient(GetForegroundWindow(), p);
-	Vect2 pos = Vect2((*p).x, (*p).y);
-	delete p;
-	return pos;
-}
-

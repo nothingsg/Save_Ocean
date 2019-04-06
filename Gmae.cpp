@@ -2,7 +2,7 @@
 #include"graphics.h"
 #pragma comment(lib,"Winmm.lib")
 
-Game::Game(int posx, int posy, int width, int height)
+Game::Game(int posx, int posy, int width, int height):main_cam(width, height)
 {
 	oc_cxGame = width;
 	oc_cyGame = height;
@@ -26,6 +26,7 @@ void Game::oc_GameInit()
 	dt = 0;
 	oc_bPause = false;
 	oc_GameLoad();
+	player.load_frame();
 }
 
 void Game::oc_GameLoad()
@@ -61,6 +62,7 @@ void Game::oc_GameLoop()
 void Game::oc_Update(float dt)
 {
 	oc_MouseProc();
+	player.Update(dt);
 }
 
 void Game::oc_Draw(const Camera &cam)
@@ -77,7 +79,7 @@ void Game::oc_Draw(const Camera &cam)
 
 	circle(x, y, 100);
 
-
+	player.DrawInCamera(main_cam);
 	Debug_text_output();		//输出调试数据
 }
 
@@ -99,7 +101,7 @@ void Game::oc_UI_Upedate()
 	    }
 		else if (flag&&mou.x > 1250 && mou.x < 1330 && mou.y>340 && mou.y < 370 && mou.mkLButton)
 		{
-			loadimage(&test_img, L".\\资源文件\\图鉴\\1+i.png", oc_cxGame, oc_cyGame, false);
+			loadimage(&test_img, L".\\资源文件\\图鉴\\1.png", oc_cxGame, oc_cyGame, false);
 			i = i + 1;
 		}
 	}

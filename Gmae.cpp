@@ -88,10 +88,11 @@ void Game::oc_Draw(const Camera &cam)
 int flag = 0;//是否进入图鉴
 void Game::oc_UI_Upedate()
 {
+	const int N = 3;//图鉴内图片数量
 	void FlushMouseMsgBuffer();//清空鼠标消息缓冲区
 	struct MOUSEMSG mou;
 	wchar_t out_text[50];
-	static int out_i=0;
+	static int out_i=1;
 	swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.png", out_i);
 	if (MouseHit())
 	{
@@ -99,12 +100,17 @@ void Game::oc_UI_Upedate()
 		if (flag==0&&mou.x >100&&mou.x<180&&mou.y>30&&mou.y < 60&&mou.mkLButton)//鼠标左键点击在按钮范围内
 	    {
 			flag = 1;//进入图鉴
-			loadimage(&test_img, L".\\资源文件\\图鉴\\0封面.png", oc_cxGame, oc_cyGame, false);
+			loadimage(&test_img, L".\\资源文件\\图鉴\\0.png", oc_cxGame, oc_cyGame, false);
 	    }
-		else if (flag&&mou.x > 1250 && mou.x < 1330 && mou.y>340 && mou.y < 370 && mou.mkLButton)
+		else if (flag&&mou.x > 1250 && mou.x < 1330 && mou.y>340 && mou.y < 370 && mou.mkLButton&&out_i<=N)
 		{
-			out_i = out_i + 1;
 			loadimage(&test_img, out_text, oc_cxGame, oc_cyGame, false);
+			out_i++;
+		}
+		else if (flag&&mou.x > 50 && mou.x < 130 && mou.y>340 && mou.y < 370 && mou.mkLButton&&out_i>0)
+		{
+			loadimage(&test_img, out_text, oc_cxGame, oc_cyGame, false);
+			out_i--;
 		}
 	}
 }

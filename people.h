@@ -16,43 +16,65 @@ public:
 
 	enum people_state
 	{
-		stand_R = 0,
-		stand_L,
-		walk_R,
-		walk_L,
-		run_R,
-		run_L,
-		jump_R,
-		jump_L
+		sta_stand = 0,
+		sta_standR,
+		sta_standL,
+		sta_walkR,
+		sta_walkL,
+		sta_runR,
+		sta_runL,
+		sta_jumpR,
+		sta_jumpL
 	};
 
-	void load_frame(people_state s, IMAGE img, IMAGE mask);
+	enum source
+	{
+		sou_stand_R = 0,
+		sou_stand_R_mask,
+		sou_stand_L,
+		sou_stand_L_mask,
+		sou_walk_R,
+		sou_walk_R_mask,
+		sou_walk_L,
+		sou_walk_L_mask,
+		sou_run_R,
+		sou_run_R_mask,
+		sou_run_L,
+		sou_run_L_mask,
+		sou_jump_R,
+		sou_jump_R_mask,
+		sou_jump_L,
+		sou_jump_L_mask
+	};
+
+	void load_frame(source s, IMAGE img, IMAGE mask);
 	void set_state(people_state s);
 
 	
 
 private:
 	people_state state, last_state;
+	source now_source;
 	int frame_i;
 
 	std::vector<std::vector<IMAGE>> img_source;	//存放所有图片资源
 
 
-	std::vector<IMAGE> stand_R_frame;
-	std::vector<IMAGE> stand_R_frame_mask;
-	std::vector<IMAGE> stand_L_frame;
-	std::vector<IMAGE> stand_L_frame_mask;
-	std::vector<IMAGE> walk_R_frame;			//行走帧动画
-	std::vector<IMAGE> walk_R_frame_mask;		//行走帧动画掩码图
-	std::vector<IMAGE> walk_L_frame;			//行走帧动画
-	std::vector<IMAGE> walk_L_frame_mask;		//行走帧动画掩码图
-	std::vector<IMAGE> run_R_frame;				//行走帧动画
-	std::vector<IMAGE> run_R_frame_mask;		//行走帧动画掩码图
-	std::vector<IMAGE> run_L_frame;				//行走帧动画
-	std::vector<IMAGE> run_L_frame_mask;		//行走帧动画掩码图
-	std::vector<IMAGE> jump_R_frame;				//行走帧动画
-	std::vector<IMAGE> jump_R_frame_mask;			//行走帧动画掩码图
-	std::vector<IMAGE> jump_L_frame;				//行走帧动画
-	std::vector<IMAGE> jump_L_frame_mask;			//行走帧动画掩码图
+	std::vector<IMAGE> stand_R_frame;			//站立向右帧动画
+	std::vector<IMAGE> stand_R_frame_mask;		//站立向右帧动画掩码图
+	std::vector<IMAGE> stand_L_frame;			//站立向左帧动画
+	std::vector<IMAGE> stand_L_frame_mask;		//站立向左帧动画掩码图
+	std::vector<IMAGE> walk_R_frame;			//行走向右帧动画
+	std::vector<IMAGE> walk_R_frame_mask;		//行走向右帧动画掩码图
+	std::vector<IMAGE> walk_L_frame;			//行走向左帧动画
+	std::vector<IMAGE> walk_L_frame_mask;		//行走向左帧动画掩码图
+	std::vector<IMAGE> run_R_frame;				//跑动向右帧动画
+	std::vector<IMAGE> run_R_frame_mask;		//跑动向右帧动画掩码图
+	std::vector<IMAGE> run_L_frame;				//跑动向左帧动画
+	std::vector<IMAGE> run_L_frame_mask;		//跑动向左帧动画掩码图
+	std::vector<IMAGE> jump_R_frame;			//跳跃向右帧动画
+	std::vector<IMAGE> jump_R_frame_mask;		//跳跃向右帧动画掩码图
+	std::vector<IMAGE> jump_L_frame;			//跳跃向左帧动画
+	std::vector<IMAGE> jump_L_frame_mask;		//跳跃向左帧动画掩码图
 	
 };

@@ -52,7 +52,7 @@ private:
 
 	/*所有游戏对象*/
 	IMAGE test_img;		//测试图片
-	//People player;
+	People player;
 	Camera main_cam;
 	
 };

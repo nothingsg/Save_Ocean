@@ -49,5 +49,10 @@ void GameObject_phy::physical_Rotate(float dt)
 	Rotate(rotate_speed * dt);
 }
 
+void GameObject_phy::physical_set_velo(Vect2 v)
+{
+	velocity = v;
+}
+
 
 /*************************************************************************************************************************************************************/

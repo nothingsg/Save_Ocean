@@ -40,6 +40,7 @@ public:
 
 	void physical_Move(float dt);
 	void physical_Rotate(float dt);
+	void physical_set_velo(Vect2 v);
 
 };
 

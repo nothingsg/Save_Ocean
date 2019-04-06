@@ -2,8 +2,27 @@
 
 People::People()
 {
+	img_source.push_back(stand_R_frame);
+	img_source.push_back(stand_R_frame_mask);
+	img_source.push_back(stand_L_frame);
+	img_source.push_back(stand_L_frame_mask);
+	img_source.push_back(walk_R_frame);
+	img_source.push_back(walk_R_frame_mask);
+	img_source.push_back(walk_L_frame);
+	img_source.push_back(walk_L_frame_mask);
+	img_source.push_back(run_R_frame);
+	img_source.push_back(run_R_frame_mask);
+	img_source.push_back(run_L_frame);
+	img_source.push_back(run_L_frame_mask);
+	img_source.push_back(jump_R_frame);
+	img_source.push_back(jump_R_frame_mask);
+	img_source.push_back(jump_L_frame);
+	img_source.push_back(jump_L_frame_mask);
+
 	frame_i = 0;
-	state = stand_L;
+	state = sta_standR;
+	last_state = sta_standR;
+	now_source = sou_stand_R;
 }
 
 People::~People()
@@ -15,13 +34,41 @@ People::~People()
 void People::Update(float dt)
 {
 	static int frame_timer = 0;
+	if (state != last_state)
+	{
+		frame_timer = 0;
+		frame_i = 0;
+		switch (state)
+		{
+		case People::sta_standR:now_source = sou_stand_R;
+			break;
+		case People::sta_standL:now_source = sou_stand_L;
+			break;
+		case People::sta_walkR:now_source = sou_walk_R;
+			break;
+		case People::sta_walkL:now_source = sou_walk_L;
+			break;
+		case People::sta_runR:now_source = sou_run_R;
+			break;
+		case People::sta_runL:now_source = sou_run_L;
+			break;
+		case People::sta_jumpR:now_source = sou_jump_R;
+			break;
+		case People::sta_jumpL:now_source = sou_jump_L;
+			break;
+		default:
+			break;
+		}
+	}
 	frame_timer += dt;
 	if (frame_timer >= 100)
 	{
-		frame_i = (frame_i + 1) % walk_R_frame.size();
+		frame_i = (frame_i + 1) % img_source[now_source].size();
 		frame_timer = 0;
 	}
-	
+	last_state = state;
+
+	physical_Move(dt);
 }
 
 
@@ -35,84 +82,39 @@ void People::DrawInCamera(const Camera &cam)
 
 	putimage(position.x - cam.position.x + cam.xClient / 2 - 30,
 		-(position.y - cam.position.y) + cam.yClient / 2 - 40,
-		&walk_R_frame_mask[frame_i], SRCAND);
+		&img_source[now_source + 1][frame_i], SRCAND);
 
 	putimage(position.x - cam.position.x + cam.xClient / 2 - 30,
 		-(position.y - cam.position.y) + cam.yClient / 2 - 40,
-		&walk_R_frame[frame_i], SRCPAINT);
+		&img_source[now_source][frame_i], SRCPAINT);
 }
 
 
 
 
 
-void People::load_frame(people_state s, IMAGE img, IMAGE mask)
+void People::load_frame(source s, IMAGE img, IMAGE mask)
 {
 
-	switch (s)
-	{
-	case People::stand_R:
-		stand_R_frame.push_back(img);
-		stand_R_frame_mask.push_back(mask);
-		break;
-	case People::stand_L:
-		stand_L_frame.push_back(img);
-		stand_L_frame_mask.push_back(mask);
-		break;
-	case People::walk_R:
-		walk_R_frame.push_back(img);
-		walk_R_frame_mask.push_back(mask);
-		break;
-	case People::walk_L:
-		walk_L_frame.push_back(img);
-		walk_L_frame_mask.push_back(mask);
-		break;
-	case People::run_R:
-		run_R_frame.push_back(img);
-		run_R_frame_mask.push_back(mask);
-		break;
-	case People::run_L:
-		run_L_frame.push_back(img);
-		run_L_frame_mask.push_back(mask);
-		break;
-	case People::jump_R:
-		jump_R_frame.push_back(img);
-		jump_R_frame_mask.push_back(mask);
-		break;
-	case People::jump_L:
-		jump_L_frame.push_back(img);
-		jump_L_frame_mask.push_back(mask);
-		break;
-	default:
-		break;
-	}
+	img_source[s].push_back(img);		//载入图片和掩码图资源
+	img_source[s + 1].push_back(mask);
 
-	IMAGE img_t;
-	loadimage(&img_t, L".\\资源文件\\测试用\\runL-1.bmp", 60, 80, false);
-	walk_R_frame.push_back(img_t);
-	loadimage(&img_t, L".\\资源文件\\测试用\\runL-2.bmp", 60, 80, false);
-	walk_R_frame.push_back(img_t);
-	loadimage(&img_t, L".\\资源文件\\测试用\\runL-3.bmp", 60, 80, false);
-	walk_R_frame.push_back(img_t);
-	loadimage(&img_t, L".\\资源文件\\测试用\\runL-4.bmp", 60, 80, false);
-	walk_R_frame.push_back(img_t);
-
-	loadimage(&img_t, L".\\资源文件\\测试用\\runL-1X.bmp", 60, 80, false);
-	walk_R_frame_mask.push_back(img_t);
-	loadimage(&img_t, L".\\资源文件\\测试用\\runL-2X.bmp", 60, 80, false);
-	walk_R_frame_mask.push_back(img_t);
-	loadimage(&img_t, L".\\资源文件\\测试用\\runL-3X.bmp", 60, 80, false);
-	walk_R_frame_mask.push_back(img_t);
-	loadimage(&img_t, L".\\资源文件\\测试用\\runL-4X.bmp", 60, 80, false);
-	walk_R_frame_mask.push_back(img_t);
+	
 
 }
 
 
 void People::set_state(people_state s)
 {
-	last_state = state;
-	state = s;
+	if (s != sta_stand)
+	{
+		state = s;
+	}
+	else
+	{
+		if (last_state == sta_runL)state = sta_standL;
+		if (last_state == sta_runR)state = sta_standR;
+	}
 	
 }
 

@@ -31,7 +31,40 @@ void Game::oc_GameInit()
 
 void Game::oc_GameLoad()
 {
-	//player.load_frame();
+	//资源加载
+	wchar_t sourse_file_name[50];
+	for (int i = 0; i < 2; i++)
+	{
+		IMAGE img_t, img_mask;
+		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\standR_%d.bmp", i);
+		loadimage(&img_t, sourse_file_name, 60, 80, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\standR_%d_mask.bmp", i);
+		loadimage(&img_mask, sourse_file_name, 60, 80, false);
+		player.load_frame(People::sou_stand_R, img_t, img_mask);
+
+		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\standL_%d.bmp", i);
+		loadimage(&img_t, sourse_file_name, 60, 80, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\standL_%d_mask.bmp", i);
+		loadimage(&img_mask, sourse_file_name, 60, 80, false);
+		player.load_frame(People::sou_stand_L, img_t, img_mask);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		IMAGE img_t, img_mask;
+		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\runR_%d.bmp", i);
+		loadimage(&img_t, sourse_file_name, 60, 80, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\runR_%d_mask.bmp", i);
+		loadimage(&img_mask, sourse_file_name, 60, 80, false);
+		player.load_frame(People::sou_run_R, img_t, img_mask);
+
+		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\runL_%d.bmp", i);
+		loadimage(&img_t, sourse_file_name, 60, 80, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\runL_%d_mask.bmp", i);
+		loadimage(&img_mask, sourse_file_name, 60, 80, false);
+		player.load_frame(People::sou_run_L, img_t, img_mask);
+	}
+
+
 	loadimage(&test_img, L".\\资源文件\\测试图片.png", oc_cxGame, oc_cyGame, false);
 	setbkmode(TRANSPARENT);	//设置文字输出是背景颜色为透明
 }
@@ -39,8 +72,8 @@ void Game::oc_GameLoad()
 void Game::oc_GameLoop()
 {
 	//主循环
-	mciSendString(L"open D:\\工程\\VS\\工作室游戏\\Save_Ocean\\资源文件\\background.wav alias backmusic", NULL, 0, NULL);
-	mciSendString(L"play backmusic wait", NULL, 0, NULL);
+	/*mciSendString(L"open D:\\工程\\VS\\工作室游戏\\Save_Ocean\\资源文件\\background.wav alias backmusic", NULL, 0, NULL);
+	mciSendString(L"play backmusic wait", NULL, 0, NULL);*/
 	while (1)
 	{
 		Frame_Begin();		//开始当前帧
@@ -63,7 +96,8 @@ void Game::oc_GameLoop()
 void Game::oc_Update(float dt)
 {
 	oc_MouseProc();
-	//player.Update(dt);
+	oc_KeyPrco();
+	player.Update(dt);
 }
 
 void Game::oc_Draw(const Camera &cam)
@@ -80,7 +114,7 @@ void Game::oc_Draw(const Camera &cam)
 
 	circle(x, y, 100);
 
-	//player.DrawInCamera(cam);
+	player.DrawInCamera(cam);
 	Debug_text_output();		//输出调试数据
 }
 
@@ -96,7 +130,7 @@ void Game::oc_UI_Upedate()
 	void FlushMouseMsgBuffer();//清空鼠标消息缓冲区
 	if (is_key_down(VK_LBUTTON))//判断是否存在鼠标消息
 	{   
-		if (flag==0&&mou.x >100&&mou.x<180&&mou.y>30&&mou.y < 60)//鼠标左键点击在按钮范围内
+		/*if (flag==0&&mou.x >100&&mou.x<180&&mou.y>30&&mou.y < 60)//鼠标左键点击在按钮范围内
 	    {
 			flag = 1;//进入图鉴
 			loadimage(&test_img, L".\\资源文件\\图鉴\\0.png", oc_cxGame, oc_cyGame, false);
@@ -112,7 +146,7 @@ void Game::oc_UI_Upedate()
 			loadimage(&test_img, out_text, oc_cxGame, oc_cyGame, false);
 			if (out_i == 0)
 				flag = 0;
-		}
+		}*/
 	}
 }
 
@@ -131,7 +165,21 @@ void Game::oc_UI_Draw()
 
 void Game::oc_KeyPrco()
 {
-
+	if (is_key_down('A'))
+	{
+		player.set_state(People::sta_runL);
+		player.physical_set_velo(Vect2(-200, 0));
+	}
+	else if (is_key_down('D'))
+	{
+		player.set_state(People::sta_runR);
+		player.physical_set_velo(Vect2(200, 0));
+	}
+	else
+	{
+		player.set_state(People::sta_stand);
+		player.physical_set_velo(Vect2(0, 0));
+	}
 }
 
 void Game::oc_MouseProc()

@@ -27,12 +27,11 @@ void Game::oc_GameInit()
 	dt = 0;
 	oc_bPause = false;
 	oc_GameLoad();
-	player.load_frame();
 }
 
 void Game::oc_GameLoad()
 {
-	player.load_frame();
+	//player.load_frame();
 	loadimage(&test_img, L".\\资源文件\\测试图片.png", oc_cxGame, oc_cyGame, false);
 	setbkmode(TRANSPARENT);	//设置文字输出是背景颜色为透明
 }
@@ -64,7 +63,7 @@ void Game::oc_GameLoop()
 void Game::oc_Update(float dt)
 {
 	oc_MouseProc();
-	player.Update(dt);
+	//player.Update(dt);
 }
 
 void Game::oc_Draw(const Camera &cam)
@@ -81,7 +80,7 @@ void Game::oc_Draw(const Camera &cam)
 
 	circle(x, y, 100);
 
-	player.DrawInCamera(cam);
+	//player.DrawInCamera(cam);
 	Debug_text_output();		//输出调试数据
 }
 
@@ -138,10 +137,8 @@ void Game::oc_KeyPrco()
 void Game::oc_MouseProc()
 {
 	static Vect2 last_mouse_pos;
-	MOUSEMSG mou_msg = GetMouseMsg();
+	Vect2 mouse_pos = GetMousePos(oc_hWnd);
 	
-	Vect2 mouse_pos(mou_msg.x, mou_msg.y);
-
 	if (is_key_down(VK_LBUTTON))
 	{
 		Vect2 add = mouse_pos - last_mouse_pos;

@@ -89,8 +89,8 @@ void Game::oc_Draw(const Camera &cam)
 int flag = 0;//是否进入图鉴
 void Game::oc_UI_Upedate()
 {
-	void FlushMouseMsgBuffer();//清空鼠标消息缓冲区
-	struct MOUSEMSG mou;
+	FlushMouseMsgBuffer();//清空鼠标消息缓冲区
+	MOUSEMSG mou;
 	wchar_t out_text[50];
 	static int out_i=0;
 	swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.png", out_i);
@@ -104,7 +104,7 @@ void Game::oc_UI_Upedate()
 	    }
 		else if (flag&&mou.x > 1250 && mou.x < 1330 && mou.y>340 && mou.y < 370 && mou.mkLButton)
 		{
-			out_i = out_i + 1;
+			out_i = out_i - 1;
 			loadimage(&test_img, out_text, oc_cxGame, oc_cyGame, false);
 		}
 	}
@@ -131,17 +131,18 @@ void Game::oc_KeyPrco()
 void Game::oc_MouseProc()
 {
 	static Vect2 last_mouse_pos;
-	Vect2 mouse_pos = GetMousePos();
+	MOUSEMSG mou_msg = GetMouseMsg();
+	
+	Vect2 mouse_pos(mou_msg.x, mou_msg.y);
 
-	if (is_key_down(VK_LBUTTON))
+	if (mou_msg.mkLButton)
 	{
 		Vect2 add = mouse_pos - last_mouse_pos;
 		add.y = -add.y;
 		main_cam.position = main_cam.position - add;
 	}
-
-
 	last_mouse_pos = mouse_pos;
+
 }
 
 

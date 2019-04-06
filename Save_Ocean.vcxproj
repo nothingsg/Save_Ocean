@@ -130,6 +130,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="people.cpp" />
     <ClCompile Include="Random.cpp" />
+    <ClCompile Include="terrain.cpp" />
     <ClCompile Include="tool.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +142,7 @@
     <ClInclude Include="Matrix3.h" />
     <ClInclude Include="people.h" />
     <ClInclude Include="Random.h" />
+    <ClInclude Include="terrain.h" />
     <ClInclude Include="tool.h" />
     <ClInclude Include="Vect2.h" />
     <ClInclude Include="Vect3.h" />

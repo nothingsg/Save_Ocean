@@ -88,6 +88,7 @@ void Game::oc_UI_Upedate()
 {
 	void FlushMouseMsgBuffer();//清空鼠标消息缓冲区
 	struct MOUSEMSG mou;
+	static int i = 0;
 	if (MouseHit())
 	{
 		mou=GetMouseMsg();//获取鼠标消息
@@ -98,7 +99,8 @@ void Game::oc_UI_Upedate()
 	    }
 		else if (flag&&mou.x > 1250 && mou.x < 1330 && mou.y>340 && mou.y < 370 && mou.mkLButton)
 		{
-			loadimage(&test_img, L".\\资源文件\\图鉴\\1.png", oc_cxGame, oc_cyGame, false);
+			loadimage(&test_img, L".\\资源文件\\图鉴\\1+i.png", oc_cxGame, oc_cyGame, false);
+			i = i + 1;
 		}
 	}
 }

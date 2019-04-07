@@ -11,6 +11,7 @@
 #include "people.h"
 #include "terrain.h"
 #include"button.h"
+#include"mywindow.h"
 
 
 

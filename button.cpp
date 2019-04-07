@@ -23,11 +23,12 @@ void Button::drawchange()
 }
 
 
-bool Button::leftmouse(bool last,bool now, HWND oc_hWnd)
+bool Button::leftmouse(HWND oc_hWnd)
 {
 	bool f=0;//f=true表示鼠标左键点击并在按钮范围内后
-	if (!last&&now)//判断是鼠标左键是否按下
-		f = 1;
+	void FlushMouseMsgBuffer();//清空鼠标消息缓冲区
+	static bool last = 0;
+	bool now = is_key_down(VK_LBUTTON);
 	if (!last&&now)//判断是鼠标左键是否按下
 	{
 		Vect2 moup = GetMousePos(oc_hWnd);
@@ -35,18 +36,4 @@ bool Button::leftmouse(bool last,bool now, HWND oc_hWnd)
 			f = 1;
 	}
 	return f;
-}
-
-
-void Button::mousepos(HWND oc_hWnd)//鼠标是否点击，是否切换画面
-{
-	bool y=0;//用于判断是否转换画面
-	void FlushMouseMsgBuffer();//清空鼠标消息缓冲区
-	static bool last = 0;
-	bool now = is_key_down(VK_LBUTTON);
-	y = leftmouse(last, now,oc_hWnd);
-	if (y)
-	{
-		drawchange();
-	}
 }

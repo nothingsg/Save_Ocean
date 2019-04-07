@@ -130,6 +130,7 @@ void Game::oc_Draw(const Camera &cam)
 
 /*cy完成*/
 int flag = 0;//是否进入图鉴
+window win(700, 500);
 void Game::oc_UI_Upedate()
 {
 	const int N = 3;//图鉴内图片数量
@@ -144,32 +145,33 @@ void Game::oc_UI_Upedate()
 		if (flag==0&&mou.x >100&&mou.x<180&&mou.y>30&&mou.y < 60)//鼠标左键点击在按钮范围内
 	    {
 			flag = 1;//进入图鉴
-			loadimage(&test_img, L".\\资源文件\\图鉴\\0.png", oc_cxGame, oc_cyGame, false);
+			loadimage(&win.img_i, L".\\资源文件\\图鉴\\0.png", win.new_x,win.new_y, false);
+			//win.show();
 	    }
-		else if (flag&&mou.x > 1300 && mou.x < 1320 && mou.y>10 && mou.y < 30)
+		else if (flag&&mou.x > 980 && mou.x < 1000 && mou.y>100 && mou.y < 120)//退出
 		{
 			out_i = 0;
 			flag = 0;
 			loadimage(&test_img, L".\\资源文件\\测试图片.png", oc_cxGame, oc_cyGame, false);
 		}
-		else if (flag&&mou.x > 1250 && mou.x < 1330 && mou.y>340 && mou.y < 370 &&out_i<N)
+		else if (flag&&mou.x > 950 && mou.x < 990 && mou.y>340 && mou.y < 360 &&out_i<N)//下页
 		{
 			out_i++;
 			if (out_i <=0)
 				out_i = 1;
 			swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.png", out_i);
-			loadimage(&test_img, out_text, oc_cxGame, oc_cyGame, false);
+			loadimage(&win.img_i, out_text, win.new_x, win.new_y, false);
 		}
-		else if (flag&&mou.x > 50 && mou.x < 130 && mou.y>340 && mou.y < 370 &&out_i>=0)
+		else if (flag&&mou.x > 310 && mou.x < 350 && mou.y>340 && mou.y < 360 &&out_i>=0)//上页
 		{
 			out_i--;
 			if (out_i>= N )
 				out_i = N - 1;
 			swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.png", out_i);
-			loadimage(&test_img, out_text, oc_cxGame, oc_cyGame, false);
+			loadimage(&win.img_i, out_text, win.new_x, win.new_y, false);
 		}
 	}
-	last = now;
+	last = now;    
 }
 
 void Game::oc_UI_Draw()
@@ -178,10 +180,11 @@ void Game::oc_UI_Draw()
 		bar3d(100, 30, 180, 60, 3, true);
 	else
 	{
-		fillrectangle(1300,10,1320,30);
-		bar3d(1250, 340, 1330, 370, 3, true);
-		bar3d(50, 340, 130, 370, 3, true);
-	}
+		win.show();
+		fillrectangle(980,100,1000,120);
+		bar3d(950, 340, 990, 360, 1, true);
+		bar3d(310, 340, 350, 360, 1, true);
+	}   
 }
 /*end*/
 

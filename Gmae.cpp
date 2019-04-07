@@ -1,9 +1,8 @@
 ﻿#include "Game.h"
 #include"graphics.h"
-#define is_key_down(key) ((GetAsyncKeyState(key)&0x80000)?1:0)
 #pragma comment(lib,"Winmm.lib")
 
-Game::Game(int posx, int posy, int width, int height):main_cam(width, height)
+Game::Game(int posx, int posy, int width, int height) :main_cam(width, height), gravity(0, -0)
 {
 	oc_cxGame = width;
 	oc_cyGame = height;
@@ -31,7 +30,49 @@ void Game::oc_GameInit()
 
 void Game::oc_GameLoad()
 {
-	//player.load_frame();
+	//资源加载
+	wchar_t sourse_file_name[50];
+	for (int i = 0; i < 2; i++)
+	{
+		IMAGE img_t, img_mask;
+		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\standR_%d.bmp", i);
+		loadimage(&img_t, sourse_file_name, 60, 80, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\standR_%d_mask.bmp", i);
+		loadimage(&img_mask, sourse_file_name, 60, 80, false);
+		player.load_frame(People::sou_stand_R, img_t, img_mask);
+
+		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\standL_%d.bmp", i);
+		loadimage(&img_t, sourse_file_name, 60, 80, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\standL_%d_mask.bmp", i);
+		loadimage(&img_mask, sourse_file_name, 60, 80, false);
+		player.load_frame(People::sou_stand_L, img_t, img_mask);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		IMAGE img_t, img_mask;
+		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\runR_%d.bmp", i);
+		loadimage(&img_t, sourse_file_name, 60, 80, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\runR_%d_mask.bmp", i);
+		loadimage(&img_mask, sourse_file_name, 60, 80, false);
+		player.load_frame(People::sou_run_R, img_t, img_mask);
+
+		/*swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\runL_%d.bmp", i);
+		loadimage(&img_t, sourse_file_name, 60, 80, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\runL_%d_mask.bmp", i);
+		loadimage(&img_mask, sourse_file_name, 60, 80, false);
+		player.load_frame(People::sou_run_L, img_t, img_mask);*/
+	}
+	for (int i = 0; i < 14; i++)
+	{
+		IMAGE img_t, img_mask;
+		swprintf(sourse_file_name, 50, L".\\资源文件\\很丑的人\\人物行走动画_%d.png", i);
+		loadimage(&img_t, sourse_file_name, 60, 80, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\很丑的人\\人物行走动画_%d_mask.png", i);
+		loadimage(&img_mask, sourse_file_name, 60, 80, false);
+		player.load_frame(People::sou_run_L, img_t, img_mask);
+	}
+
+
 	loadimage(&test_img, L".\\资源文件\\测试图片.png", oc_cxGame, oc_cyGame, false);
 	setbkmode(TRANSPARENT);	//设置文字输出是背景颜色为透明
 }
@@ -39,18 +80,18 @@ void Game::oc_GameLoad()
 void Game::oc_GameLoop()
 {
 	//主循环
-	mciSendString(L"open D:\\工程\\VS\\工作室游戏\\Save_Ocean\\资源文件\\background.wav alias backmusic", NULL, 0, NULL);
-	mciSendString(L"play backmusic wait", NULL, 0, NULL);
+	/*mciSendString(L"open D:\\工程\\VS\\工作室游戏\\Save_Ocean\\资源文件\\background.wav alias backmusic", NULL, 0, NULL);
+	mciSendString(L"play backmusic wait", NULL, 0, NULL);*/
 	while (1)
 	{
 		Frame_Begin();		//开始当前帧
 		
 
 		oc_Update(dt);		//数据更新
-		oc_UI_Upedate();
+		oc_UI_Upedate();	//UI数据更新
 		BeginBatchDraw();	//开始批量绘图
 		oc_Draw(main_cam);	//渲染
-		oc_UI_Draw();
+		oc_UI_Draw();		//UI渲染
 		FlushBatchDraw();	//显示当前帧
 		Lock_FPS(60);		//帧数控制
 
@@ -63,7 +104,9 @@ void Game::oc_GameLoop()
 void Game::oc_Update(float dt)
 {
 	oc_MouseProc();
-	//player.Update(dt);
+	oc_KeyPrco();
+	player.acceleration = player.acceleration + gravity;
+	player.Update(dt);
 }
 
 void Game::oc_Draw(const Camera &cam)
@@ -80,7 +123,7 @@ void Game::oc_Draw(const Camera &cam)
 
 	circle(x, y, 100);
 
-	//player.DrawInCamera(cam);
+	player.DrawInCamera(cam);
 	Debug_text_output();		//输出调试数据
 }
 
@@ -145,7 +188,21 @@ void Game::oc_UI_Draw()
 
 void Game::oc_KeyPrco()
 {
-
+	if (is_key_down('A'))
+	{
+		player.set_state(People::sta_runL);
+		player.velocity.x = -35;
+	}
+	else if (is_key_down('D'))
+	{
+		player.set_state(People::sta_runR);
+		player.velocity.x = 200;
+	}
+	else
+	{
+		player.set_state(People::sta_stand);
+		player.velocity.x = 0;
+	}
 }
 
 void Game::oc_MouseProc()

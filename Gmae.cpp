@@ -103,6 +103,12 @@ void Game::oc_UI_Upedate()
 			flag = 1;//进入图鉴
 			loadimage(&test_img, L".\\资源文件\\图鉴\\0.png", oc_cxGame, oc_cyGame, false);
 	    }
+		else if (flag&&mou.x > 1300 && mou.x < 1320 && mou.y>10 && mou.y < 30)
+		{
+			out_i = 0;
+			flag = 0;
+			loadimage(&test_img, L".\\资源文件\\测试图片.png", oc_cxGame, oc_cyGame, false);
+		}
 		else if (flag&&mou.x > 1250 && mou.x < 1330 && mou.y>340 && mou.y < 370 &&out_i<N)
 		{
 			out_i++;
@@ -129,6 +135,7 @@ void Game::oc_UI_Draw()
 		bar3d(100, 30, 180, 60, 3, true);
 	else
 	{
+		fillrectangle(1300,10,1320,30);
 		bar3d(1250, 340, 1330, 370, 3, true);
 		bar3d(50, 340, 130, 370, 3, true);
 	}

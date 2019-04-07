@@ -48,6 +48,9 @@
     <ClCompile Include="button.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="fish.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix2.h">
@@ -87,6 +90,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="button.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="fish.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

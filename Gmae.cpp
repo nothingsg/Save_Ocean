@@ -2,7 +2,7 @@
 #include"graphics.h"
 #pragma comment(lib,"Winmm.lib")
 
-Game::Game(int posx, int posy, int width, int height) :main_cam(width, height), gravity(0, -0)
+Game::Game(int posx, int posy, int width, int height) :main_cam(width, height), gravity(0, -10)
 {
 	oc_cxGame = width;
 	oc_cyGame = height;
@@ -72,6 +72,18 @@ void Game::oc_GameLoad()
 		player.load_frame(People::sou_run_L, img_t, img_mask);
 	}
 
+	for (int i = 0; i < 8; i++)
+	{
+		IMAGE img_t, img_mask;
+		swprintf(sourse_file_name, 50, L".\\资源文件\\鱼测试\\fish_%d.png", i);
+		loadimage(&img_t, sourse_file_name, 300, 120, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\鱼测试\\fish_%d_mask.png", i);
+		loadimage(&img_mask, sourse_file_name, 300, 120, false);
+		afish.load_frame(Fish::sou_swim, img_t, img_mask);
+	}
+	
+
+
 
 	loadimage(&test_img, L".\\资源文件\\测试图片.png", oc_cxGame, oc_cyGame, false);
 	setbkmode(TRANSPARENT);	//设置文字输出是背景颜色为透明
@@ -105,8 +117,9 @@ void Game::oc_Update(float dt)
 {
 	oc_MouseProc();
 	oc_KeyPrco();
-	player.acceleration = player.acceleration + gravity;
+	//player.acceleration = player.acceleration + gravity;
 	player.Update(dt);
+	afish.Update(dt);
 }
 
 void Game::oc_Draw(const Camera &cam)
@@ -124,6 +137,7 @@ void Game::oc_Draw(const Camera &cam)
 	circle(x, y, 100);
 
 	player.DrawInCamera(cam);
+	afish.DrawInCamera(cam);
 	Debug_text_output();		//输出调试数据
 }
 
@@ -144,13 +158,13 @@ void Game::oc_UI_Upedate()
 		if (flag==0&&mou.x >100&&mou.x<180&&mou.y>30&&mou.y < 60)//鼠标左键点击在按钮范围内
 	    {
 			flag = 1;//进入图鉴
-			loadimage(&test_img, L".\\资源文件\\图鉴\\0.png", oc_cxGame, oc_cyGame, false);
+			loadimage(&oc_window, L".\\资源文件\\图鉴\\0.png", 500, 500, false);
 	    }
 		else if (flag&&mou.x > 1300 && mou.x < 1320 && mou.y>10 && mou.y < 30)
 		{
 			out_i = 0;
 			flag = 0;
-			loadimage(&test_img, L".\\资源文件\\测试图片.png", oc_cxGame, oc_cyGame, false);
+			loadimage(&oc_window, L".\\资源文件\\测试图片.png", 500, 500, false);
 		}
 		else if (flag&&mou.x > 1250 && mou.x < 1330 && mou.y>340 && mou.y < 370 &&out_i<N)
 		{
@@ -158,7 +172,7 @@ void Game::oc_UI_Upedate()
 			if (out_i <=0)
 				out_i = 1;
 			swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.png", out_i);
-			loadimage(&test_img, out_text, oc_cxGame, oc_cyGame, false);
+			loadimage(&oc_window, out_text, 500, 500, false);
 		}
 		else if (flag&&mou.x > 50 && mou.x < 130 && mou.y>340 && mou.y < 370 &&out_i>=0)
 		{
@@ -166,7 +180,7 @@ void Game::oc_UI_Upedate()
 			if (out_i>= N )
 				out_i = N - 1;
 			swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.png", out_i);
-			loadimage(&test_img, out_text, oc_cxGame, oc_cyGame, false);
+			loadimage(&oc_window, out_text, 500, 500, false);
 		}
 	}
 	last = now;
@@ -181,7 +195,9 @@ void Game::oc_UI_Draw()
 		fillrectangle(1300,10,1320,30);
 		bar3d(1250, 340, 1330, 370, 3, true);
 		bar3d(50, 340, 130, 370, 3, true);
+		putimage(100, 100, &oc_window);
 	}
+	
 }
 /*end*/
 

@@ -11,7 +11,8 @@
 #include "people.h"
 #include "fish.h"
 #include "terrain.h"
-#include "button.h"
+#include"button.h"
+#include"mywindow.h"
 
 
 

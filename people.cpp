@@ -62,8 +62,8 @@ void People::Update(float dt)
 	}
 
 	frame_timer += dt;
-	frame_i = (frame_i + frame_timer / 5) % img_source[now_source].size();
-	frame_timer = frame_timer % 5;
+	frame_i = (frame_i + frame_timer / 100) % img_source[now_source].size();
+	frame_timer = frame_timer % 100;
 
 	last_state = state;
 

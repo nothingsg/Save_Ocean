@@ -84,8 +84,8 @@ void Game::oc_GameLoad()
 	
 
 
-
-	loadimage(&test_img, L".\\资源文件\\测试图片.png", oc_cxGame, oc_cyGame, false);
+	//载入背景图片
+	loadimage(&test_img, L".\\资源文件\\background.jpg");
 	setbkmode(TRANSPARENT);	//设置文字输出是背景颜色为透明
 }
 

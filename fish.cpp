@@ -19,8 +19,8 @@ void Fish::Update(float dt)
 	static int frame_timer = 0;
 	
 	frame_timer += dt;
-	frame_i = (frame_i + frame_timer / 10) % img_source[now_source].size();
-	frame_timer = frame_timer % 10;
+	frame_i = (frame_i + frame_timer / 100) % img_source[now_source].size();
+	frame_timer = frame_timer % 100;
 
 	physical_Move(dt);
 }

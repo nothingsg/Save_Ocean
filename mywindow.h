@@ -10,7 +10,9 @@ public:
 	IMAGE img_i;//窗口
 	HWND w_hWnd;//窗口句柄
 	window(int x, int y);
-	bool outbutton();
+	void outbutton();//退出
+	void upbutton();
+	void downbutton();
 	void show();//显示窗口
 	void hide();//关闭窗口
 };

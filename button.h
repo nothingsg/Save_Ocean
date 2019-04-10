@@ -15,6 +15,6 @@ class Button//按钮
 public:
 	Button(int x1, int y1, int x2, int y2, int height);//获取按钮位置和大小
 	void draw(int lt_x, int lt_y, int rb_x, int rb_y, int deep);//画出按钮
-	bool leftmouse(HWND oc_hWnd);
+
 	void drawchange();//切换到另一窗口/画面
 };

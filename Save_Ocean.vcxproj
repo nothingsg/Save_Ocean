@@ -123,23 +123,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="fish.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gmae.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mywindow.cpp" />
     <ClCompile Include="people.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="terrain.cpp" />
     <ClCompile Include="tool.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="fish.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Matrix2.h" />
     <ClInclude Include="Matrix3.h" />
+    <ClInclude Include="mywindow.h" />
     <ClInclude Include="people.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="terrain.h" />

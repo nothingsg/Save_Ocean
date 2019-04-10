@@ -60,12 +60,11 @@ void People::Update(float dt)
 			break;
 		}
 	}
+
 	frame_timer += dt;
-	if (frame_timer >= 100)
-	{
-		frame_i = (frame_i + 1) % img_source[now_source].size();
-		frame_timer = 0;
-	}
+	frame_i = (frame_i + frame_timer / 100) % img_source[now_source].size();
+	frame_timer = frame_timer % 100;
+
 	last_state = state;
 
 	physical_Move(dt);

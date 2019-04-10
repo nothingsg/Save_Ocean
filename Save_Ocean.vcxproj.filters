@@ -45,6 +45,12 @@
     <ClCompile Include="terrain.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="button.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mywindow.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix2.h">
@@ -81,6 +87,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="terrain.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="button.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="fish.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

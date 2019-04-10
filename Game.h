@@ -9,7 +9,10 @@
 #include "GameObject.h"
 #include "Camera.h"
 #include "people.h"
+#include "fish.h"
 #include "terrain.h"
+#include"button.h"
+#include"mywindow.h"
 
 
 
@@ -54,7 +57,9 @@ private:
 
 	/*所有游戏对象*/
 	IMAGE test_img;		//测试图片
+	IMAGE oc_window;
 	People player;
+	Fish afish;
 	Camera main_cam;
 	
 };
@@ -64,3 +69,6 @@ class GameEngine
 {
 	//以后再看
 };
+
+
+

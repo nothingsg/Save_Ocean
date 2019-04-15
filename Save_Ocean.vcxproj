@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="boat.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="tool.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="boat.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider.h" />

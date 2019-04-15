@@ -99,6 +99,7 @@ void Game::oc_GameLoop()
 	//主循环
 	/*mciSendString(L"open D:\\工程\\VS\\工作室游戏\\Save_Ocean\\资源文件\\background.wav alias backmusic", NULL, 0, NULL);
 	mciSendString(L"play backmusic wait", NULL, 0, NULL);*/
+	
 	while (1)
 	{
 		Frame_Begin();		//开始当前帧
@@ -186,7 +187,7 @@ void Game::oc_Draw(const Camera &cam)
 
 /*cy完成*/
 int flag = 0;//是否进入图鉴
-window win(700, 500);
+window win(700, 500);//生成图鉴窗口
 void Game::oc_UI_Upedate()
 {
 	const int N = 3;//图鉴内图片数量
@@ -194,46 +195,46 @@ void Game::oc_UI_Upedate()
 	static int out_i=0;
 	void FlushMouseMsgBuffer();//清空鼠标消息缓冲区
 	static bool last = 0;
-	bool now= is_key_down(VK_LBUTTON);
+	bool now = is_key_down(VK_LBUTTON);
 	if (!last&&now)//判断是鼠标左键是否按下
-	{   
-		Vect2 mou= GetMousePos(oc_hWnd);
-		if (flag==0&&mou.x >100&&mou.x<180&&mou.y>30&&mou.y < 60)//鼠标左键点击在按钮范围内
-	    {
+	{
+		Vect2 mou = GetMousePos(oc_hWnd);
+		if (flag == 0 && mou.x > 100 && mou.x < 180 && mou.y>30 && mou.y < 60)//鼠标左键点击在按钮范围内
+		{
 			flag = 1;//进入图鉴
-			loadimage(&win.img_i, L".\\资源文件\\图鉴\\0.png", win.new_x,win.new_y, false);
+			loadimage(&win.img_i, L".\\资源文件\\图鉴\\0.png", win.new_x, win.new_y, false);
 			//win.show();
-	    }
-		else if (flag&&mou.x > 980 && mou.x < 1000 && mou.y>100 && mou.y < 120)//退出
+		}
+		else if (flag==1&&mou.x > 980 && mou.x < 1000 && mou.y>100 && mou.y < 120)//退出
 		{
 			out_i = 0;
 			flag = 0;
 			loadimage(&oc_window, L".\\资源文件\\测试图片.png", 500, 500, false);
 		}
-		else if (flag&&mou.x > 950 && mou.x < 990 && mou.y>340 && mou.y < 360 &&out_i<N)//下页
+		else if (flag==1&&mou.x > 950 && mou.x < 990 && mou.y>340 && mou.y < 360 && out_i < N)//下页
 		{
 			out_i++;
-			if (out_i <=0)
+			if (out_i <= 0)
 				out_i = 1;
 			swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.png", out_i);
 			loadimage(&win.img_i, out_text, win.new_x, win.new_y, false);
 		}
-		else if (flag&&mou.x > 310 && mou.x < 350 && mou.y>340 && mou.y < 360 &&out_i>=0)//上页
+		else if (flag==1&&mou.x > 310 && mou.x < 350 && mou.y>340 && mou.y < 360 && out_i >= 0)//上页
 		{
 			out_i--;
-			if (out_i>= N )
+			if (out_i >= N)
 				out_i = N - 1;
 			swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.png", out_i);
 			loadimage(&win.img_i, out_text, win.new_x, win.new_y, false);
 		}
 	}
-	last = now;    
+	last = now;
 }
 
 void Game::oc_UI_Draw()
 {
 	if (flag == 0)
-		bar3d(100, 30, 180, 60, 3, true);
+		bar3d(100,30,180,60,2,true);
 	else
 	{
 		win.show();

@@ -6,7 +6,7 @@ class Fish : public GameObject_phy
 public:
 	Fish();
 	~Fish();
-
+	
 	virtual void Update(float dt) override;
 	virtual void Draw() override;
 	virtual void DrawInCamera(const Camera &cam) override;

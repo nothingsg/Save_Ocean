@@ -27,7 +27,7 @@ void Game::oc_GameInit()
 	oc_bPause = false;
 	oc_GameLoad();
 }
-
+//游戏资源加载
 void Game::oc_GameLoad()
 {
 	//资源加载
@@ -35,40 +35,32 @@ void Game::oc_GameLoad()
 	for (int i = 0; i < 2; i++)
 	{
 		IMAGE img_t, img_mask;
-		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\standR_%d.bmp", i);
-		loadimage(&img_t, sourse_file_name, 60, 80, false);
-		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\standR_%d_mask.bmp", i);
-		loadimage(&img_mask, sourse_file_name, 60, 80, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞静止向右_%d.png", i);
+		loadimage(&img_t, sourse_file_name, 59, 95, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞静止向右_0_mask.png", i);
+		loadimage(&img_mask, sourse_file_name, 59, 95, false);
 		player.load_frame(People::sou_stand_R, img_t, img_mask);
 
-		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\standL_%d.bmp", i);
-		loadimage(&img_t, sourse_file_name, 60, 80, false);
-		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\standL_%d_mask.bmp", i);
-		loadimage(&img_mask, sourse_file_name, 60, 80, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞静止向左_%d.png", i);
+		loadimage(&img_t, sourse_file_name, 59, 95, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞静止向左_%d_mask.png", i);
+		loadimage(&img_mask, sourse_file_name, 59, 95, false);
 		player.load_frame(People::sou_stand_L, img_t, img_mask);
 	}
-	for (int i = 0; i < 4; i++)
+
+	for (int i = 0; i < 6; i++)
 	{
 		IMAGE img_t, img_mask;
-		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\runR_%d.bmp", i);
-		loadimage(&img_t, sourse_file_name, 60, 80, false);
-		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\runR_%d_mask.bmp", i);
-		loadimage(&img_mask, sourse_file_name, 60, 80, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞走路向右_%d.png", i);
+		loadimage(&img_t, sourse_file_name, 59, 95, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞走路向右_%d_mask.png", i);
+		loadimage(&img_mask, sourse_file_name, 59, 95, false);
 		player.load_frame(People::sou_run_R, img_t, img_mask);
 
-		/*swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\runL_%d.bmp", i);
-		loadimage(&img_t, sourse_file_name, 60, 80, false);
-		swprintf(sourse_file_name, 50, L".\\资源文件\\测试用\\runL_%d_mask.bmp", i);
-		loadimage(&img_mask, sourse_file_name, 60, 80, false);
-		player.load_frame(People::sou_run_L, img_t, img_mask);*/
-	}
-	for (int i = 0; i < 14; i++)
-	{
-		IMAGE img_t, img_mask;
-		swprintf(sourse_file_name, 50, L".\\资源文件\\很丑的人\\人物行走动画_%d.png", i);
-		loadimage(&img_t, sourse_file_name, 60, 80, false);
-		swprintf(sourse_file_name, 50, L".\\资源文件\\很丑的人\\人物行走动画_%d_mask.png", i);
-		loadimage(&img_mask, sourse_file_name, 60, 80, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞走路向左_%d.png", i);
+		loadimage(&img_t, sourse_file_name, 59, 95, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞走路向左_%d_mask.png", i);
+		loadimage(&img_mask, sourse_file_name, 59, 95, false);
 		player.load_frame(People::sou_run_L, img_t, img_mask);
 	}
 
@@ -76,9 +68,9 @@ void Game::oc_GameLoad()
 	{
 		IMAGE img_t, img_mask;
 		swprintf(sourse_file_name, 50, L".\\资源文件\\鱼测试\\fish_%d.png", i);
-		loadimage(&img_t, sourse_file_name, 300, 120, false);
+		loadimage(&img_t, sourse_file_name, 60, 24, false);
 		swprintf(sourse_file_name, 50, L".\\资源文件\\鱼测试\\fish_%d_mask.png", i);
-		loadimage(&img_mask, sourse_file_name, 300, 120, false);
+		loadimage(&img_mask, sourse_file_name, 60, 24, false);
 		afish.load_frame(Fish::sou_swim, img_t, img_mask);
 	}
 	
@@ -87,8 +79,13 @@ void Game::oc_GameLoad()
 	//载入背景图片
 	loadimage(&test_img, L".\\资源文件\\background.jpg");
 	setbkmode(TRANSPARENT);	//设置文字输出是背景颜色为透明
-}
 
+	afish.position = Vect2(1000, -1500);
+	afish.velocity = Vect2(-100, 0);
+	player.position = Vect2(1000, -880);
+	main_cam.position = player.position;
+}
+//游戏主循环
 void Game::oc_GameLoop()
 {
 	//主循环
@@ -113,29 +110,66 @@ void Game::oc_GameLoop()
 	
 }	 
 	
-
+//游戏数据更新
 void Game::oc_Update(float dt)
 {
 	oc_MouseProc();
 	oc_KeyPrco();
 	//player.acceleration = player.acceleration + gravity;
+	
 	player.Update(dt);
 	afish.Update(dt);
-}
 
+	//之后这个要写在碰撞系统里
+	/*************************************************************************************************/
+	if (player.position.x < 0)
+	{
+		player.position.x = 0;
+	}
+	else if (player.position.x > 1100)
+	{
+		player.position.x = 1100;
+	}
+	if (player.position.y > 0)
+	{
+		player.position.y = 0;
+	}
+	else if (player.position.y < -5000)
+	{
+		player.position.y = -5000;
+	}
+
+
+	main_cam.position = player.position;
+	if (main_cam.position.x - main_cam.xClient / 2 < 0)
+	{
+		main_cam.position.x = main_cam.xClient / 2;
+	}
+	else if (main_cam.position.x + main_cam.xClient / 2 > 5000)
+	{
+		main_cam.position.x = 5000 - main_cam.xClient / 2;
+	}
+
+	if (main_cam.position.y - main_cam.yClient / 2 > 0)
+	{
+		main_cam.position.y = main_cam.yClient / 2;
+	}
+	else if (main_cam.position.y + main_cam.yClient / 2 < -5000)
+	{
+		main_cam.position.y = -5000 + main_cam.xClient / 2;
+	}
+	/************************************************************************************************************/
+}
+//游戏渲染
 void Game::oc_Draw(const Camera &cam)
 {
 	cleardevice();				//清屏
-	int x = 0, y = 0, xm = -oc_cxGame / 2, ym = oc_cyGame / 2;
-	xm = xm - cam.position.x + oc_cxGame / 2;
-	ym = -(ym - cam.position.y) + oc_cyGame / 2;
-	putimage(xm, ym, &test_img);
+	int bck_pos_x = 0, bck_pos_y = 0;
+	bck_pos_x = bck_pos_x - cam.position.x + oc_cxGame / 2;
+	bck_pos_y = -(bck_pos_y - cam.position.y) + oc_cyGame / 2;
+	putimage(bck_pos_x, bck_pos_y, &test_img);
 	/*测试 摄像机*/
 	
-	x = x - cam.position.x + oc_cxGame / 2;
-	y = -(y - cam.position.y) + oc_cyGame / 2;
-
-	circle(x, y, 100);
 
 	player.DrawInCamera(cam);
 	afish.DrawInCamera(cam);
@@ -219,7 +253,7 @@ void Game::oc_KeyPrco()
 	if (is_key_down('A'))
 	{
 		player.set_state(People::sta_runL);
-		player.velocity.x = -35;
+		player.velocity.x = -200;
 	}
 	else if (is_key_down('D'))
 	{

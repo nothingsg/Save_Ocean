@@ -126,6 +126,7 @@
     <ClCompile Include="button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="control.cpp" />
     <ClCompile Include="fish.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gmae.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="control.h" />
     <ClInclude Include="fish.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />

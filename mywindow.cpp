@@ -22,18 +22,16 @@ void window::hide()
 
 void window::outbutton()
 {
-	bool y = 0;
-	Button out(new_x + 280, 100, new_x + 300, 120, 3);
-	out.draw(new_x + 280, 100, new_x + 300, 120, 3);
-
+	Button out(new_x + 280, 100, new_x + 300, 120);
+	out.draw();
 }
 
 
 void window::upbutton()
 {
 	bool y = 0;
-	Button up(310, 335, 350, 365, 3);
-	up.draw(310, 335, 350, 365, 3);
+	Button up(310, 335, 350, 365);
+	up.draw();
 
 }
 
@@ -42,7 +40,7 @@ void window::upbutton()
 void window::downbutton()
 {
 	bool y = 0;
-	Button down(new_x + 250, 335, new_x + 290, 365, 3);
-	down.draw(new_x + 250, 335, new_x + 290, 365, 3);
+	Button down(new_x + 250, 335, new_x + 290, 365);
+	down.draw();
 
 }

@@ -15,4 +15,5 @@ public:
 	void downbutton();
 	void show();//显示窗口
 	void hide();//关闭窗口
+
 };

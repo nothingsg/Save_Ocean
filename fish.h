@@ -11,6 +11,11 @@ public:
 	virtual void Draw() override;
 	virtual void DrawInCamera(const Camera &cam) override;
 	
+	enum state
+	{
+		null
+	};
+
 	enum source
 	{
 		sou_swim = 0,			//250*100
@@ -18,8 +23,10 @@ public:
 	};
 
 	void load_frame(source s, IMAGE img, IMAGE mask);
+	void set_state(state s);
 
 private:
+	state now_state, last_state;
 	source now_source;
 	int frame_i;
 

@@ -2,7 +2,10 @@
 #include"graphics.h"
 #pragma comment(lib,"Winmm.lib")
 
-Game::Game(int posx, int posy, int width, int height) :main_cam(width, height), gravity(0, -10)
+static int flag_jump = 1; //大苏打实打实打算
+static int flag_boat = 0;
+
+Game::Game(int posx, int posy, int width, int height) :main_cam(width, height), gravity(0, -700)
 {
 	oc_cxGame = width;
 	oc_cyGame = height;
@@ -26,12 +29,24 @@ void Game::oc_GameInit()
 	dt = 0;
 	oc_bPause = false;
 	oc_GameLoad();
+
+	//初始化信息
+	afish.position = Vect2(1000, -1500);
+	afish.velocity = Vect2(-100, 0);
+	//player.position = Vect2(1000, -880);
+	player.position = Vect2(800, -500);
+	wood_boat.position = Vect2(1250, -980);
+	main_cam.position = Vect2(800, -950);
+
+
+	player.acceleration = gravity;
 }
 //游戏资源加载
 void Game::oc_GameLoad()
 {
 	//资源加载
 	wchar_t sourse_file_name[50];
+	//人物资源加载
 	for (int i = 0; i < 2; i++)
 	{
 		IMAGE img_t, img_mask;
@@ -64,6 +79,7 @@ void Game::oc_GameLoad()
 		player.load_frame(People::sou_run_L, img_t, img_mask);
 	}
 
+	//鱼类资源加载
 	for (int i = 0; i < 8; i++)
 	{
 		IMAGE img_t, img_mask;
@@ -74,16 +90,22 @@ void Game::oc_GameLoad()
 		afish.load_frame(Fish::sou_swim, img_t, img_mask);
 	}
 	
-
+	//船类资源加载
+	for (int i = 0; i < 2; i++)
+	{
+		IMAGE img_t, img_mask;
+		swprintf(sourse_file_name, 50, L".\\资源文件\\boat\\船_%d.png", i);
+		loadimage(&img_t, sourse_file_name, 300, 75, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\boat\\船_%d_mask.png", i);
+		loadimage(&img_mask, sourse_file_name, 300, 75, false);
+		wood_boat.load_frame(Boat::sou_boat_R, img_t, img_mask);
+	}
 
 	//载入背景图片
 	loadimage(&test_img, L".\\资源文件\\background.jpg");
 	setbkmode(TRANSPARENT);	//设置文字输出是背景颜色为透明
 
-	afish.position = Vect2(1000, -1500);
-	afish.velocity = Vect2(-100, 0);
-	player.position = Vect2(1000, -880);
-	main_cam.position = player.position;
+	
 }
 //游戏主循环
 void Game::oc_GameLoop()
@@ -115,10 +137,10 @@ void Game::oc_Update(float dt)
 {
 	oc_MouseProc();
 	oc_KeyPrco();
-	//player.acceleration = player.acceleration + gravity;
-	
+
 	player.Update(dt);
 	afish.Update(dt);
+	wood_boat.Update(dt);
 
 	//之后这个要写在碰撞系统里
 	/*************************************************************************************************/
@@ -134,31 +156,50 @@ void Game::oc_Update(float dt)
 	{
 		player.position.y = 0;
 	}
-	else if (player.position.y < -5000)
+	else if (player.position.y < -900)
 	{
-		player.position.y = -5000;
+		player.position.y = -900;
+		player.velocity.y = 0;
+		flag_jump = 0;
 	}
 
 
-	main_cam.position = player.position;
+	if (wood_boat.position.x < 1250)
+	{
+		wood_boat.position.x = 1250;
+	}
+	else if (wood_boat.position.x > 11000)
+	{
+		wood_boat.position.x = 11000;
+	}
+
+	if (flag_boat)
+	{
+		player.position = wood_boat.position - Vect2(20, -30);
+	}
+
+
+	main_cam.position.x = player.position.x;
 	if (main_cam.position.x - main_cam.xClient / 2 < 0)
 	{
 		main_cam.position.x = main_cam.xClient / 2;
 	}
-	else if (main_cam.position.x + main_cam.xClient / 2 > 5000)
+	else if (main_cam.position.x + main_cam.xClient / 2 > 50000)
 	{
-		main_cam.position.x = 5000 - main_cam.xClient / 2;
+		main_cam.position.x = 50000 - main_cam.xClient / 2;
 	}
 
 	if (main_cam.position.y - main_cam.yClient / 2 > 0)
 	{
 		main_cam.position.y = main_cam.yClient / 2;
 	}
-	else if (main_cam.position.y + main_cam.yClient / 2 < -5000)
+	else if (main_cam.position.y + main_cam.yClient / 2 < -50000)
 	{
-		main_cam.position.y = -5000 + main_cam.xClient / 2;
+		main_cam.position.y = -50000 + main_cam.xClient / 2;
 	}
 	/************************************************************************************************************/
+
+	
 }
 //游戏渲染
 void Game::oc_Draw(const Camera &cam)
@@ -171,8 +212,11 @@ void Game::oc_Draw(const Camera &cam)
 	/*测试 摄像机*/
 	
 
+	
+	wood_boat.DrawInCamera(cam);
 	player.DrawInCamera(cam);
 	afish.DrawInCamera(cam);
+	
 	Debug_text_output();		//输出调试数据
 }
 
@@ -242,19 +286,59 @@ void Game::oc_KeyPrco()
 {
 	if (is_key_down('A'))
 	{
-		player.set_state(People::sta_runL);
-		player.velocity.x = -200;
+		if (flag_boat)
+		{
+			wood_boat.velocity.x = -300;
+			player.set_state(People::sta_standL);
+		}
+		else
+		{
+			player.set_state(People::sta_runL);
+			player.velocity.x = -200;
+		}
+		
 	}
 	else if (is_key_down('D'))
 	{
-		player.set_state(People::sta_runR);
-		player.velocity.x = 200;
+		if (flag_boat)
+		{
+			wood_boat.velocity.x = 300;
+			player.set_state(People::sta_standR);
+		}
+		else
+		{
+			player.set_state(People::sta_runR);
+			player.velocity.x = 200;
+		}
+		
 	}
 	else
 	{
-		player.set_state(People::sta_stand);
-		player.velocity.x = 0;
+		if (flag_boat)
+		{
+			wood_boat.velocity.x = 0;
+		}
+		else
+		{
+			player.set_state(People::sta_stand);
+			player.velocity.x = 0;
+		}
+		
 	}
+
+	if (is_key_down('W') && !flag_jump)
+	{
+		
+		flag_jump = 1;
+		//player.set_state(People::sta_jumpL);
+		player.velocity.y = 400;
+	}
+	if (is_key_down('E') && player.position.x > 1050)
+	{
+		flag_boat = 1;
+		player.position = wood_boat.position - Vect2(20, -30);
+	}
+
 }
 
 void Game::oc_MouseProc()
@@ -262,13 +346,13 @@ void Game::oc_MouseProc()
 	static Vect2 last_mouse_pos;
 	Vect2 mouse_pos = GetMousePos(oc_hWnd);
 	
-	if (is_key_down(VK_LBUTTON))
+	/*if (is_key_down(VK_LBUTTON))
 	{
 		Vect2 add = mouse_pos - last_mouse_pos;
 		add.y = -add.y;
 		main_cam.position = main_cam.position - add;
 	}
-	last_mouse_pos = mouse_pos;
+	last_mouse_pos = mouse_pos;*/
 
 }
 

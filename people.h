@@ -14,17 +14,18 @@ public:
 	virtual void Draw() override;
 	virtual void DrawInCamera(const Camera &cam) override;
 
-	enum people_state
+	enum state
 	{
 		sta_stand = 0,
-		sta_standR,
-		sta_standL,
-		sta_walkR,
-		sta_walkL,
-		sta_runR,
-		sta_runL,
-		sta_jumpR,
-		sta_jumpL
+		sta_standR = 1 << 0,
+		sta_standL = 1 << 1,
+		sta_walkR = 1 << 2,
+		sta_walkL = 1 << 3,
+		sta_runR = 1 << 4,
+		sta_runL = 1 << 5,
+		sta_jumpR = 1 << 6,
+		sta_jumpL = 1 << 7,
+		boating = 1 << 8
 	};
 
 	enum source
@@ -48,12 +49,12 @@ public:
 	};
 
 	void load_frame(source s, IMAGE img, IMAGE mask);
-	void set_state(people_state s);
+	void set_state(state s);
 
 	
 
 private:
-	people_state state, last_state;
+	state now_state, last_state;
 	source now_source;
 	int frame_i;
 

@@ -20,7 +20,7 @@ People::People()
 	img_source.push_back(jump_L_frame_mask);
 
 	frame_i = 0;
-	state = sta_standR;
+	now_state = sta_standR;
 	last_state = sta_standR;
 	now_source = sou_stand_R;
 }
@@ -34,11 +34,11 @@ People::~People()
 void People::Update(float dt)
 {
 	static int frame_timer = 0;
-	if (state != last_state)
+	if (now_state != last_state)
 	{
 		frame_timer = 0;
 		frame_i = 0;
-		switch (state)
+		switch (now_state)
 		{
 		case People::sta_standR:now_source = sou_stand_R;
 			break;
@@ -65,7 +65,7 @@ void People::Update(float dt)
 	frame_i = (frame_i + frame_timer / 100) % img_source[now_source].size();
 	frame_timer = frame_timer % 100;
 
-	last_state = state;
+	last_state = now_state;
 
 	physical_Move(dt);
 }
@@ -79,12 +79,12 @@ void People::Draw()
 void People::DrawInCamera(const Camera &cam)
 {
 
-	putimage(position.x - cam.position.x + cam.xClient / 2 - 30,
-		-(position.y - cam.position.y) + cam.yClient / 2 - 40,
+	putimage(position.x - cam.position.x + cam.xClient / 2 - img_source[now_source][frame_i].getwidth() / 2,
+		-(position.y - cam.position.y) + cam.yClient / 2 - img_source[now_source][frame_i].getheight() / 2,
 		&img_source[now_source + 1][frame_i], SRCAND);
 
-	putimage(position.x - cam.position.x + cam.xClient / 2 - 30,
-		-(position.y - cam.position.y) + cam.yClient / 2 - 40,
+	putimage(position.x - cam.position.x + cam.xClient / 2 - img_source[now_source][frame_i].getwidth() / 2,
+		-(position.y - cam.position.y) + cam.yClient / 2 - img_source[now_source][frame_i].getheight() / 2,
 		&img_source[now_source][frame_i], SRCPAINT);
 }
 
@@ -103,16 +103,16 @@ void People::load_frame(source s, IMAGE img, IMAGE mask)
 }
 
 
-void People::set_state(people_state s)
+void People::set_state(state s)
 {
 	if (s != sta_stand)
 	{
-		state = s;
+		now_state = s;
 	}
 	else
 	{
-		if (last_state == sta_runL)state = sta_standL;
-		if (last_state == sta_runR)state = sta_standR;
+		if (last_state == sta_runL)now_state = sta_standL;
+		if (last_state == sta_runR)now_state = sta_standR;
 	}
 	
 }

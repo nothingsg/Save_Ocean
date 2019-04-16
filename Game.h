@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "people.h"
 #include "fish.h"
+#include "boat.h"
 #include "terrain.h"
 #include"button.h"
 #include"mywindow.h"
@@ -60,7 +61,10 @@ private:
 	IMAGE oc_window;
 	People player;
 	Fish afish;
-	Camera main_cam;
+	Boat wood_boat;
+
+
+	Camera main_cam;	//Ö÷ÉãÏñ»ú
 	
 };
 

@@ -12,8 +12,9 @@
 #include "fish.h"
 #include "boat.h"
 #include "terrain.h"
-#include"button.h"
-#include"mywindow.h"
+#include "button.h"
+#include "mywindow.h"
+#include "control.h"
 
 
 

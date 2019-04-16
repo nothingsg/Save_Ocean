@@ -235,19 +235,18 @@ void Game::oc_UI_Upedate()
 	if (!last&&now)//判断是鼠标左键是否按下
 	{
 		Vect2 mou = GetMousePos(oc_hWnd);
-		if (flag == 0 && mou.x > 100 && mou.x < 180 && mou.y>30 && mou.y < 60)//鼠标左键点击在按钮范围内
+		if (flag == 0 && mou.x > 100 && mou.x < 155 && mou.y>30 && mou.y < 120)//鼠标左键点击在按钮范围内
 		{
 			flag = 1;//进入图鉴
 			loadimage(&win.img_i, L".\\资源文件\\图鉴\\0.png", win.new_x, win.new_y, false);
-			//win.show();
 		}
-		else if (flag==1&&mou.x > 980 && mou.x < 1000 && mou.y>100 && mou.y < 120)//退出
+		else if (flag==1&&mou.x > 970 && mou.x < 1000 && mou.y>100 && mou.y < 130)//退出
 		{
 			out_i = 0;
 			flag = 0;
 			loadimage(&oc_window, L".\\资源文件\\测试图片.png", 500, 500, false);
 		}
-		else if (flag==1&&mou.x > 950 && mou.x < 990 && mou.y>340 && mou.y < 360 && out_i < N)//下页
+		else if (flag==1&&mou.x > 940 && mou.x < 990 && mou.y>360 && mou.y < 390 && out_i < N)//下页
 		{
 			out_i++;
 			if (out_i <= 0)
@@ -255,7 +254,7 @@ void Game::oc_UI_Upedate()
 			swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.png", out_i);
 			loadimage(&win.img_i, out_text, win.new_x, win.new_y, false);
 		}
-		else if (flag==1&&mou.x > 310 && mou.x < 350 && mou.y>340 && mou.y < 360 && out_i >= 0)//上页
+		else if (flag==1&&mou.x > 310 && mou.x < 360 && mou.y>360 && mou.y < 390 && out_i >= 0)//上页
 		{
 			out_i--;
 			if (out_i >= N)
@@ -269,14 +268,25 @@ void Game::oc_UI_Upedate()
 
 void Game::oc_UI_Draw()
 {
+	IMAGE img_0,img_1, img_2, img_3;
 	if (flag == 0)
-		bar3d(100,30,180,60,2,true);
+	{
+		//bar(100,30,155,120);
+		loadimage(&img_0, L".\\资源文件\\按钮\\图鉴.png", 55, 90, false);
+		putimage(100, 30, &img_0);
+	}
 	else
 	{
 		win.show();
-		fillrectangle(980,100,1000,120);
-		bar3d(950, 340, 990, 360, 1, true);
-		bar3d(310, 340, 350, 360, 1, true);
+		//bar(970,100,1000,130);//退出
+		loadimage(&img_1, L".\\资源文件\\按钮\\退出.png", 30, 30, false);
+		putimage(970, 100, &img_1);
+		//bar(940, 360, 990, 390);//下页
+		loadimage(&img_2, L".\\资源文件\\按钮\\下页.png", 50, 30, false);
+		putimage(940, 360, &img_2);
+		//bar(310, 360, 360, 390);//上页
+		loadimage(&img_3, L".\\资源文件\\按钮\\上页.png", 50, 30, false);
+		putimage(310, 360, &img_3);
 	}   
 }
 /*end*/

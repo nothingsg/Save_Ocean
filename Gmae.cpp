@@ -2,10 +2,7 @@
 #include"graphics.h"
 #pragma comment(lib,"Winmm.lib")
 
-static int flag_jump = 1; //大苏打实打实打算
-static int flag_boat = 0;
-
-Game::Game(int posx, int posy, int width, int height) :main_cam(width, height), gravity(0, -700)
+Game::Game(int posx, int posy, int width, int height) :main_cam(width, height), gravity(0, -980)
 {
 	oc_cxGame = width;
 	oc_cyGame = height;
@@ -35,6 +32,7 @@ void Game::oc_GameInit()
 	afish.velocity = Vect2(-100, 0);
 	//player.position = Vect2(1000, -880);
 	player.position = Vect2(800, -500);
+	player.set_state(People::sta_jumpR);
 	wood_boat.position = Vect2(1250, -980);
 	main_cam.position = Vect2(800, -950);
 
@@ -79,6 +77,20 @@ void Game::oc_GameLoad()
 		player.load_frame(People::sou_run_L, img_t, img_mask);
 	}
 
+	IMAGE img_t, img_mask;
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞跳跃向右_%d.png", 0);
+	loadimage(&img_t, sourse_file_name, 59, 95, false);
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞跳跃向右_%d_mask.png", 0);
+	loadimage(&img_mask, sourse_file_name, 59, 95, false);
+	player.load_frame(People::sou_jump_R, img_t, img_mask);
+
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞跳跃向左_%d.png", 0);
+	loadimage(&img_t, sourse_file_name, 59, 95, false);	
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞跳跃向左_%d_mask.png", 0);
+	loadimage(&img_mask, sourse_file_name, 59, 95, false);
+	player.load_frame(People::sou_jump_L, img_t, img_mask);
+
+
 	//鱼类资源加载
 	for (int i = 0; i < 8; i++)
 	{
@@ -94,16 +106,19 @@ void Game::oc_GameLoad()
 	for (int i = 0; i < 2; i++)
 	{
 		IMAGE img_t, img_mask;
-		swprintf(sourse_file_name, 50, L".\\资源文件\\boat\\船_%d.png", i);
-		loadimage(&img_t, sourse_file_name, 300, 75, false);
-		swprintf(sourse_file_name, 50, L".\\资源文件\\boat\\船_%d_mask.png", i);
-		loadimage(&img_mask, sourse_file_name, 300, 75, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\boat\\两头船_%d.png", i);
+		loadimage(&img_t, sourse_file_name, 419, 75, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\boat\\两头船_%d_mask.png", i);
+		loadimage(&img_mask, sourse_file_name, 419, 75, false);
 		wood_boat.load_frame(Boat::sou_boat_R, img_t, img_mask);
 	}
 
 	//载入背景图片
 	loadimage(&test_img, L".\\资源文件\\background.jpg");
-	setbkmode(TRANSPARENT);	//设置文字输出是背景颜色为透明
+
+
+	setbkmode(TRANSPARENT);			//设置文字输出是背景颜色为透明
+	settextcolor(RGB(255, 0, 0));	//设置文字输出颜色为红色
 
 	
 }
@@ -144,58 +159,93 @@ void Game::oc_Update(float dt)
 
 	//之后这个要写在碰撞系统里
 	/*************************************************************************************************/
-	if (player.position.x < 0)
+	switch (player.get_state())
 	{
-		player.position.x = 0;
-	}
-	else if (player.position.x > 1100)
+	case People::sta_boatingR:case People::sta_boatingL:
 	{
-		player.position.x = 1100;
-	}
-	if (player.position.y > 0)
+		if (wood_boat.position.x < 1250)
+		{
+			wood_boat.position.x = 1250;
+			wood_boat.velocity = Vect2(0, 0);
+		}
+		else if (wood_boat.position.x > 8400)
+		{
+			wood_boat.position.x = 8400;
+			wood_boat.velocity = Vect2(0, 0);
+		}
+		player.velocity = Vect2(0, 0);
+		player.position = wood_boat.position - Vect2(0, -30);
+	}break;
+	case People::sta_catchR:case People::sta_catchL:
 	{
-		player.position.y = 0;
-	}
-	else if (player.position.y < -900)
-	{
-		player.position.y = -900;
-		player.velocity.y = 0;
-		flag_jump = 0;
-	}
 
-
-	if (wood_boat.position.x < 1250)
+	}break;
+	case People::sta_jumpR:case People::sta_jumpL:
 	{
-		wood_boat.position.x = 1250;
+		if (player.position.x < 0)
+		{
+			player.position.x = 0;
+			player.velocity = Vect2(0, 0);
+		}
+		else if (player.position.x > 1100)
+		{
+			player.position.x = 1100;
+			player.velocity = Vect2(0, 0);
+		}
+		if (player.position.y > 0)
+		{
+			player.position.y = 0;
+		}
+		else if (player.position.y < -900)
+		{
+			player.position.y = -900;
+			player.velocity.y = 0;
+			player.set_state(People::sta_stand);
+		}
 	}
-	else if (wood_boat.position.x > 11000)
+	default:
 	{
-		wood_boat.position.x = 11000;
+		if (player.position.x < 0)
+		{
+			player.position.x = 0;
+			player.velocity = Vect2(0, 0);
+		}
+		else if (player.position.x > 1100)
+		{
+			player.position.x = 1100;
+			player.velocity = Vect2(0, 0);
+		}
+		if (player.position.y > 0)
+		{
+			player.position.y = 0;
+		}
+		else if (player.position.y < -900)
+		{
+			player.position.y = -900;
+			player.velocity.y = 0;
+		}
 	}
-
-	if (flag_boat)
-	{
-		player.position = wood_boat.position - Vect2(20, -30);
+		break;
 	}
-
+	
 
 	main_cam.position.x = player.position.x;
 	if (main_cam.position.x - main_cam.xClient / 2 < 0)
 	{
 		main_cam.position.x = main_cam.xClient / 2;
 	}
-	else if (main_cam.position.x + main_cam.xClient / 2 > 50000)
+	else if (main_cam.position.x + main_cam.xClient / 2 > 9600)
 	{
-		main_cam.position.x = 50000 - main_cam.xClient / 2;
+		main_cam.position.x = 9600 - main_cam.xClient / 2;
 	}
 
 	if (main_cam.position.y - main_cam.yClient / 2 > 0)
 	{
 		main_cam.position.y = main_cam.yClient / 2;
 	}
-	else if (main_cam.position.y + main_cam.yClient / 2 < -50000)
+	else if (main_cam.position.y + main_cam.yClient / 2 < -5400)
 	{
-		main_cam.position.y = -50000 + main_cam.xClient / 2;
+		main_cam.position.y = -5400 + main_cam.xClient / 2;
 	}
 	/************************************************************************************************************/
 
@@ -220,8 +270,8 @@ void Game::oc_Draw(const Camera &cam)
 	Debug_text_output();		//输出调试数据
 }
 
-
-/*cy完成*/
+/*UI部分*/
+/***********************************cy完成*********************************************/
 int flag = 0;//是否进入图鉴
 window win(700, 500);//生成图鉴窗口
 void Game::oc_UI_Upedate()
@@ -289,65 +339,107 @@ void Game::oc_UI_Draw()
 		putimage(310, 360, &img_3);
 	}   
 }
-/*end*/
+/*************************************end*******************************************/
 
 
 void Game::oc_KeyPrco()
 {
 	if (is_key_down('A'))
 	{
-		if (flag_boat)
+
+		switch (player.get_state())
 		{
+
+		case People::sta_boatingR:case People::sta_boatingL:
+		{
+			player.set_state(People::sta_boatingL);
 			wood_boat.velocity.x = -300;
-			player.set_state(People::sta_standL);
-		}
-		else
+		}break;
+
+		case People::sta_catchR:case People::sta_catchL:
+		{
+
+		}break;
+
+		case People::sta_jumpR:case People::sta_jumpL:
+		{
+			player.set_state(People::sta_jumpL);
+			player.velocity.x = -200;
+		}break;
+		default:
 		{
 			player.set_state(People::sta_runL);
 			player.velocity.x = -200;
 		}
+		break;
+		}
+
 		
 	}
 	else if (is_key_down('D'))
 	{
-		if (flag_boat)
+
+		switch (player.get_state())
 		{
+
+		case People::sta_boatingR:case People::sta_boatingL:
+		{
+			player.set_state(People::sta_boatingR);
 			wood_boat.velocity.x = 300;
-			player.set_state(People::sta_standR);
-		}
-		else
+		}break;
+
+		case People::sta_catchR:case People::sta_catchL:
+		{
+
+		}break;
+
+		case People::sta_jumpR:case People::sta_jumpL:
+		{
+			player.set_state(People::sta_jumpR);
+			player.velocity.x = 200;
+		}break;
+		default:
 		{
 			player.set_state(People::sta_runR);
 			player.velocity.x = 200;
+		}
+		break;
 		}
 		
 	}
 	else
 	{
-		if (flag_boat)
-		{
-			wood_boat.velocity.x = 0;
-		}
-		else
+		wood_boat.velocity.x = 0;
+		player.velocity.x = 0;
+		if (player.get_state() == People::sta_runL || player.get_state() == People::sta_runR)
 		{
 			player.set_state(People::sta_stand);
-			player.velocity.x = 0;
 		}
 		
 	}
 
-	if (is_key_down('W') && !flag_jump)
+	if (is_key_down('W') && player.get_state() != People::sta_jumpL && player.get_state() != People::sta_jumpR)
 	{
-		
-		flag_jump = 1;
-		//player.set_state(People::sta_jumpL);
+		player.set_state(People::sta_jump);
 		player.velocity.y = 400;
 	}
-	if (is_key_down('E') && player.position.x > 1050)
+
+	static int last_key_E = 0;
+	if (is_key_down('E') && !last_key_E)
 	{
-		flag_boat = 1;
-		player.position = wood_boat.position - Vect2(20, -30);
+		last_key_E = 1;
+		if (player.get_state() != People::sta_boatingR && player.get_state() != People::sta_boatingL && player.position.x > 1050)
+		{
+			player.set_state(People::sta_boatingR);
+			player.position = wood_boat.position - Vect2(0, -30);
+		}
+		else if((player.get_state() == People::sta_boatingR || player.get_state() == People::sta_boatingL) && player.position.x < 1300)
+		{
+			player.set_state(People::sta_standL);
+			player.position = Vect2(1100, -950);
+		}
 	}
+	last_key_E = is_key_down('E');
 
 }
 
@@ -404,7 +496,18 @@ void Game::Lock_FPS(int fps)
 
 void Game::Debug_text_output()		//调试数据输出
 {
-	wchar_t output_text[50];
-	swprintf(output_text, 50, L"FPS:%d Time:%f", oc_FPS, oc_timer/1000.0f);
+	wchar_t output_text[200];
+	swprintf(output_text, 200, L"FPS:%d Time:%f\n player: state:%d pos(%f,%f) vel(%f,%f)\n boat: pos(%f,%f) vel(%f,%f)",
+		oc_FPS,
+		oc_timer/1000.0f,
+		player.get_state(),
+		player.position.x,
+		player.position.y,
+		player.velocity.x,
+		player.velocity.y,
+		wood_boat.position.x,
+		wood_boat.position.y,
+		wood_boat.velocity.x,
+		wood_boat.velocity.y);
 	outtextxy(5, 5, output_text);
 }

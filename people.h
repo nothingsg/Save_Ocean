@@ -17,15 +17,19 @@ public:
 	enum state
 	{
 		sta_stand = 0,
-		sta_standR = 1 << 0,
-		sta_standL = 1 << 1,
-		sta_walkR = 1 << 2,
-		sta_walkL = 1 << 3,
-		sta_runR = 1 << 4,
-		sta_runL = 1 << 5,
-		sta_jumpR = 1 << 6,
-		sta_jumpL = 1 << 7,
-		boating = 1 << 8
+		sta_standR,
+		sta_standL,
+		sta_walkR,
+		sta_walkL,
+		sta_runR,
+		sta_runL,
+		sta_jump,
+		sta_jumpR,
+		sta_jumpL,
+		sta_catchR,
+		sta_catchL,
+		sta_boatingR,
+		sta_boatingL
 	};
 
 	enum source
@@ -50,7 +54,7 @@ public:
 
 	void load_frame(source s, IMAGE img, IMAGE mask);
 	void set_state(state s);
-
+	state get_state();
 	
 
 private:
@@ -77,5 +81,10 @@ private:
 	std::vector<IMAGE> jump_R_frame_mask;		//跳跃向右帧动画掩码图
 	std::vector<IMAGE> jump_L_frame;			//跳跃向左帧动画
 	std::vector<IMAGE> jump_L_frame_mask;		//跳跃向左帧动画掩码图
+	std::vector<IMAGE> catch_R_frame;			//抓取向右帧动画
+	std::vector<IMAGE> catch_R_frame_mask;		//抓取向右帧动画掩码图
+	std::vector<IMAGE> catch_L_frame;			//抓取向左帧动画
+	std::vector<IMAGE> catch_L_frame_mask;		//抓取向左帧动画掩码图
+	IMAGE hand, hand_mask;
 	
 };

@@ -18,6 +18,8 @@ People::People()
 	img_source.push_back(jump_R_frame_mask);
 	img_source.push_back(jump_L_frame);
 	img_source.push_back(jump_L_frame_mask);
+	img_source.push_back(catch_L_frame);
+	img_source.push_back(catch_L_frame_mask);
 
 	frame_i = 0;
 	now_state = sta_standR;
@@ -55,6 +57,10 @@ void People::Update(float dt)
 		case People::sta_jumpR:now_source = sou_jump_R;
 			break;
 		case People::sta_jumpL:now_source = sou_jump_L;
+			break;
+		case People::sta_boatingR:now_source = sou_stand_R;
+			break;
+		case People::sta_boatingL:now_source = sou_stand_L;
 			break;
 		default:
 			break;
@@ -105,16 +111,26 @@ void People::load_frame(source s, IMAGE img, IMAGE mask)
 
 void People::set_state(state s)
 {
-	if (s != sta_stand)
+	if (s != sta_stand && s!= sta_jump)
 	{
 		now_state = s;
 	}
-	else
+	else if(s == sta_stand)
 	{
-		if (last_state == sta_runL)now_state = sta_standL;
-		if (last_state == sta_runR)now_state = sta_standR;
+		if (last_state == sta_runL || last_state == sta_jumpL)now_state = sta_standL;
+		if (last_state == sta_runR || last_state == sta_jumpR)now_state = sta_standR;
+	}
+	else if (s == sta_jump) 
+	{
+		if (last_state == sta_runL || last_state == sta_standL)now_state = sta_jumpL;
+		if (last_state == sta_runR || last_state == sta_standR)now_state = sta_jumpR;
 	}
 	
+}
+
+People::state People::get_state()
+{
+	return now_state;
 }
 
 

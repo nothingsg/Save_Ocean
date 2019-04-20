@@ -1,14 +1,21 @@
 #include "Camera.h"
 
-Camera::Camera(int xC, int yC)
+Camera::Camera(int xC, int yC, float s_scale)
 {
 	xClient = xC;
 	yClient = yC;
+	scale = s_scale;
 }
 Camera::~Camera()
 {
 
 }
+
+void Camera::set_scale(float new_scale)
+{
+	scale = new_scale;
+}
+
 
 int Camera::Left()
 {

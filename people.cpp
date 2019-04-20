@@ -18,6 +18,8 @@ People::People()
 	img_source.push_back(jump_R_frame_mask);
 	img_source.push_back(jump_L_frame);
 	img_source.push_back(jump_L_frame_mask);
+	img_source.push_back(catch_R_frame);
+	img_source.push_back(catch_R_frame_mask);
 	img_source.push_back(catch_L_frame);
 	img_source.push_back(catch_L_frame_mask);
 
@@ -62,6 +64,10 @@ void People::Update(float dt)
 			break;
 		case People::sta_boatingL:now_source = sou_stand_L;
 			break;
+		case People::sta_catchR:now_source = sou_catch_R;
+			break;
+		case People::sta_catchL:now_source = sou_catch_L;
+			break;
 		default:
 			break;
 		}
@@ -74,6 +80,11 @@ void People::Update(float dt)
 	last_state = now_state;
 
 	physical_Move(dt);
+
+	if (now_state == sta_catchR || now_state == sta_catchL)
+	{
+		hand.Update(dt);
+	}
 }
 
 
@@ -92,22 +103,39 @@ void People::DrawInCamera(const Camera &cam)
 	putimage(position.x - cam.position.x + cam.xClient / 2 - img_source[now_source][frame_i].getwidth() / 2,
 		-(position.y - cam.position.y) + cam.yClient / 2 - img_source[now_source][frame_i].getheight() / 2,
 		&img_source[now_source][frame_i], SRCPAINT);
+
+	if (now_state == sta_catchR || now_state == sta_catchL)
+	{
+		hand.DrawInCamera(cam);
+	}
 }
 
+void People::Catch()
+{
+	now_state = sta_catchR;
+	hand.position = position - Vect2(0, 20);;
+	hand.velocity = Vect2(0, -1000);
+	hand.acceleration = Vect2(0, 1000);
+}
 
-
+Vect2 People::get_hand_pos()
+{
+	return hand.position;
+}
 
 
 void People::load_frame(source s, IMAGE img, IMAGE mask)
 {
-
 	img_source[s].push_back(img);		//载入图片和掩码图资源
 	img_source[s + 1].push_back(mask);
-
-	
-
 }
 
+
+void People::load_hand_img(IMAGE img, IMAGE mask)
+{
+	hand.hand = img;
+	hand.hand_mask = mask;
+}
 
 void People::set_state(state s)
 {
@@ -132,6 +160,53 @@ People::state People::get_state()
 {
 	return now_state;
 }
+
+
+
+/*******************************Hand********************/
+
+
+Hand::Hand()
+{
+
+}
+
+Hand::~Hand()
+{
+
+}
+
+void Hand::Update(float dt)
+{
+	physical_Move(dt);
+}
+
+void Hand::Draw()
+{
+
+}
+
+void Hand::DrawInCamera(const Camera &cam)
+{
+	putimage(position.x - cam.position.x + cam.xClient / 2 - hand_mask.getwidth() / 2,
+		-(position.y - cam.position.y) + cam.yClient / 2 - hand_mask.getheight() / 2,
+		&hand_mask, SRCAND);
+
+	putimage(position.x - cam.position.x + cam.xClient / 2 - hand.getwidth() / 2,
+		-(position.y - cam.position.y) + cam.yClient / 2 - hand.getheight() / 2,
+		&hand, SRCPAINT);
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -3,6 +3,18 @@
 #include "GameObject.h"
 #define OC_LEFT 0
 #define OC_RIGHT 1
+class Hand : public GameObject_phy
+{
+public:
+	Hand();
+	~Hand();
+
+	virtual void Update(float dt) override;
+	virtual void Draw() override;
+	virtual void DrawInCamera(const Camera &cam) override;
+
+	IMAGE hand, hand_mask;
+};
 
 class People : public GameObject_phy
 {
@@ -49,18 +61,29 @@ public:
 		sou_jump_R,
 		sou_jump_R_mask,
 		sou_jump_L,
-		sou_jump_L_mask
+		sou_jump_L_mask,
+		sou_catch_R,
+		sou_catch_R_mask,
+		sou_catch_L,
+		sou_catch_L_mask
 	};
 
+	void Catch();
+
 	void load_frame(source s, IMAGE img, IMAGE mask);
+	void load_hand_img(IMAGE img, IMAGE mask);
 	void set_state(state s);
 	state get_state();
+	Vect2 get_hand_pos();
 	
-
+	//IMAGE hand, hand_mask;
 private:
 	state now_state, last_state;
 	source now_source;
 	int frame_i;
+
+
+	Hand hand;
 
 	std::vector<std::vector<IMAGE>> img_source;	//存放所有图片资源
 
@@ -85,6 +108,10 @@ private:
 	std::vector<IMAGE> catch_R_frame_mask;		//抓取向右帧动画掩码图
 	std::vector<IMAGE> catch_L_frame;			//抓取向左帧动画
 	std::vector<IMAGE> catch_L_frame_mask;		//抓取向左帧动画掩码图
-	IMAGE hand, hand_mask;
+	
 	
 };
+
+
+
+

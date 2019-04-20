@@ -2,7 +2,7 @@
 #include"graphics.h"
 #pragma comment(lib,"Winmm.lib")
 
-Game::Game(int posx, int posy, int width, int height) :main_cam(width, height), gravity(0, -980)
+Game::Game(int posx, int posy, int width, int height) :main_cam(width, height, 2.0f) , gravity(0, -980)
 {
 	oc_cxGame = width;
 	oc_cyGame = height;
@@ -34,7 +34,7 @@ void Game::oc_GameInit()
 	player.position = Vect2(800, -500);
 	player.set_state(People::sta_jumpR);
 	wood_boat.position = Vect2(1250, -980);
-	main_cam.position = Vect2(800, -950);
+	main_cam.position = Vect2(800, -940);
 
 
 	player.acceleration = gravity;
@@ -49,15 +49,15 @@ void Game::oc_GameLoad()
 	{
 		IMAGE img_t, img_mask;
 		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞静止向右_%d.png", i);
-		loadimage(&img_t, sourse_file_name, 59, 95, false);
+		loadimage(&img_t, sourse_file_name, 60, 94, false);
 		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞静止向右_0_mask.png", i);
-		loadimage(&img_mask, sourse_file_name, 59, 95, false);
+		loadimage(&img_mask, sourse_file_name, 60, 94, false);
 		player.load_frame(People::sou_stand_R, img_t, img_mask);
 
 		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞静止向左_%d.png", i);
-		loadimage(&img_t, sourse_file_name, 59, 95, false);
+		loadimage(&img_t, sourse_file_name, 60, 94, false);
 		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞静止向左_%d_mask.png", i);
-		loadimage(&img_mask, sourse_file_name, 59, 95, false);
+		loadimage(&img_mask, sourse_file_name, 60, 94, false);
 		player.load_frame(People::sou_stand_L, img_t, img_mask);
 	}
 
@@ -65,31 +65,48 @@ void Game::oc_GameLoad()
 	{
 		IMAGE img_t, img_mask;
 		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞走路向右_%d.png", i);
-		loadimage(&img_t, sourse_file_name, 59, 95, false);
+		loadimage(&img_t, sourse_file_name, 60, 94, false);
 		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞走路向右_%d_mask.png", i);
-		loadimage(&img_mask, sourse_file_name, 59, 95, false);
+		loadimage(&img_mask, sourse_file_name, 60, 94, false);
 		player.load_frame(People::sou_run_R, img_t, img_mask);
 
 		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞走路向左_%d.png", i);
-		loadimage(&img_t, sourse_file_name, 59, 95, false);
+		loadimage(&img_t, sourse_file_name, 60, 94, false);
 		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞走路向左_%d_mask.png", i);
-		loadimage(&img_mask, sourse_file_name, 59, 95, false);
+		loadimage(&img_mask, sourse_file_name, 60, 94, false);
 		player.load_frame(People::sou_run_L, img_t, img_mask);
 	}
 
 	IMAGE img_t, img_mask;
 	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞跳跃向右_%d.png", 0);
-	loadimage(&img_t, sourse_file_name, 59, 95, false);
+	loadimage(&img_t, sourse_file_name, 60, 94, false);
 	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞跳跃向右_%d_mask.png", 0);
-	loadimage(&img_mask, sourse_file_name, 59, 95, false);
+	loadimage(&img_mask, sourse_file_name, 60, 94, false);
 	player.load_frame(People::sou_jump_R, img_t, img_mask);
 
 	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞跳跃向左_%d.png", 0);
-	loadimage(&img_t, sourse_file_name, 59, 95, false);	
+	loadimage(&img_t, sourse_file_name, 60, 94, false);
 	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞跳跃向左_%d_mask.png", 0);
-	loadimage(&img_mask, sourse_file_name, 59, 95, false);
+	loadimage(&img_mask, sourse_file_name, 60, 94, false);
 	player.load_frame(People::sou_jump_L, img_t, img_mask);
 
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞垂直伸手向右_%d.png", 1);
+	loadimage(&img_t, sourse_file_name, 60, 94, false);
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞垂直伸手向右_%d_mask.png", 1);
+	loadimage(&img_mask, sourse_file_name, 60, 94, false);
+	player.load_frame(People::sou_catch_R, img_t, img_mask);
+
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞垂直伸手向左_%d.png", 1);
+	loadimage(&img_t, sourse_file_name, 60, 94, false);
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞垂直伸手向左_%d_mask.png", 1);
+	loadimage(&img_mask, sourse_file_name, 60, 94, false);
+	player.load_frame(People::sou_catch_L, img_t, img_mask);
+
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\手_%d.png", 0);
+	loadimage(&img_t, sourse_file_name, 60, 94, false);
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\手_%d_mask.png", 0);
+	loadimage(&img_mask, sourse_file_name, 60, 94, false);
+	player.load_hand_img(img_t, img_mask);
 
 	//鱼类资源加载
 	for (int i = 0; i < 8; i++)
@@ -152,6 +169,7 @@ void Game::oc_Update(float dt)
 {
 	oc_MouseProc();
 	oc_KeyPrco();
+	
 
 	player.Update(dt);
 	afish.Update(dt);
@@ -166,31 +184,36 @@ void Game::oc_Update(float dt)
 		if (wood_boat.position.x < 1250)
 		{
 			wood_boat.position.x = 1250;
-			wood_boat.velocity = Vect2(0, 0);
+			wood_boat.velocity.x = 0;
 		}
 		else if (wood_boat.position.x > 8400)
 		{
 			wood_boat.position.x = 8400;
-			wood_boat.velocity = Vect2(0, 0);
+			wood_boat.velocity.x = 0;
 		}
 		player.velocity = Vect2(0, 0);
 		player.position = wood_boat.position - Vect2(0, -30);
 	}break;
 	case People::sta_catchR:case People::sta_catchL:
 	{
-
+		player.velocity = Vect2(0, 0);
+		player.position = wood_boat.position - Vect2(0, -30);
+		if (player.get_hand_pos().y >= player.position.y - 20)
+		{
+			player.set_state(People::sta_boatingR);
+		}
 	}break;
 	case People::sta_jumpR:case People::sta_jumpL:
 	{
 		if (player.position.x < 0)
 		{
 			player.position.x = 0;
-			player.velocity = Vect2(0, 0);
+			player.velocity.x = 0;
 		}
 		else if (player.position.x > 1100)
 		{
 			player.position.x = 1100;
-			player.velocity = Vect2(0, 0);
+			player.velocity.x = 0;
 		}
 		if (player.position.y > 0)
 		{
@@ -208,7 +231,7 @@ void Game::oc_Update(float dt)
 		if (player.position.x < 0)
 		{
 			player.position.x = 0;
-			player.velocity = Vect2(0, 0);
+			player.velocity.x = 0;
 		}
 		else if (player.position.x > 1100)
 		{
@@ -255,6 +278,8 @@ void Game::oc_Update(float dt)
 void Game::oc_Draw(const Camera &cam)
 {
 	cleardevice();				//清屏
+	//setaspectratio(1 / cam.scale, 1 / cam.scale);//设置缩放系数
+
 	int bck_pos_x = 0, bck_pos_y = 0;
 	bck_pos_x = bck_pos_x - cam.position.x + oc_cxGame / 2;
 	bck_pos_y = -(bck_pos_y - cam.position.y) + oc_cyGame / 2;
@@ -425,21 +450,32 @@ void Game::oc_KeyPrco()
 	}
 
 	static int last_key_E = 0;
-	if (is_key_down('E') && !last_key_E)
+	if (is_key_down('E') && !last_key_E && player.get_state() != People::sta_catchR && player.get_state() != People::sta_catchL)
 	{
 		last_key_E = 1;
 		if (player.get_state() != People::sta_boatingR && player.get_state() != People::sta_boatingL && player.position.x > 1050)
 		{
 			player.set_state(People::sta_boatingR);
 			player.position = wood_boat.position - Vect2(0, -30);
+			main_cam.position.y = -1200;
 		}
 		else if((player.get_state() == People::sta_boatingR || player.get_state() == People::sta_boatingL) && player.position.x < 1300)
 		{
 			player.set_state(People::sta_standL);
-			player.position = Vect2(1100, -950);
+			wood_boat.velocity = Vect2(0, 0);
+			player.position = Vect2(1100, -940);
+			main_cam.position.y = -940;
 		}
 	}
 	last_key_E = is_key_down('E');
+
+	static int last_key_S = 0;
+	if (is_key_down('S') && !last_key_S && (player.get_state() == People::sta_boatingR || player.get_state() == People::sta_boatingL))
+	{
+		wood_boat.velocity = Vect2(0, 0);
+		player.Catch();
+	}
+	last_key_S = is_key_down('S');
 
 }
 
@@ -497,7 +533,7 @@ void Game::Lock_FPS(int fps)
 void Game::Debug_text_output()		//调试数据输出
 {
 	wchar_t output_text[200];
-	swprintf(output_text, 200, L"FPS:%d Time:%f\n player: state:%d pos(%f,%f) vel(%f,%f)\n boat: pos(%f,%f) vel(%f,%f)",
+	swprintf(output_text, 200, L"FPS:%d Time:%f player: state:%d pos(%f,%f) vel(%f,%f) boat: pos(%f,%f) vel(%f,%f) hand: pos(%f,%f)",
 		oc_FPS,
 		oc_timer/1000.0f,
 		player.get_state(),
@@ -508,6 +544,8 @@ void Game::Debug_text_output()		//调试数据输出
 		wood_boat.position.x,
 		wood_boat.position.y,
 		wood_boat.velocity.x,
-		wood_boat.velocity.y);
+		wood_boat.velocity.y,
+		player.get_hand_pos().x,
+		player.get_hand_pos().y);
 	outtextxy(5, 5, output_text);
 }

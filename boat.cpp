@@ -48,8 +48,8 @@ void Boat::Draw()
 
 void Boat::DrawInCamera(const Camera &cam)
 {
-	putimage(position.x - cam.position.x + cam.xClient / 2 - img_source[now_source][frame_i].getwidth() / 2,
-		-(position.y - cam.position.y) + cam.yClient / 2 - img_source[now_source][frame_i].getheight() / 2,
+	putimage(position.x - cam.position.x + cam.xClient / 2 - img_source[now_source+1][frame_i].getwidth() / 2,
+		-(position.y - cam.position.y) + cam.yClient / 2 - img_source[now_source+1][frame_i].getheight() / 2,
 		&img_source[now_source + 1][frame_i], SRCAND);
 
 	putimage(position.x - cam.position.x + cam.xClient / 2 - img_source[now_source][frame_i].getwidth() / 2,

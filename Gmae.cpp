@@ -8,6 +8,7 @@ Game::Game(int posx, int posy, int width, int height) :main_cam(width, height, 2
 	oc_cyGame = height;
 	oc_posxGmae = posx;
 	oc_posyGame = posy;
+
 }
 
 Game::~Game()

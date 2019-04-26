@@ -11,14 +11,14 @@ int main()
 		HWND oc_hWnd = GetHWnd();
 		loadimage(&ready, L".\\资源文件\\开始界面.png", 1300, 900, false);
 		putimage(50, 0, &ready);
-		//bar(400, 350, 940, 500);//开始按钮位置
+		//bar(462, 353, 870, 455);//开始按钮位置
 		void FlushMouseMsgBuffer();//清空鼠标消息缓冲区
 		static bool last = 0;
 		bool now = is_key_down(VK_LBUTTON);
 		if (!last&&now)//判断是鼠标左键是否按下
 		{
 			Vect2 mou = GetMousePos(oc_hWnd);
-			if (mou.x > 400 && mou.x < 940 && mou.y>350 && mou.y < 500)
+			if (mou.x > 462 && mou.x < 870 && mou.y>353 && mou.y < 455)
 			{
 				break;
 			}

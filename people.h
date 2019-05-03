@@ -13,7 +13,10 @@ public:
 	virtual void Draw() override;
 	virtual void DrawInCamera(const Camera &cam) override;
 
+	Vect2 start_pos;
+	float arm_len;
 	IMAGE hand, hand_mask;
+	IMAGE arm, arm_mask;
 };
 
 class People : public GameObject_phy
@@ -69,12 +72,16 @@ public:
 	};
 
 	void Catch();
+	void Pull();
 
 	void load_frame(source s, IMAGE img, IMAGE mask);
 	void load_hand_img(IMAGE img, IMAGE mask);
+	void load_arm_img(IMAGE img, IMAGE mask);
 	void set_state(state s);
 	state get_state();
+
 	Vect2 get_hand_pos();
+	float get_hand_len();
 	
 	//IMAGE hand, hand_mask;
 private:

@@ -79,6 +79,7 @@ void Game::oc_GameLoad()
 	}
 
 	IMAGE img_t, img_mask;
+
 	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞跳跃向右_%d.png", 0);
 	loadimage(&img_t, sourse_file_name, 60, 94, false);
 	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞跳跃向右_%d_mask.png", 0);
@@ -103,11 +104,25 @@ void Game::oc_GameLoad()
 	loadimage(&img_mask, sourse_file_name, 60, 94, false);
 	player.load_frame(People::sou_catch_L, img_t, img_mask);
 
-	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\手_%d.png", 0);
-	loadimage(&img_t, sourse_file_name, 60, 94, false);
-	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\手_%d_mask.png", 0);
-	loadimage(&img_mask, sourse_file_name, 60, 94, false);
+
+
+	img_t.Resize(60, 940);
+	img_mask.Resize(60, 940);
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\整只手_%d.png", 0);
+	loadimage(&img_t, sourse_file_name, 60, 940, false);
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\整只手_%d_mask.png", 0);
+	loadimage(&img_mask, sourse_file_name, 60, 940, false);
 	player.load_hand_img(img_t, img_mask);
+
+
+	/*
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\手臂_%d.png", 0);
+	loadimage(&img_t, sourse_file_name, 60, 940, false);
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\手臂_%d_mask.png", 0);
+	loadimage(&img_mask, sourse_file_name, 60, 940, false);
+	player.load_arm_img(img_t, img_mask);*/
+
+	
 
 	//鱼类资源加载
 	for (int i = 0; i < 8; i++)
@@ -533,8 +548,8 @@ void Game::Lock_FPS(int fps)
 
 void Game::Debug_text_output()		//调试数据输出
 {
-	wchar_t output_text[200];
-	swprintf(output_text, 200, L"FPS:%d Time:%f player: state:%d pos(%f,%f) vel(%f,%f) boat: pos(%f,%f) vel(%f,%f) hand: pos(%f,%f)",
+	wchar_t output_text[300];
+	swprintf(output_text, 300, L"FPS:%d Time:%f player: state:%d pos(%f,%f) vel(%f,%f) boat: pos(%f,%f) vel(%f,%f) hand: pos(%f,%f) arm_len: %f",
 		oc_FPS,
 		oc_timer/1000.0f,
 		player.get_state(),
@@ -547,6 +562,7 @@ void Game::Debug_text_output()		//调试数据输出
 		wood_boat.velocity.x,
 		wood_boat.velocity.y,
 		player.get_hand_pos().x,
-		player.get_hand_pos().y);
+		player.get_hand_pos().y,
+		player.get_hand_len());
 	outtextxy(5, 5, output_text);
 }

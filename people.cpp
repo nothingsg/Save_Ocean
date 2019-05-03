@@ -113,7 +113,8 @@ void People::DrawInCamera(const Camera &cam)
 void People::Catch()
 {
 	now_state = sta_catchR;
-	hand.position = position - Vect2(0, 20);;
+	hand.position = position - Vect2(0, 18);
+	hand.start_pos = hand.position;
 	hand.velocity = Vect2(0, -1000);
 	hand.acceleration = Vect2(0, 1000);
 }
@@ -121,6 +122,11 @@ void People::Catch()
 Vect2 People::get_hand_pos()
 {
 	return hand.position;
+}
+
+float People::get_hand_len()
+{
+	return hand.arm_len;
 }
 
 
@@ -135,6 +141,12 @@ void People::load_hand_img(IMAGE img, IMAGE mask)
 {
 	hand.hand = img;
 	hand.hand_mask = mask;
+}
+
+void People::load_arm_img(IMAGE img, IMAGE mask)
+{
+	hand.arm = img;
+	hand.arm_mask = mask;
 }
 
 void People::set_state(state s)
@@ -179,6 +191,7 @@ Hand::~Hand()
 void Hand::Update(float dt)
 {
 	physical_Move(dt);
+	arm_len = (start_pos - position).vectorLength();
 }
 
 void Hand::Draw()
@@ -188,7 +201,7 @@ void Hand::Draw()
 
 void Hand::DrawInCamera(const Camera &cam)
 {
-	putimage(position.x - cam.position.x + cam.xClient / 2 - hand_mask.getwidth() / 2,
+	/*putimage(position.x - cam.position.x + cam.xClient / 2 - hand_mask.getwidth() / 2,
 		-(position.y - cam.position.y) + cam.yClient / 2 - hand_mask.getheight() / 2,
 		&hand_mask, SRCAND);
 
@@ -196,6 +209,23 @@ void Hand::DrawInCamera(const Camera &cam)
 		-(position.y - cam.position.y) + cam.yClient / 2 - hand.getheight() / 2,
 		&hand, SRCPAINT);
 
+	putimage(start_pos.x - cam.position.x + cam.xClient / 2 - hand_mask.getwidth() / 2,
+		-(start_pos.y - cam.position.y - 68) + cam.yClient / 2 - hand_mask.getheight() / 2,
+		60, (int)arm_len, &arm_mask, 0, 0, SRCAND);
+
+	putimage(start_pos.x - cam.position.x + cam.xClient / 2 - hand.getwidth() / 2,
+		-(start_pos.y - cam.position.y - 68) + cam.yClient / 2 - hand.getheight() / 2,
+		60, (int)arm_len, &arm, 0, 0, SRCPAINT);*/
+
+
+	/*************************************************************/
+	putimage(start_pos.x - cam.position.x + cam.xClient / 2 - hand_mask.getwidth() / 2,
+		-(start_pos.y - cam.position.y - 25) + cam.yClient / 2,
+		60, arm_len, &hand_mask, -1, hand_mask.getheight() - arm_len, SRCAND);
+
+	putimage(start_pos.x - cam.position.x + cam.xClient / 2 - hand.getwidth() / 2,
+		-(start_pos.y - cam.position.y - 25) + cam.yClient / 2,
+		60, arm_len, &hand, -1, hand.getheight() - arm_len, SRCPAINT);
 }
 
 

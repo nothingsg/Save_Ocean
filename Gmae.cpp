@@ -360,23 +360,41 @@ void Game::oc_UI_Upedate()
 void Game::oc_UI_Draw()
 {
 	IMAGE img_0,img_1, img_2, img_3;
+	POINT pt;
+	GetCursorPos(&pt);
 	if (flag == 0)
 	{
+		ScreenToClient(oc_hWnd, &pt);
+		printf("%5i %5i\n", pt.x, pt.y);
 		//bar(100,30,155,120);
-		loadimage(&img_0, L".\\资源文件\\按钮\\图鉴.png", 55, 90, false);
+		if(pt.x > 100 && pt.x < 155 && pt.y>30 && pt.y < 120)
+			loadimage(&img_0, L".\\资源文件\\按钮\\图鉴2.png", 55, 90, false);
+		else
+			loadimage(&img_0, L".\\资源文件\\按钮\\图鉴.png", 55, 90, false);
 		putimage(100, 30, &img_0);
 	}
 	else
 	{
 		win.show();
+		win.w_hWnd = GetHWnd();
+		ScreenToClient(win.w_hWnd, &pt);
 		//bar(970,100,1000,130);//退出
-		loadimage(&img_1, L".\\资源文件\\按钮\\退出.png", 30, 30, false);
+		if (pt.x > 970 && pt.x < 1000 && pt.y>100 && pt.y < 130)
+			loadimage(&img_1, L".\\资源文件\\按钮\\退出2.png", 30, 30, false);
+		else
+			loadimage(&img_1, L".\\资源文件\\按钮\\退出.png", 30, 30, false);
 		putimage(970, 100, &img_1);
 		//bar(940, 360, 990, 390);//下页
-		loadimage(&img_2, L".\\资源文件\\按钮\\下页.png", 50, 30, false);
+		if (pt.x > 940 && pt.x < 990 && pt.y>360 && pt.y < 390)
+			loadimage(&img_2, L".\\资源文件\\按钮\\下页2.png", 50, 30, false);
+		else
+			loadimage(&img_2, L".\\资源文件\\按钮\\下页.png", 50, 30, false);
 		putimage(940, 360, &img_2);
 		//bar(310, 360, 360, 390);//上页
-		loadimage(&img_3, L".\\资源文件\\按钮\\上页.png", 50, 30, false);
+		if (pt.x > 310 && pt.x < 360 && pt.y>360 && pt.y < 390)
+			loadimage(&img_3, L".\\资源文件\\按钮\\上页2.png", 50, 30, false);
+		else
+			loadimage(&img_3, L".\\资源文件\\按钮\\上页.png", 50, 30, false);
 		putimage(310, 360, &img_3);
 	}   
 }

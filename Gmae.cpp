@@ -19,32 +19,110 @@ Game::~Game()
 //游戏初始化
 void Game::oc_GameInit()
 {		
-	initgraph(oc_cxGame, oc_cyGame, SHOWCONSOLE);
-	oc_hWnd = GetHWnd();
+	initgraph(oc_cxGame, oc_cyGame, SHOWCONSOLE);		//初始化窗口
+	Random::randInit();									//初始化随机数
+	oc_hWnd = GetHWnd();								//初始化窗口位置
 	SetWindowPos(oc_hWnd, HWND_TOP, oc_posxGmae, oc_posyGame, oc_cxGame, oc_cyGame, SWP_SHOWWINDOW);
+	
+	oc_GameLoad();		//载入资源
+	
+	//初始化数据
 	oc_FPS = 0;
 	oc_timer = 0;
 	dt = 0;
 	oc_bPause = false;
-	oc_GameLoad();
 
-	//初始化信息
-	afish.position = Vect2(1000, -1500);
+	afish.position = Vect2(2000, -1200);
 	afish.velocity = Vect2(-100, 0);
 	//player.position = Vect2(1000, -880);
 	player.position = Vect2(800, -500);
 	player.set_state(People::sta_jumpR);
 	wood_boat.position = Vect2(1250, -980);
 	main_cam.position = Vect2(800, -940);
-
-
 	player.acceleration = gravity;
 }
 //游戏资源加载
 void Game::oc_GameLoad()
 {
-	//资源加载
 	wchar_t sourse_file_name[50];
+	//资源路径加载
+	/*soure_list[oc_bkg][game_background].push_back((wchar_t*)L".\\资源文件\\background\\background.jpg");
+
+	for (int i = 0; i < 2; i++)
+	{
+		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞静止向右_%d.png", i);
+		soure_list[oc_player][People::sou_stand_R].push_back(sourse_file_name);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞静止向右_0_mask.png", i);
+		soure_list[oc_player][People::sou_stand_L_mask].push_back(sourse_file_name);
+
+		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞静止向左_%d.png", i);
+		soure_list[oc_player][People::sou_stand_R].push_back(sourse_file_name);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞静止向左_%d_mask.png", i);
+		soure_list[oc_player][People::sou_stand_L_mask].push_back(sourse_file_name);
+	}
+
+	for (int i = 0; i < 6; i++)
+	{
+		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞走路向右_%d.png", i);
+		soure_list[oc_player][People::sou_run_R].push_back(sourse_file_name);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞走路向右_%d_mask.png", i);
+		soure_list[oc_player][People::sou_run_R_mask].push_back(sourse_file_name);
+
+		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞走路向左_%d.png", i);
+		soure_list[oc_player][People::sou_run_L].push_back(sourse_file_name);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞走路向左_%d_mask.png", i);
+		soure_list[oc_player][People::sou_run_L_mask].push_back(sourse_file_name);
+	}
+
+
+
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞跳跃向右_%d.png", 0);
+	soure_list[oc_player][People::sou_jump_R].push_back(sourse_file_name);
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞跳跃向右_%d_mask.png", 0);
+	soure_list[oc_player][People::sou_jump_R_mask].push_back(sourse_file_name);
+
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞跳跃向左_%d.png", 0);
+	soure_list[oc_player][People::sou_jump_L].push_back(sourse_file_name);
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞跳跃向左_%d_mask.png", 0);
+	soure_list[oc_player][People::sou_jump_L_mask].push_back(sourse_file_name);
+
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞垂直伸手向右_%d.png", 1);
+	soure_list[oc_player][People::sou_catch_R].push_back(sourse_file_name);
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞垂直伸手向右_%d_mask.png", 1);
+	soure_list[oc_player][People::sou_catch_R_mask].push_back(sourse_file_name);
+
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞垂直伸手向左_%d.png", 1);
+	soure_list[oc_player][People::sou_catch_L].push_back(sourse_file_name);
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞垂直伸手向左_%d_mask.png", 1);
+	soure_list[oc_player][People::sou_catch_L_mask].push_back(sourse_file_name);
+
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\整只手_%d.png", 0);
+	soure_list[oc_player][People::sou_hand_L].push_back(sourse_file_name);
+	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\整只手_%d_mask.png", 0);
+	soure_list[oc_player][People::sou_hand_L_mask].push_back(sourse_file_name);
+
+	for (int i = 0; i < 8; i++)
+	{
+		swprintf(sourse_file_name, 50, L".\\资源文件\\鱼测试\\fish_%d.png", i);
+		soure_list[oc_fish][Fish::sou_swim].push_back(sourse_file_name);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\鱼测试\\fish_%d_mask.png", i);
+		soure_list[oc_fish][Fish::sou_swim_mask].push_back(sourse_file_name);
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		swprintf(sourse_file_name, 50, L".\\资源文件\\boat\\两头船_%d.png", i);
+		soure_list[oc_boat][Boat::sou_boat_R].push_back(sourse_file_name);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\boat\\两头船_%d_mask.png", i);
+		soure_list[oc_boat][Boat::sou_boat_R_mask].push_back(sourse_file_name);
+	}*/
+
+
+
+	/**********************************************************************************/
+
+	//资源加载
+	
 	//人物资源加载
 	for (int i = 0; i < 2; i++)
 	{
@@ -77,6 +155,8 @@ void Game::oc_GameLoad()
 		loadimage(&img_mask, sourse_file_name, 60, 94, false);
 		player.load_frame(People::sou_run_L, img_t, img_mask);
 	}
+
+
 
 	IMAGE img_t, img_mask;
 
@@ -147,7 +227,7 @@ void Game::oc_GameLoad()
 	}
 
 	//载入背景图片
-	loadimage(&test_img, L".\\资源文件\\background.jpg");
+	loadimage(&game_background, L".\\资源文件\\background.jpg");
 
 
 	setbkmode(TRANSPARENT);			//设置文字输出是背景颜色为透明
@@ -186,10 +266,48 @@ void Game::oc_Update(float dt)
 	oc_MouseProc();
 	oc_KeyPrco();
 	
+	//添加新的鱼
+	if (fishs.size() < MAX_FISH_NUM)
+	{
+		Vect2 f_pos(Random::random_in(player.position.x - 2000, player.position.x + 2000), Random::random_in(-2500, -1100));
+		Fish::fish_type type = (Fish::fish_type)(int)Random::random_in(0, Fish::total_fish_type);
+		int fish_farme_num, fish_width, fish_height;
+		switch (type)
+		{
+		case Fish::one:
+		{
+			fish_farme_num = 8;
+			fish_width = 60;
+			fish_height = 24;
+		}break;
+		case Fish::two:
+		{
+			fish_farme_num = 14;
+			fish_width = 33;
+			fish_height = 58;
+		}break;
+		default:
+		{
+			fish_farme_num = 0;
+			fish_width = 0;
+			fish_height = 0;
+		}break;
+		}
+		new_fish(type, fish_farme_num, fish_width, fish_height, f_pos);
+	}
 
 	player.Update(dt);
 	afish.Update(dt);
 	wood_boat.Update(dt);
+	for (int i = 0; i < fishs.size(); i++)
+	{
+		if (fishs[i].position.x < player.position.x - 3000 || fishs[i].position.x > player.position.x + 3000)
+		{
+			fishs.erase(fishs.begin() + i);
+			continue;
+		}
+		fishs[i].Update(dt);
+	}
 
 	//之后这个要写在碰撞系统里
 	/*************************************************************************************************/
@@ -299,7 +417,7 @@ void Game::oc_Draw(const Camera &cam)
 	int bck_pos_x = 0, bck_pos_y = 0;
 	bck_pos_x = bck_pos_x - cam.position.x + oc_cxGame / 2;
 	bck_pos_y = -(bck_pos_y - cam.position.y) + oc_cyGame / 2;
-	putimage(bck_pos_x, bck_pos_y, &test_img);
+	putimage(bck_pos_x, bck_pos_y, &game_background);
 	/*测试 摄像机*/
 	
 
@@ -307,6 +425,10 @@ void Game::oc_Draw(const Camera &cam)
 	wood_boat.DrawInCamera(cam);
 	player.DrawInCamera(cam);
 	afish.DrawInCamera(cam);
+	for (int i = 0; i < fishs.size(); i++)
+	{
+		fishs[i].DrawInCamera(cam);
+	}
 	
 	Debug_text_output();		//输出调试数据
 }
@@ -561,6 +683,25 @@ void Game::Lock_FPS(int fps)
 	int t = 1000.0f / fps - clock() + timer_temp;
 	if (t < 0)return;
 	Sleep(t);
+}
+
+void Game::new_fish(Fish::fish_type type, int farme_num, int width, int height, Vect2 pos)
+{
+	/*60 24*/
+	Fish f;
+	wchar_t sourse_file_name[50];
+	for (int i = 0; i < farme_num; i++)
+	{
+		IMAGE img_t, img_mask;
+		swprintf(sourse_file_name, 50, L".\\资源文件\\fish\\%d\\fish_%d.png", type, i);
+		loadimage(&img_t, sourse_file_name, width, height, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\fish\\%d\\fish_%d_mask.png", type, i);
+		loadimage(&img_mask, sourse_file_name, width, height, false);
+		f.load_frame(Fish::sou_swim, img_t, img_mask);
+	}
+	f.position = pos;
+	f.velocity = Vect2(Random::random_in(-200, -50), 0);
+	fishs.push_back(f);
 }
 
 

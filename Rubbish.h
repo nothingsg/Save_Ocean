@@ -1,22 +1,17 @@
 #pragma once
+
 #include "GameObject.h"
 
-class Fish : public GameObject_phy
+
+class Rubbish : public GameObject_phy
 {
 public:
-	Fish();
-	~Fish();
-	
+	Rubbish();
+	~Rubbish();
+
 	virtual void Update(float dt) override;
 	virtual void Draw() override;
 	virtual void DrawInCamera(const Camera &cam) override;
-	
-	enum fish_type
-	{
-		one = 0,
-		two,
-		total_fish_type
-	};
 
 	enum state
 	{

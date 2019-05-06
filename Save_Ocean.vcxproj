@@ -135,6 +135,7 @@
     <ClCompile Include="mywindow.cpp" />
     <ClCompile Include="people.cpp" />
     <ClCompile Include="Random.cpp" />
+    <ClCompile Include="Rubbish.cpp" />
     <ClCompile Include="terrain.cpp" />
     <ClCompile Include="tool.cpp" />
   </ItemGroup>
@@ -152,6 +153,7 @@
     <ClInclude Include="mywindow.h" />
     <ClInclude Include="people.h" />
     <ClInclude Include="Random.h" />
+    <ClInclude Include="Rubbish.h" />
     <ClInclude Include="terrain.h" />
     <ClInclude Include="tool.h" />
     <ClInclude Include="Vect2.h" />

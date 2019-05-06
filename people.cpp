@@ -48,10 +48,6 @@ void People::Update(float dt)
 			break;
 		case People::sta_standL:now_source = sou_stand_L;
 			break;
-		case People::sta_walkR:now_source = sou_walk_R;
-			break;
-		case People::sta_walkL:now_source = sou_walk_L;
-			break;
 		case People::sta_runR:now_source = sou_run_R;
 			break;
 		case People::sta_runL:now_source = sou_run_L;

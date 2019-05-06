@@ -5,6 +5,7 @@
 #include "Vect3.h"
 #include "Matrix2.h"
 #include "Matrix3.h"
+#include "Random.h"
 #include <vector>
 
 #define PI 3.141592653589793238462643383249901429f

@@ -3,6 +3,8 @@
 #include "GameObject.h"
 #define OC_LEFT 0
 #define OC_RIGHT 1
+#define MAX_FISH_NUM 50
+
 class Hand : public GameObject_phy
 {
 public:
@@ -53,10 +55,6 @@ public:
 		sou_stand_R_mask,
 		sou_stand_L,
 		sou_stand_L_mask,
-		sou_walk_R,
-		sou_walk_R_mask,
-		sou_walk_L,
-		sou_walk_L_mask,
 		sou_run_R,
 		sou_run_R_mask,
 		sou_run_L,
@@ -68,7 +66,9 @@ public:
 		sou_catch_R,
 		sou_catch_R_mask,
 		sou_catch_L,
-		sou_catch_L_mask
+		sou_catch_L_mask,
+		sou_hand_L,
+		sou_hand_L_mask
 	};
 
 	void Catch();

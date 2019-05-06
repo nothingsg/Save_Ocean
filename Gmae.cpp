@@ -487,7 +487,7 @@ void Game::oc_UI_Draw()
 	if (flag == 0)
 	{
 		ScreenToClient(oc_hWnd, &pt);
-		printf("%5i %5i\n", pt.x, pt.y);
+		//printf("%5i %5i\n", pt.x, pt.y);
 		//bar(100,30,155,120);
 		if(pt.x > 100 && pt.x < 155 && pt.y>30 && pt.y < 120)
 			loadimage(&img_0, L".\\资源文件\\按钮\\图鉴2.png", 55, 90, false);

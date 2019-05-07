@@ -282,9 +282,9 @@ void Game::oc_Update(float dt)
 		}break;
 		case Fish::two:
 		{
-			fish_farme_num = 14;
-			fish_width = 33;
-			fish_height = 58;
+			fish_farme_num = 5;
+			fish_width = 90;
+			fish_height = 40;
 		}break;
 		default:
 		{

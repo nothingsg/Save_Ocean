@@ -1,20 +1,20 @@
-#include"button.h"
+#include "button.h"
+//#include "control.h"
 
 
-Button::Button(int x1, int y1, int x2, int y2, int height)
+
+Button::Button(int left, int top, int weight, int height)
 {
-	lt_x = x1;
-	lt_y = y2;
-	rb_x = x2;
-	rb_y = y2;
-	deep = height;
+	lt_x = left;
+	lt_y = top;
+	rb_x = left+weight;
+	rb_y = top+height;
 }
 
 
-void Button::draw(int lt_x, int lt_y, int rb_x, int rb_y, int deep)
+void Button::draw()
 {
-	bar3d(lt_x,lt_y,rb_x,rb_y,deep,true);
-
+	bar(lt_x,lt_y,rb_x,rb_y);
 }
 
 

@@ -6,11 +6,23 @@ class Fish : public GameObject_phy
 public:
 	Fish();
 	~Fish();
-
+	
 	virtual void Update(float dt) override;
 	virtual void Draw() override;
 	virtual void DrawInCamera(const Camera &cam) override;
 	
+	enum fish_type
+	{
+		one = 0,
+		two,
+		total_fish_type
+	};
+
+	enum state
+	{
+		null
+	};
+
 	enum source
 	{
 		sou_swim = 0,			//250*100
@@ -18,8 +30,10 @@ public:
 	};
 
 	void load_frame(source s, IMAGE img, IMAGE mask);
+	void set_state(state s);
 
 private:
+	state now_state, last_state;
 	source now_source;
 	int frame_i;
 

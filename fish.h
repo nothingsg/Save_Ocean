@@ -15,6 +15,8 @@ public:
 	{
 		one = 0,
 		two,
+		three,
+		four,
 		total_fish_type
 	};
 

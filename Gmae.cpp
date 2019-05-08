@@ -269,7 +269,9 @@ void Game::oc_Update(float dt)
 	//添加新的鱼
 	if (fishs.size() < MAX_FISH_NUM)
 	{
-		Vect2 f_pos(Random::random_in(player.position.x - 2000, player.position.x + 2000), Random::random_in(-2500, -1100));
+		int p_x;
+		while ((p_x = Random::random_in(player.position.x - 2000, player.position.x + 2000)) > player.position.x - oc_cxGame / 2 - 100 && p_x < player.position.x + oc_cxGame / 2 + 100);
+		Vect2 f_pos(p_x, Random::random_in(-2500, -1100));
 		Fish::fish_type type = (Fish::fish_type)(int)Random::random_in(0, Fish::total_fish_type);
 		int fish_farme_num, fish_width, fish_height;
 		switch (type)
@@ -285,6 +287,18 @@ void Game::oc_Update(float dt)
 			fish_farme_num = 5;
 			fish_width = 90;
 			fish_height = 40;
+		}break;
+		case Fish::three:
+		{
+			fish_farme_num = 5;
+			fish_width = 40;
+			fish_height = 20;
+		}break;
+		case Fish::four:
+		{
+			fish_farme_num = 5;
+			fish_width = 40;
+			fish_height = 30;
 		}break;
 		default:
 		{
@@ -690,17 +704,29 @@ void Game::new_fish(Fish::fish_type type, int farme_num, int width, int height, 
 	/*60 24*/
 	Fish f;
 	wchar_t sourse_file_name[50];
+	char faced;
+	if (pos.x < player.position.x)
+	{
+		faced = 'R';
+		f.velocity = Vect2(Random::random_in(50, 200), 0);
+	}	
+	else
+	{
+		faced = 'L';
+		f.velocity = Vect2(Random::random_in(-200, -50), 0);
+	}
+		
 	for (int i = 0; i < farme_num; i++)
 	{
 		IMAGE img_t, img_mask;
-		swprintf(sourse_file_name, 50, L".\\资源文件\\fish\\%d\\fish_%d.png", type, i);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\fish\\%d\\fish_%d_%c.png", type, i, faced);
 		loadimage(&img_t, sourse_file_name, width, height, false);
-		swprintf(sourse_file_name, 50, L".\\资源文件\\fish\\%d\\fish_%d_mask.png", type, i);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\fish\\%d\\fish_%d_%c_mask.png", type, i, faced);
 		loadimage(&img_mask, sourse_file_name, width, height, false);
 		f.load_frame(Fish::sou_swim, img_t, img_mask);
 	}
 	f.position = pos;
-	f.velocity = Vect2(Random::random_in(-200, -50), 0);
+	
 	fishs.push_back(f);
 }
 

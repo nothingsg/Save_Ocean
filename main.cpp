@@ -12,12 +12,12 @@ int main()
 		IMAGE an;
 		POINT pt;
 		loadimage(&ready, L".\\资源文件\\开始界面.png", 1300, 900, false);
-		//bar(568, 397, 854, 474);//开始按钮位置
+		//bar(568, 397, 854, 475);//开始按钮位置
 		GetCursorPos(&pt);//检取光标的位置，以屏幕坐标表示
 		ScreenToClient(oc_hWnd, &pt);//该函数把屏幕上指定点的屏幕坐标转换成用户坐标
-		if (pt.x > 568 && pt.x < 854 && pt.y>397 && pt.y < 474)
+		if (pt.x > 568 && pt.x < 854 && pt.y>397 && pt.y < 475)
 		{
-			loadimage(&an, L".\\资源文件\\开始界面2.png", 286, 77, false);
+			loadimage(&an, L".\\资源文件\\开始界面2.png", 286, 78, false);
 		}
 		putimage(50, 0, &ready);
 		putimage(568, 397, &an);

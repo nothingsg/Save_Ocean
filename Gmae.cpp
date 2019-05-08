@@ -489,7 +489,7 @@ void Game::oc_UI_Upedate()
 		{
 			out_i++;
 			if (out_i >= N)
-				out_i = N-1;
+				out_i = N;
 			if(book[out_i])
 			{ 
 				swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.jpg", out_i);

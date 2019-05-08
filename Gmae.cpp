@@ -488,8 +488,8 @@ void Game::oc_UI_Upedate()
 		else if (flag==1&&mou.x > 940 && mou.x < 990 && mou.y>360 && mou.y < 390 && out_i < N)//下页
 		{
 			out_i++;
-			if (out_i <= 0)
-				out_i = 1;
+			if (out_i >= N)
+				out_i = N-1;
 			if(book[out_i])
 			{ 
 				swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.jpg", out_i);
@@ -501,8 +501,8 @@ void Game::oc_UI_Upedate()
 		else if (flag==1&&mou.x > 310 && mou.x < 360 && mou.y>360 && mou.y < 390 && out_i >= 0)//上页
 		{
 			out_i--;
-			if (out_i >= N)
-				out_i = N - 1;
+			if (out_i <=0)
+				out_i = 0;
 			if (book[out_i])
 			{
 				swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.jpg", out_i);

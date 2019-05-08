@@ -54,6 +54,9 @@ public:
 	void Frame_End();			//结束一帧
 	void Lock_FPS(int fps);		//锁定帧数,0表示无限制
 
+	//增加鱼到图鉴,num为鱼的序号(按fish文件夹中),light==true时图鉴会变亮
+	void add(int num,bool light=true);
+
 	//生成鱼
 	void new_fish(
 		Fish::fish_type type,

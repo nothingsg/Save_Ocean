@@ -3,12 +3,12 @@
 
 Rubbish::Rubbish()
 {
-	img_source.push_back(swim);
-	img_source.push_back(swim_mask);
+	img_source.push_back(rfloat);
+	img_source.push_back(rfloat_mask);
 	now_state = null;
 	last_state = null;
 	frame_i = 0;
-	now_source = sou_swim;
+	now_source = sou_float;
 }
 
 Rubbish::~Rubbish()
@@ -33,8 +33,8 @@ void Rubbish::Update(float dt)
 	}
 
 	frame_timer += dt;
-	frame_i = (frame_i + frame_timer / 100) % img_source[now_source].size();
-	frame_timer = frame_timer % 100;
+	frame_i = (frame_i + frame_timer / 200) % img_source[now_source].size();
+	frame_timer = frame_timer % 200;
 
 	physical_Move(dt);
 }

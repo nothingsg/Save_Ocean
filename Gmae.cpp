@@ -32,13 +32,13 @@ void Game::oc_GameInit()
 	dt = 0;
 	oc_bPause = false;
 
-	afish.position = Vect2(2000, -1200);
-	afish.velocity = Vect2(-100, 0);
+	/*afish.position = Vect2(2000, -1200);
+	afish.velocity = Vect2(-100, 0);*/
 	//player.position = Vect2(1000, -880);
-	player.position = Vect2(800, -500);
+	player.position = Vect2(ISLAND_SIDE * 0.8f, 0);
 	player.set_state(People::sta_jumpR);
-	wood_boat.position = Vect2(1250, -980);
-	main_cam.position = Vect2(800, -940);
+	wood_boat.position = Vect2(BOAT_POS_L, SEA_LEVEL);
+	main_cam.position = Vect2(ISLAND_SIDE * 0.8f, ISLAND_HEIGHT);
 	player.acceleration = gravity;
 }
 //游戏资源加载
@@ -128,15 +128,15 @@ void Game::oc_GameLoad()
 	{
 		IMAGE img_t, img_mask;
 		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞静止向右_%d.png", i);
-		loadimage(&img_t, sourse_file_name, 60, 94, false);
+		loadimage(&img_t, sourse_file_name, 54, 85, false);
 		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞静止向右_0_mask.png", i);
-		loadimage(&img_mask, sourse_file_name, 60, 94, false);
+		loadimage(&img_mask, sourse_file_name, 54, 85, false);
 		player.load_frame(People::sou_stand_R, img_t, img_mask);
 
 		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞静止向左_%d.png", i);
-		loadimage(&img_t, sourse_file_name, 60, 94, false);
+		loadimage(&img_t, sourse_file_name, 54, 85, false);
 		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞静止向左_%d_mask.png", i);
-		loadimage(&img_mask, sourse_file_name, 60, 94, false);
+		loadimage(&img_mask, sourse_file_name, 54, 85, false);
 		player.load_frame(People::sou_stand_L, img_t, img_mask);
 	}
 
@@ -144,15 +144,15 @@ void Game::oc_GameLoad()
 	{
 		IMAGE img_t, img_mask;
 		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞走路向右_%d.png", i);
-		loadimage(&img_t, sourse_file_name, 60, 94, false);
+		loadimage(&img_t, sourse_file_name, 54, 85, false);
 		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞走路向右_%d_mask.png", i);
-		loadimage(&img_mask, sourse_file_name, 60, 94, false);
+		loadimage(&img_mask, sourse_file_name, 54, 85, false);
 		player.load_frame(People::sou_run_R, img_t, img_mask);
 
 		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞走路向左_%d.png", i);
-		loadimage(&img_t, sourse_file_name, 60, 94, false);
+		loadimage(&img_t, sourse_file_name, 54, 85, false);
 		swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞走路向左_%d_mask.png", i);
-		loadimage(&img_mask, sourse_file_name, 60, 94, false);
+		loadimage(&img_mask, sourse_file_name, 54, 85, false);
 		player.load_frame(People::sou_run_L, img_t, img_mask);
 	}
 
@@ -161,74 +161,61 @@ void Game::oc_GameLoad()
 	IMAGE img_t, img_mask;
 
 	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞跳跃向右_%d.png", 0);
-	loadimage(&img_t, sourse_file_name, 60, 94, false);
+	loadimage(&img_t, sourse_file_name, 54, 85, false);
 	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞跳跃向右_%d_mask.png", 0);
-	loadimage(&img_mask, sourse_file_name, 60, 94, false);
+	loadimage(&img_mask, sourse_file_name, 54, 85, false);
 	player.load_frame(People::sou_jump_R, img_t, img_mask);
 
 	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞跳跃向左_%d.png", 0);
-	loadimage(&img_t, sourse_file_name, 60, 94, false);
+	loadimage(&img_t, sourse_file_name, 54, 85, false);
 	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞跳跃向左_%d_mask.png", 0);
-	loadimage(&img_mask, sourse_file_name, 60, 94, false);
+	loadimage(&img_mask, sourse_file_name, 54, 85, false);
 	player.load_frame(People::sou_jump_L, img_t, img_mask);
 
 	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞垂直伸手向右_%d.png", 1);
-	loadimage(&img_t, sourse_file_name, 60, 94, false);
+	loadimage(&img_t, sourse_file_name, 54, 85, false);
 	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞垂直伸手向右_%d_mask.png", 1);
-	loadimage(&img_mask, sourse_file_name, 60, 94, false);
+	loadimage(&img_mask, sourse_file_name, 54, 85, false);
 	player.load_frame(People::sou_catch_R, img_t, img_mask);
 
 	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞垂直伸手向左_%d.png", 1);
-	loadimage(&img_t, sourse_file_name, 60, 94, false);
+	loadimage(&img_t, sourse_file_name, 54, 85, false);
 	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\路飞垂直伸手向左_%d_mask.png", 1);
-	loadimage(&img_mask, sourse_file_name, 60, 94, false);
+	loadimage(&img_mask, sourse_file_name, 54, 85, false);
 	player.load_frame(People::sou_catch_L, img_t, img_mask);
 
 
 
-	img_t.Resize(60, 940);
-	img_mask.Resize(60, 940);
+	img_t.Resize(54, 850);
+	img_mask.Resize(54, 850);
 	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\整只手_%d.png", 0);
-	loadimage(&img_t, sourse_file_name, 60, 940, false);
+	loadimage(&img_t, sourse_file_name, 54, 850, false);
 	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\整只手_%d_mask.png", 0);
-	loadimage(&img_mask, sourse_file_name, 60, 940, false);
+	loadimage(&img_mask, sourse_file_name, 54, 850, false);
 	player.load_hand_img(img_t, img_mask);
 
 
 	/*
 	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\手臂_%d.png", 0);
-	loadimage(&img_t, sourse_file_name, 60, 940, false);
+	loadimage(&img_t, sourse_file_name, 54, 850, false);
 	swprintf(sourse_file_name, 50, L".\\资源文件\\player\\手臂_%d_mask.png", 0);
-	loadimage(&img_mask, sourse_file_name, 60, 940, false);
+	loadimage(&img_mask, sourse_file_name, 54, 850, false);
 	player.load_arm_img(img_t, img_mask);*/
 
-	
-
-	//鱼类资源加载
-	for (int i = 0; i < 8; i++)
-	{
-		IMAGE img_t, img_mask;
-		swprintf(sourse_file_name, 50, L".\\资源文件\\鱼测试\\fish_%d.png", i);
-		loadimage(&img_t, sourse_file_name, 60, 24, false);
-		swprintf(sourse_file_name, 50, L".\\资源文件\\鱼测试\\fish_%d_mask.png", i);
-		loadimage(&img_mask, sourse_file_name, 60, 24, false);
-		afish.load_frame(Fish::sou_swim, img_t, img_mask);
-	}
 	
 	//船类资源加载
 	for (int i = 0; i < 2; i++)
 	{
 		IMAGE img_t, img_mask;
 		swprintf(sourse_file_name, 50, L".\\资源文件\\boat\\两头船_%d.png", i);
-		loadimage(&img_t, sourse_file_name, 419, 75, false);
+		loadimage(&img_t, sourse_file_name, 322, 58, false);
 		swprintf(sourse_file_name, 50, L".\\资源文件\\boat\\两头船_%d_mask.png", i);
-		loadimage(&img_mask, sourse_file_name, 419, 75, false);
+		loadimage(&img_mask, sourse_file_name, 322, 58, false);
 		wood_boat.load_frame(Boat::sou_boat_R, img_t, img_mask);
 	}
 
-	//载入背景图片
-	loadimage(&game_background, L".\\资源文件\\background.jpg");
-
+	//载入背景图片 9600*5400
+	loadimage(&game_background, L".\\资源文件\\background.jpg", 4800 * 0.9, 2700 * 0.9, true);
 
 	setbkmode(TRANSPARENT);			//设置文字输出是背景颜色为透明
 	settextcolor(RGB(255, 0, 0));	//设置文字输出颜色为红色
@@ -269,50 +256,106 @@ void Game::oc_Update(float dt)
 	//添加新的鱼
 	if (fishs.size() < MAX_FISH_NUM)
 	{
-		int p_x;
-		while ((p_x = Random::random_in(player.position.x - 2000, player.position.x + 2000)) > player.position.x - oc_cxGame / 2 - 100 && p_x < player.position.x + oc_cxGame / 2 + 100);
-		Vect2 f_pos(p_x, Random::random_in(-2500, -1100));
-		Fish::fish_type type = (Fish::fish_type)(int)Random::random_in(0, Fish::total_fish_type);
-		int fish_farme_num, fish_width, fish_height;
-		switch (type)
+		static int fish_creat_timer = 0;
+		fish_creat_timer += dt;
+		int add_num = fish_creat_timer / FISH_CREAT_RACE;
+		fish_creat_timer = fish_creat_timer % FISH_CREAT_RACE;
+
+		while (add_num--)
 		{
-		case Fish::one:
-		{
-			fish_farme_num = 8;
-			fish_width = 60;
-			fish_height = 24;
-		}break;
-		case Fish::two:
-		{
-			fish_farme_num = 5;
-			fish_width = 90;
-			fish_height = 40;
-		}break;
-		case Fish::three:
-		{
-			fish_farme_num = 5;
-			fish_width = 40;
-			fish_height = 20;
-		}break;
-		case Fish::four:
-		{
-			fish_farme_num = 5;
-			fish_width = 40;
-			fish_height = 30;
-		}break;
-		default:
-		{
-			fish_farme_num = 0;
-			fish_width = 0;
-			fish_height = 0;
-		}break;
+			int p_x;
+			while ((p_x = Random::random_in(player.position.x - 2000, player.position.x + 2000)) > player.position.x - oc_cxGame / 2 - 100 && p_x < player.position.x + oc_cxGame / 2 + 100);
+			Vect2 f_pos(p_x, Random::random_in(SEA_LEVEL*3.0f, SEA_LEVEL*1.2f));
+			Fish::fish_type type = (Fish::fish_type)(int)Random::random_in(0, Fish::total_fish_type);
+			int fish_farme_num, fish_width, fish_height;
+			switch (type)
+			{
+			case Fish::one:
+			{
+				fish_farme_num = 8;
+				fish_width = 30;
+				fish_height = 12;
+			}break;
+			case Fish::two:
+			{
+				fish_farme_num = 5;
+				fish_width = 45;
+				fish_height = 20;
+			}break;
+			case Fish::three:
+			{
+				fish_farme_num = 5;
+				fish_width = 30;
+				fish_height = 15;
+			}break;
+			case Fish::four:
+			{
+				fish_farme_num = 5;
+				fish_width = 30;
+				fish_height = 23;
+			}break;
+			default:
+			{
+				fish_farme_num = 0;
+				fish_width = 0;
+				fish_height = 0;
+			}break;
+			}
+			new_fish(type, fish_farme_num, fish_width, fish_height, f_pos);
 		}
-		new_fish(type, fish_farme_num, fish_width, fish_height, f_pos);
 	}
 
-	player.Update(dt);
-	afish.Update(dt);
-	wood_boat.Update(dt);
+	//添加新的垃圾
+	if (rubbishs.size() < MAX_FISH_NUM)
+	{
+		static int rubbish_creat_timer = 0;
+		rubbish_creat_timer += dt;
+		int add_num = rubbish_creat_timer / FISH_RUBBISH_RACE;
+		rubbish_creat_timer = rubbish_creat_timer % FISH_RUBBISH_RACE;
+
+		while (add_num--)
+		{
+			Vect2 f_pos(Random::random_in(FECTORY_POS_X*0.9f, FECTORY_POS_X*1.1f), Random::random_in(SEA_LEVEL*3.0f, SEA_LEVEL*1.2f));
+			Rubbish::rubbish_type type = (Rubbish::rubbish_type)(int)Random::random_in(0, Rubbish::total_rubbish_type);
+			int rubbish_farme_num, rubbish_width, rubbish_height;
+			switch (type)
+			{
+			case Rubbish::one:
+			{
+				rubbish_farme_num = 2;
+				rubbish_width = 50;
+				rubbish_height = 50;
+			}break;
+			/*case Fish::two:
+			{
+				rubbish_farme_num = 5;
+				rubbish_width = 90;
+				rubbish_height = 40;
+			}break;
+			case Fish::three:
+			{
+				rubbish_farme_num = 5;
+				rubbish_width = 40;
+				rubbish_height = 20;
+			}break;
+			case Fish::four:
+			{
+				rubbish_farme_num = 5;
+				rubbish_width = 40;
+				rubbish_height = 30;
+			}break;*/
+			default:
+			{
+				rubbish_farme_num = 0;
+				rubbish_width = 0;
+				rubbish_height = 0;
+			}break;
+			}
+			new_rubbish(type, rubbish_farme_num, rubbish_width, rubbish_height, f_pos);
+		}
+	}
+	
+	//所有鱼更新
 	for (int i = 0; i < fishs.size(); i++)
 	{
 		if (fishs[i].position.x < player.position.x - 3000 || fishs[i].position.x > player.position.x + 3000)
@@ -322,6 +365,20 @@ void Game::oc_Update(float dt)
 		}
 		fishs[i].Update(dt);
 	}
+	//所有垃圾更新
+	for (int i = 0; i < rubbishs.size(); i++)
+	{
+		if (rubbishs[i].position.x < player.position.x - 2000)
+		{
+			rubbishs.erase(rubbishs.begin() + i);
+			continue;
+		}
+		rubbishs[i].Update(dt);
+	}
+
+	player.Update(dt);
+	wood_boat.Update(dt);
+	
 
 	//之后这个要写在碰撞系统里
 	/*************************************************************************************************/
@@ -329,27 +386,76 @@ void Game::oc_Update(float dt)
 	{
 	case People::sta_boatingR:case People::sta_boatingL:
 	{
-		if (wood_boat.position.x < 1250)
+		if (wood_boat.position.x < BOAT_POS_L)
 		{
-			wood_boat.position.x = 1250;
+			wood_boat.position.x = BOAT_POS_L;
 			wood_boat.velocity.x = 0;
 		}
-		else if (wood_boat.position.x > 8400)
+		else if (wood_boat.position.x > FECTORY_POS_X)
 		{
-			wood_boat.position.x = 8400;
+			wood_boat.position.x = FECTORY_POS_X;
 			wood_boat.velocity.x = 0;
 		}
 		player.velocity = Vect2(0, 0);
-		player.position = wood_boat.position - Vect2(0, -30);
+		player.position = wood_boat.position - Vect2(0, PLAYER_OFFSET_B);
 	}break;
 	case People::sta_catchR:case People::sta_catchL:
 	{
+		static int catched_fish = -1;
 		player.velocity = Vect2(0, 0);
-		player.position = wood_boat.position - Vect2(0, -30);
+		player.position = wood_boat.position - Vect2(0, PLAYER_OFFSET_B);
+
+		/*if (catched_fish == -1 && player.get_hand_vel().y < 0)
+		{
+			for (int i = 0; i < fishs.size(); i++)
+			{
+				if ((fishs[i].position - player.get_hand_pos()).vectorLengthSquared() < 600)
+				{
+					fishs[i].acceleration = Vect2(0, 0);
+					fishs[i].velocity = Vect2(0, 0);
+					player.Pull();
+					catched_fish = i;
+					break;
+				}
+			}
+		}
+		else if(catched_fish != -1)
+		{
+			fishs[catched_fish].position = player.get_hand_pos();
+		}*/
+
+		static int catched_rubbish = -1;
+		if (catched_rubbish == -1 && player.get_hand_vel().y < 0)
+		{
+			for (int i = 0; i < rubbishs.size(); i++)
+			{
+				if ((rubbishs[i].position - player.get_hand_pos()).vectorLengthSquared() < HAND_COLLIDER_RANGE)
+				{
+					rubbishs[i].acceleration = Vect2(0, 0);
+					rubbishs[i].velocity = Vect2(0, 0);
+					player.Pull();
+					catched_rubbish = i;
+					break;
+				}
+			}
+		}
+		else if (catched_rubbish != -1)
+		{
+			rubbishs[catched_rubbish].position = player.get_hand_pos();
+		}
+
 		if (player.get_hand_pos().y >= player.position.y - 20)
 		{
 			player.set_state(People::sta_boatingR);
+			if (catched_rubbish != -1)
+			{
+				rubbishs.erase(rubbishs.begin() + catched_rubbish);
+				catched_rubbish = -1;
+			}
+			
 		}
+		
+			
 	}break;
 	case People::sta_jumpR:case People::sta_jumpL:
 	{
@@ -358,18 +464,18 @@ void Game::oc_Update(float dt)
 			player.position.x = 0;
 			player.velocity.x = 0;
 		}
-		else if (player.position.x > 1100)
+		else if (player.position.x > ISLAND_SIDE)
 		{
-			player.position.x = 1100;
+			player.position.x = ISLAND_SIDE;
 			player.velocity.x = 0;
 		}
 		if (player.position.y > 0)
 		{
 			player.position.y = 0;
 		}
-		else if (player.position.y < -900)
+		else if (player.position.y < ISLAND_HEIGHT)
 		{
-			player.position.y = -900;
+			player.position.y = ISLAND_HEIGHT;
 			player.velocity.y = 0;
 			player.set_state(People::sta_stand);
 		}
@@ -381,18 +487,18 @@ void Game::oc_Update(float dt)
 			player.position.x = 0;
 			player.velocity.x = 0;
 		}
-		else if (player.position.x > 1100)
+		else if (player.position.x > ISLAND_SIDE)
 		{
-			player.position.x = 1100;
+			player.position.x = ISLAND_SIDE;
 			player.velocity = Vect2(0, 0);
 		}
 		if (player.position.y > 0)
 		{
 			player.position.y = 0;
 		}
-		else if (player.position.y < -900)
+		else if (player.position.y < ISLAND_HEIGHT)
 		{
-			player.position.y = -900;
+			player.position.y = ISLAND_HEIGHT;
 			player.velocity.y = 0;
 		}
 	}
@@ -405,18 +511,18 @@ void Game::oc_Update(float dt)
 	{
 		main_cam.position.x = main_cam.xClient / 2;
 	}
-	else if (main_cam.position.x + main_cam.xClient / 2 > 9600)
+	else if (main_cam.position.x + main_cam.xClient / 2 > game_background.getwidth())
 	{
-		main_cam.position.x = 9600 - main_cam.xClient / 2;
+		main_cam.position.x = game_background.getwidth() - main_cam.xClient / 2;
 	}
 
-	if (main_cam.position.y - main_cam.yClient / 2 > 0)
+	if (main_cam.position.y + main_cam.yClient / 2 > 0)
 	{
-		main_cam.position.y = main_cam.yClient / 2;
+		main_cam.position.y = -main_cam.yClient / 2;
 	}
-	else if (main_cam.position.y + main_cam.yClient / 2 < -5400)
+	else if (main_cam.position.y - main_cam.yClient / 2 < -game_background.getheight())
 	{
-		main_cam.position.y = -5400 + main_cam.xClient / 2;
+		main_cam.position.y = -game_background.getheight() + main_cam.xClient / 2;
 	}
 	/************************************************************************************************************/
 
@@ -428,21 +534,25 @@ void Game::oc_Draw(const Camera &cam)
 	cleardevice();				//清屏
 	//setaspectratio(1 / cam.scale, 1 / cam.scale);//设置缩放系数
 
-	int bck_pos_x = 0, bck_pos_y = 0;
+	/*int bck_pos_x = 0, bck_pos_y = 0;
 	bck_pos_x = bck_pos_x - cam.position.x + oc_cxGame / 2;
-	bck_pos_y = -(bck_pos_y - cam.position.y) + oc_cyGame / 2;
-	putimage(bck_pos_x, bck_pos_y, &game_background);
-	/*测试 摄像机*/
-	
+	bck_pos_y = -(bck_pos_y - cam.position.y) + oc_cyGame / 2;*/
+	putimage(-cam.position.x + oc_cxGame / 2, cam.position.y + oc_cyGame / 2, &game_background);
 
 	
-	wood_boat.DrawInCamera(cam);
-	player.DrawInCamera(cam);
-	afish.DrawInCamera(cam);
+
 	for (int i = 0; i < fishs.size(); i++)
 	{
 		fishs[i].DrawInCamera(cam);
 	}
+	for (int i = 0; i < rubbishs.size(); i++)
+	{
+		rubbishs[i].DrawInCamera(cam);
+	}
+	
+	wood_boat.DrawInCamera(cam);
+	player.DrawInCamera(cam);
+	
 	
 	Debug_text_output();		//输出调试数据
 }
@@ -548,7 +658,7 @@ void Game::oc_KeyPrco()
 		case People::sta_boatingR:case People::sta_boatingL:
 		{
 			player.set_state(People::sta_boatingL);
-			wood_boat.velocity.x = -300;
+			wood_boat.velocity.x = -BOAT_MOVE_VELOCITY;
 		}break;
 
 		case People::sta_catchR:case People::sta_catchL:
@@ -559,12 +669,12 @@ void Game::oc_KeyPrco()
 		case People::sta_jumpR:case People::sta_jumpL:
 		{
 			player.set_state(People::sta_jumpL);
-			player.velocity.x = -200;
+			player.velocity.x = -PLAYER_MOVE_VELOCITY;
 		}break;
 		default:
 		{
 			player.set_state(People::sta_runL);
-			player.velocity.x = -200;
+			player.velocity.x = -PLAYER_MOVE_VELOCITY;
 		}
 		break;
 		}
@@ -580,7 +690,7 @@ void Game::oc_KeyPrco()
 		case People::sta_boatingR:case People::sta_boatingL:
 		{
 			player.set_state(People::sta_boatingR);
-			wood_boat.velocity.x = 300;
+			wood_boat.velocity.x = BOAT_MOVE_VELOCITY;
 		}break;
 
 		case People::sta_catchR:case People::sta_catchL:
@@ -591,12 +701,12 @@ void Game::oc_KeyPrco()
 		case People::sta_jumpR:case People::sta_jumpL:
 		{
 			player.set_state(People::sta_jumpR);
-			player.velocity.x = 200;
+			player.velocity.x = PLAYER_MOVE_VELOCITY;
 		}break;
 		default:
 		{
 			player.set_state(People::sta_runR);
-			player.velocity.x = 200;
+			player.velocity.x = PLAYER_MOVE_VELOCITY;
 		}
 		break;
 		}
@@ -616,36 +726,46 @@ void Game::oc_KeyPrco()
 	if (is_key_down('W') && player.get_state() != People::sta_jumpL && player.get_state() != People::sta_jumpR)
 	{
 		player.set_state(People::sta_jump);
-		player.velocity.y = 400;
+		player.velocity.y = PLAYER_JUMP_VELOCITY;
 	}
 
 	static int last_key_E = 0;
 	if (is_key_down('E') && !last_key_E && player.get_state() != People::sta_catchR && player.get_state() != People::sta_catchL)
 	{
 		last_key_E = 1;
-		if (player.get_state() != People::sta_boatingR && player.get_state() != People::sta_boatingL && player.position.x > 1050)
+		if (player.get_state() != People::sta_boatingR && player.get_state() != People::sta_boatingL && player.position.x > ISLAND_SIDE * 0.8f)
 		{
 			player.set_state(People::sta_boatingR);
-			player.position = wood_boat.position - Vect2(0, -30);
-			main_cam.position.y = -1200;
+			player.position = wood_boat.position - Vect2(0, PLAYER_OFFSET_B);
+			main_cam.position.y = SEA_LEVEL * 1.5f;
 		}
-		else if((player.get_state() == People::sta_boatingR || player.get_state() == People::sta_boatingL) && player.position.x < 1300)
+		else if((player.get_state() == People::sta_boatingR || player.get_state() == People::sta_boatingL) && player.position.x < BOAT_POS_L * 1.1f)
 		{
 			player.set_state(People::sta_standL);
 			wood_boat.velocity = Vect2(0, 0);
-			player.position = Vect2(1100, -940);
-			main_cam.position.y = -940;
+			player.position = Vect2(ISLAND_SIDE, SEA_LEVEL);
+			main_cam.position.y = SEA_LEVEL;
 		}
 	}
 	last_key_E = is_key_down('E');
 
-	static int last_key_S = 0;
-	if (is_key_down('S') && !last_key_S && (player.get_state() == People::sta_boatingR || player.get_state() == People::sta_boatingL))
+	static int last_key_J = 0;
+	if (is_key_down('J') && !last_key_J)
 	{
-		wood_boat.velocity = Vect2(0, 0);
-		player.Catch();
+		
+		if (player.get_state() == People::sta_catchL || player.get_state() == People::sta_catchR)
+		{
+			wood_boat.velocity = Vect2(0, 0);
+			player.Pull();
+		}
+		else if (player.get_state() == People::sta_boatingR || player.get_state() == People::sta_boatingL)
+		{
+			wood_boat.velocity = Vect2(0, 0);
+			player.Catch();
+		}
+			
 	}
-	last_key_S = is_key_down('S');
+	last_key_J = is_key_down('J');
 
 }
 
@@ -730,6 +850,26 @@ void Game::new_fish(Fish::fish_type type, int farme_num, int width, int height, 
 	fishs.push_back(f);
 }
 
+
+void Game::new_rubbish(Rubbish::rubbish_type type, int farme_num, int width, int height, Vect2 pos)
+{
+	
+	Rubbish r;
+	wchar_t sourse_file_name[50];
+	
+	for (int i = 0; i < farme_num; i++)
+	{
+		IMAGE img_t, img_mask;
+		swprintf(sourse_file_name, 50, L".\\资源文件\\rubbish\\%d\\rubbish_%d.png", type, i);
+		loadimage(&img_t, sourse_file_name, width, height, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\rubbish\\%d\\rubbish_%d_mask.png", type, i);
+		loadimage(&img_mask, sourse_file_name, width, height, false);
+		r.load_frame(Rubbish::sou_float, img_t, img_mask);
+	}
+	r.position = pos;
+	r.velocity = Vect2(Random::random_in(-200, -50), 0);
+	rubbishs.push_back(r);
+}
 
 void Game::Debug_text_output()		//调试数据输出
 {

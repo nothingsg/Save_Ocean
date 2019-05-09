@@ -115,6 +115,12 @@ void People::Catch()
 	hand.acceleration = Vect2(0, 1000);
 }
 
+void People::Pull()
+{
+	hand.acceleration = Vect2(0, 0);
+	hand.velocity = Vect2(0, 1000);
+}
+
 Vect2 People::get_hand_pos()
 {
 	return hand.position;
@@ -123,6 +129,11 @@ Vect2 People::get_hand_pos()
 float People::get_hand_len()
 {
 	return hand.arm_len;
+}
+
+Vect2 People::get_hand_vel()
+{
+	return hand.velocity;
 }
 
 
@@ -216,11 +227,11 @@ void Hand::DrawInCamera(const Camera &cam)
 
 	/*************************************************************/
 	putimage(start_pos.x - cam.position.x + cam.xClient / 2 - hand_mask.getwidth() / 2,
-		-(start_pos.y - cam.position.y - 25) + cam.yClient / 2,
+		-(start_pos.y - cam.position.y - 20) + cam.yClient / 2,
 		60, arm_len, &hand_mask, -1, hand_mask.getheight() - arm_len, SRCAND);
 
 	putimage(start_pos.x - cam.position.x + cam.xClient / 2 - hand.getwidth() / 2,
-		-(start_pos.y - cam.position.y - 25) + cam.yClient / 2,
+		-(start_pos.y - cam.position.y - 20) + cam.yClient / 2,
 		60, arm_len, &hand, -1, hand.getheight() - arm_len, SRCPAINT);
 }
 

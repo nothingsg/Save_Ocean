@@ -1,5 +1,6 @@
 ﻿#include "Game.h"
 #include"graphics.h"
+#include <mmsystem.h>
 #pragma comment(lib,"Winmm.lib")
 
 Game::Game(int posx, int posy, int width, int height) :main_cam(width, height, 2.0f) , gravity(0, -980)
@@ -565,6 +566,7 @@ const int N = 4;//图鉴内图片数量
 int book[N+1];//标记鱼
 int new_i;//新加的鱼的序号
 int flaglight = 0;//表示图鉴不亮
+
 void Game::add(int num, bool light)
 {
 	book[num+1] = 1;
@@ -820,13 +822,40 @@ void Game::oc_MouseProc()
 	static Vect2 last_mouse_pos;
 	Vect2 mouse_pos = GetMousePos(oc_hWnd);
 	
-	/*if (is_key_down(VK_LBUTTON))
+	if (is_key_down(VK_RBUTTON))
 	{
-		Vect2 add = mouse_pos - last_mouse_pos;
+		/*Vect2 add = mouse_pos - last_mouse_pos;
 		add.y = -add.y;
-		main_cam.position = main_cam.position - add;
+		main_cam.position = main_cam.position - add;*/
+		/*add(0);
+		add(1);
+		add(2);
+		add(3);*/
+		/*mciSendString(_T("open .\\资源文件\\background.mp3 alias mymusic"), NULL, 0, NULL);
+
+		// 播放音乐
+		mciSendString(_T("play mymusic"), NULL, 0, NULL);
+		std::cout << "开始播放" << std::endl;*/
+		// 停止播放并关闭音乐
+	
 	}
-	last_mouse_pos = mouse_pos;*/
+
+	if (is_key_down(VK_LBUTTON))
+	{
+		/*Vect2 add = mouse_pos - last_mouse_pos;
+		add.y = -add.y;
+		main_cam.position = main_cam.position - add;*/
+		/*add(0);
+		add(1);
+		add(2);
+		add(3);*/
+
+		// 停止播放并关闭音乐
+		/*mciSendString(_T("stop mymusic"), NULL, 0, NULL);
+		mciSendString(_T("close mymusic"), NULL, 0, NULL);
+		std::cout << "停止播放" << std::endl;*/
+	}
+	//last_mouse_pos = mouse_pos;
 
 }
 

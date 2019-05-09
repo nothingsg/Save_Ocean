@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #define OC_LEFT 0
 #define OC_RIGHT 1
-#define MAX_FISH_NUM 50
+
 
 class Hand : public GameObject_phy
 {
@@ -82,6 +82,7 @@ public:
 
 	Vect2 get_hand_pos();
 	float get_hand_len();
+	Vect2 get_hand_vel();
 	
 	//IMAGE hand, hand_mask;
 private:

@@ -38,7 +38,7 @@ private:
 	state now_state, last_state;
 	source now_source;
 	int frame_i;
-
+	int frame_dt;
 
 	std::vector<std::vector<IMAGE>> img_source;	//存放所有图片资源
 

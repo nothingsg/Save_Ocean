@@ -560,44 +560,78 @@ void Game::oc_Draw(const Camera &cam)
 /*UI部分*/
 /***********************************cy完成*********************************************/
 int flag = 0;//是否进入图鉴
-window win(700, 500);//生成图鉴窗口
+window win(300,100,700, 500);//生成图鉴窗口
+const int N = 4;//图鉴内图片数量
+int book[N+1];//标记鱼
+int new_i;//新加的鱼的序号
+int flaglight = 0;//表示图鉴不亮
+void Game::add(int num, bool light)
+{
+	book[num+1] = 1;
+	new_i = num+1;
+	if (light)
+	{
+		flaglight = 1;
+	}
+}
+
 void Game::oc_UI_Upedate()
 {
-	const int N = 3;//图鉴内图片数量
+	//book[2] = 1;
+	//new_i = 2;//测试
 	wchar_t out_text[50];
-	static int out_i=0;
+	static int out_i = 0;
+	book[0] = 1;//封面一直存在
 	void FlushMouseMsgBuffer();//清空鼠标消息缓冲区
 	static bool last = 0;
 	bool now = is_key_down(VK_LBUTTON);
 	if (!last&&now)//判断是鼠标左键是否按下
 	{
 		Vect2 mou = GetMousePos(oc_hWnd);
-		if (flag == 0 && mou.x > 100 && mou.x < 155 && mou.y>30 && mou.y < 120)//鼠标左键点击在按钮范围内
+		if (flag == 0 && mou.x > 100 && mou.x < 170 && mou.y>30 && mou.y < 90)//鼠标左键点击在按钮范围内
 		{
 			flag = 1;//进入图鉴
-			loadimage(&win.img_i, L".\\资源文件\\图鉴\\0.png", win.new_x, win.new_y, false);
+			if (flaglight)
+			{
+				out_i=new_i;
+				swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.jpg", out_i);
+				loadimage(&win.img_i, out_text, win.new_x, win.new_y, false);
+			}
+			else
+				loadimage(&win.img_i, L".\\资源文件\\图鉴\\0.jpg", win.new_x, win.new_y, false);
 		}
 		else if (flag==1&&mou.x > 970 && mou.x < 1000 && mou.y>100 && mou.y < 130)//退出
 		{
 			out_i = 0;
 			flag = 0;
 			loadimage(&oc_window, L".\\资源文件\\测试图片.png", 500, 500, false);
+			flaglight = 0;//图鉴变黑
 		}
 		else if (flag==1&&mou.x > 940 && mou.x < 990 && mou.y>360 && mou.y < 390 && out_i < N)//下页
 		{
 			out_i++;
-			if (out_i <= 0)
-				out_i = 1;
-			swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.png", out_i);
-			loadimage(&win.img_i, out_text, win.new_x, win.new_y, false);
+			if (out_i >= N)
+				out_i = N;
+			if(book[out_i])
+			{ 
+				swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.jpg", out_i);
+				loadimage(&win.img_i, out_text, win.new_x, win.new_y, false);
+			}
+			else
+				loadimage(&win.img_i, L".\\资源文件\\图鉴\\未知.jpg", win.new_x, win.new_y, false);
 		}
 		else if (flag==1&&mou.x > 310 && mou.x < 360 && mou.y>360 && mou.y < 390 && out_i >= 0)//上页
 		{
 			out_i--;
-			if (out_i >= N)
-				out_i = N - 1;
-			swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.png", out_i);
-			loadimage(&win.img_i, out_text, win.new_x, win.new_y, false);
+			if (out_i <=0)
+				out_i = 0;
+			if (book[out_i])
+			{
+				swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.jpg", out_i);
+				loadimage(&win.img_i, out_text, win.new_x, win.new_y, false);
+			}
+			else
+				loadimage(&win.img_i, L".\\资源文件\\图鉴\\未知.jpg", win.new_x, win.new_y, false);
 		}
 	}
 	last = now;
@@ -613,14 +647,26 @@ void Game::oc_UI_Draw()
 		ScreenToClient(oc_hWnd, &pt);
 		//printf("%5i %5i\n", pt.x, pt.y);
 		//bar(100,30,155,120);
-		if(pt.x > 100 && pt.x < 155 && pt.y>30 && pt.y < 120)
-			loadimage(&img_0, L".\\资源文件\\按钮\\图鉴2.png", 55, 90, false);
+		if (flaglight)
+		{
+			if(pt.x > 100 && pt.x < 170 && pt.y>30 && pt.y < 90)
+				loadimage(&img_0, L".\\资源文件\\按钮\\图鉴4.jpg", 70, 60, false);
+			else
+				loadimage(&img_0, L".\\资源文件\\按钮\\图鉴3.jpg", 70, 60, false);
+		}
+		else if (pt.x > 100 && pt.x < 170 && pt.y>30 && pt.y < 90)
+		{
+			loadimage(&img_0, L".\\资源文件\\按钮\\图鉴2.jpg", 70, 60, false);
+		}
 		else
-			loadimage(&img_0, L".\\资源文件\\按钮\\图鉴.png", 55, 90, false);
+		{
+			loadimage(&img_0, L".\\资源文件\\按钮\\图鉴.jpg", 70, 60, false);
+		}
 		putimage(100, 30, &img_0);
 	}
 	else
 	{
+		
 		win.show();
 		win.w_hWnd = GetHWnd();
 		ScreenToClient(win.w_hWnd, &pt);
@@ -632,17 +678,17 @@ void Game::oc_UI_Draw()
 		putimage(970, 100, &img_1);
 		//bar(940, 360, 990, 390);//下页
 		if (pt.x > 940 && pt.x < 990 && pt.y>360 && pt.y < 390)
-			loadimage(&img_2, L".\\资源文件\\按钮\\下页2.png", 50, 30, false);
+			loadimage(&img_2, L".\\资源文件\\按钮\\下页2.jpg", 50, 30, false);
 		else
-			loadimage(&img_2, L".\\资源文件\\按钮\\下页.png", 50, 30, false);
+			loadimage(&img_2, L".\\资源文件\\按钮\\下页.jpg", 50, 30, false);
 		putimage(940, 360, &img_2);
 		//bar(310, 360, 360, 390);//上页
 		if (pt.x > 310 && pt.x < 360 && pt.y>360 && pt.y < 390)
-			loadimage(&img_3, L".\\资源文件\\按钮\\上页2.png", 50, 30, false);
+			loadimage(&img_3, L".\\资源文件\\按钮\\上页2.jpg", 50, 30, false);
 		else
-			loadimage(&img_3, L".\\资源文件\\按钮\\上页.png", 50, 30, false);
+			loadimage(&img_3, L".\\资源文件\\按钮\\上页.jpg", 50, 30, false);
 		putimage(310, 360, &img_3);
-	}   
+	}  
 }
 /*************************************end*******************************************/
 

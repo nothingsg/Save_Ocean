@@ -74,7 +74,7 @@ public:
 	void Lock_FPS(int fps = 0);	//锁定帧数,0表示无限制
 
 	//增加鱼到图鉴,num为鱼的序号(按fish文件夹中),light==true时图鉴会变亮
-	void add(int num,bool light=true);
+	void add(int num, bool light = true);
 
 	//生成鱼
 	void new_fish(
@@ -119,6 +119,7 @@ private:
 	IMAGE oc_window;
 	People player;
 	std::vector<Fish> fishs;
+	std::vector<Fish> head_fish;
 	std::vector<Rubbish> rubbishs;
 	Boat wood_boat;
 

@@ -598,13 +598,13 @@ void Game::oc_UI_Upedate()
 				out_i=new_i;
 				swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.jpg", out_i);
 				loadimage(&win.img_i, out_text, win.new_x, win.new_y, false);
-				//swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d_mask.jpg", out_i);
-				//loadimage(&win.img_mask, out_text, win.new_x, win.new_y, false);
+				swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d_mask.jpg", out_i);
+				loadimage(&win.img_mask, out_text, win.new_x, win.new_y, false);
 			}
 			else
 			{
 				loadimage(&win.img_i, L".\\资源文件\\图鉴\\0.jpg", win.new_x, win.new_y, false);
-				//loadimage(&win.img_mask, L".\\资源文件\\图鉴\\0_mask.jpg", win.new_x, win.new_y, false);
+				loadimage(&win.img_mask, L".\\资源文件\\图鉴\\0_mask.jpg", win.new_x, win.new_y, false);
 			}
 		}
 		else if (flag==1&&mou.x > 970 && mou.x < 1000 && mou.y>100 && mou.y < 130)//退出
@@ -623,13 +623,13 @@ void Game::oc_UI_Upedate()
 			{ 
 				swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.jpg", out_i);
 				loadimage(&win.img_i, out_text, win.new_x, win.new_y, false);
-				//swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d_mask.jpg", out_i);
-				//loadimage(&win.img_mask, out_text, win.new_x, win.new_y, false);
+				swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d_mask.jpg", out_i);
+				loadimage(&win.img_mask, out_text, win.new_x, win.new_y, false);
 			}
 			else
 			{
 				loadimage(&win.img_i, L".\\资源文件\\图鉴\\未知.jpg", win.new_x, win.new_y, false);
-				//loadimage(&win.img_mask, L".\\资源文件\\图鉴\\未知_mask.jpg", win.new_x, win.new_y, false);
+				loadimage(&win.img_mask, L".\\资源文件\\图鉴\\未知_mask.jpg", win.new_x, win.new_y, false);
 			}
 		}
 		else if (flag==1&&mou.x > 310 && mou.x < 360 && mou.y>360 && mou.y < 390 && out_i >= 0)//上页
@@ -641,13 +641,13 @@ void Game::oc_UI_Upedate()
 			{
 				swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d.jpg", out_i);
 				loadimage(&win.img_i, out_text, win.new_x, win.new_y, false);
-				//swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d_mask.jpg", out_i);
-				//loadimage(&win.img_mask, out_text, win.new_x, win.new_y, false);
+				swprintf(out_text, 50, L".\\资源文件\\图鉴\\%d_mask.jpg", out_i);
+				loadimage(&win.img_mask, out_text, win.new_x, win.new_y, false);
 			}
 			else
 			{
 				loadimage(&win.img_i, L".\\资源文件\\图鉴\\未知.jpg", win.new_x, win.new_y, false);
-				//loadimage(&win.img_mask, L".\\资源文件\\图鉴\\未知_mask.jpg", win.new_x, win.new_y, false);
+				loadimage(&win.img_mask, L".\\资源文件\\图鉴\\未知_mask.jpg", win.new_x, win.new_y, false);
 			}
 		}
 	}
@@ -670,30 +670,31 @@ void Game::oc_UI_Draw()
 			if (pt.x > 100 && pt.x < 170 && pt.y>30 && pt.y < 90)
 			{
 				loadimage(&img_0, L".\\资源文件\\按钮\\图鉴4.jpg", 70, 60, false);
-				//loadimage(&img_0_mask, L".\\资源文件\\按钮\\图鉴4_mask.jpg", 70, 60, false);
+				loadimage(&img_0_mask, L".\\资源文件\\按钮\\图鉴4_mask.jpg", 70, 60, false);
 			}
 			else
 			{
 				loadimage(&img_0, L".\\资源文件\\按钮\\图鉴3.jpg", 70, 60, false);
-				//loadimage(&img_0_mask, L".\\资源文件\\按钮\\图鉴3_mask.jpg", 70, 60, false);
+				loadimage(&img_0_mask, L".\\资源文件\\按钮\\图鉴3_mask.jpg", 70, 60, false);
 			}
 		}
 		else if (pt.x > 100 && pt.x < 170 && pt.y>30 && pt.y < 90)
 		{
 			loadimage(&img_0, L".\\资源文件\\按钮\\图鉴2.jpg", 70, 60, false);
-			//loadimage(&img_0_mask, L".\\资源文件\\按钮\\图鉴2_mask.jpg", 70, 60, false);
+			loadimage(&img_0_mask, L".\\资源文件\\按钮\\图鉴2_mask.jpg", 70, 60, false);
 		}
 		else
 		{
 			loadimage(&img_0, L".\\资源文件\\按钮\\图鉴.jpg", 70, 60, false);
-			//loadimage(&img_0_mask, L".\\资源文件\\按钮\\图鉴_mask.jpg", 70, 60, false);
+			loadimage(&img_0_mask, L".\\资源文件\\按钮\\图鉴_mask.jpg", 70, 60, false);
 		}
-		putimage(100, 30, &img_0);
+		putimage(100, 30, &img_0_mask, SRCAND);
+		putimage(100, 30, &img_0, SRCPAINT);
 	}
 	else
 	{
 		
-		win.show();
+		win.show_addmask();
 		win.w_hWnd = GetHWnd();
 		ScreenToClient(win.w_hWnd, &pt);
 		//bar(970,100,1000,130);//退出

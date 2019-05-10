@@ -17,6 +17,13 @@ void window::show()
 	putimage(red_x, red_y, &img_i);//绘制新窗口的起始位置
 }
 
+
+void window::show_addmask()//输出原图加掩码
+{
+	putimage(red_x, red_y, &img_mask , SRCAND);
+	putimage(red_x, red_y, &img_i, SRCPAINT);
+}
+
 /*
 void window::outbutton()
 {

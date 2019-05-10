@@ -16,6 +16,7 @@ public:
 	//void upbutton();
 	//void downbutton();
 	void show();//ÏÔÊ¾´°¿Ú
+	void show_addmask();
 	HWND w_hWnd;//´°¿Ú¾ä±ú
 
 };

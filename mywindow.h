@@ -10,6 +10,7 @@ public:
 	int red_x;//窗口起始位置
 	int red_y;
 	IMAGE img_i;//窗口
+	IMAGE img_mask;//掩码
 	window(int x0,int y0,int x, int y);
 	//void outbutton();//退出
 	//void upbutton();

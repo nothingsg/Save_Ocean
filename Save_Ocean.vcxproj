@@ -131,6 +131,7 @@
     <ClCompile Include="fish.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gmae.cpp" />
+    <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mywindow.cpp" />
     <ClCompile Include="people.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="fish.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="light.h" />
     <ClInclude Include="Matrix2.h" />
     <ClInclude Include="Matrix3.h" />
     <ClInclude Include="mywindow.h" />

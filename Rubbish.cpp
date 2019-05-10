@@ -66,3 +66,12 @@ void Rubbish::set_state(state s)
 {
 	now_state = s;
 }
+
+void Rubbish::set_score(int s)
+{
+	score = s;
+}
+int Rubbish::get_score()
+{
+	return score;
+}

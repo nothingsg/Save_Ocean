@@ -2,19 +2,23 @@
 
 #include "GameObject.h"
 
+#pragma once
 
-class Rubbish : public GameObject_phy
+#include "GameObject.h"
+
+
+class Light : public GameObject_phy
 {
 public:
-	Rubbish();
-	~Rubbish();
+	Light();
+	~Light();
 
 	virtual void Update(float dt) override;
 	virtual void Draw() override;
 	virtual void DrawInCamera(const Camera &cam) override;
 
 
-	enum rubbish_type
+	enum light_type
 	{
 		one = 0,
 		two,
@@ -30,8 +34,8 @@ public:
 
 	enum source
 	{
-		sou_float = 0,			//250*100
-		sou_flaot_mask
+		sou_fly = 0,			//250*100
+		sou_fly_mask
 	};
 
 	void load_frame(source s, IMAGE img, IMAGE mask);
@@ -48,6 +52,6 @@ private:
 	std::vector<std::vector<IMAGE>> img_source;	//存放所有图片资源
 
 
-	std::vector<IMAGE> rfloat;
-	std::vector<IMAGE> rfloat_mask;
+	std::vector<IMAGE> fly;
+	std::vector<IMAGE> fly_mask;
 };

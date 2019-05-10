@@ -323,23 +323,23 @@ void Game::oc_Update(float dt)
 			{
 			case Rubbish::one:
 			{
-				rubbish_farme_num = 2;
-				rubbish_width = 50;
-				rubbish_height = 50;
+				rubbish_farme_num = 3;
+				rubbish_width = 30;
+				rubbish_height = 30;
 			}break;
-			/*case Fish::two:
+			case Rubbish::two:
 			{
-				rubbish_farme_num = 5;
-				rubbish_width = 90;
+				rubbish_farme_num = 1;
+				rubbish_width = 60;
 				rubbish_height = 40;
 			}break;
-			case Fish::three:
+			/*case Rubbish::three:
 			{
 				rubbish_farme_num = 5;
 				rubbish_width = 40;
 				rubbish_height = 20;
 			}break;
-			case Fish::four:
+			case Rubbish::four:
 			{
 				rubbish_farme_num = 5;
 				rubbish_width = 40;
@@ -923,6 +923,7 @@ void Game::new_fish(Fish::fish_type type, int farme_num, int width, int height, 
 {
 	/*60 24*/
 	Fish f;
+	float sclac = Random::random_in(0.8f, 1.4f);
 	wchar_t sourse_file_name[50];
 	char faced;
 	if (pos.x < player.position.x)
@@ -940,9 +941,9 @@ void Game::new_fish(Fish::fish_type type, int farme_num, int width, int height, 
 	{
 		IMAGE img_t, img_mask;
 		swprintf(sourse_file_name, 50, L".\\资源文件\\fish\\%d\\fish_%d_%c.png", type, i, faced);
-		loadimage(&img_t, sourse_file_name, width, height, false);
+		loadimage(&img_t, sourse_file_name, width * sclac, height * sclac, false);
 		swprintf(sourse_file_name, 50, L".\\资源文件\\fish\\%d\\fish_%d_%c_mask.png", type, i, faced);
-		loadimage(&img_mask, sourse_file_name, width, height, false);
+		loadimage(&img_mask, sourse_file_name, width * sclac, height * sclac, false);
 		f.load_frame(Fish::sou_swim, img_t, img_mask);
 	}
 	f.position = pos;
@@ -955,15 +956,16 @@ void Game::new_rubbish(Rubbish::rubbish_type type, int farme_num, int width, int
 {
 	
 	Rubbish r;
+	float sclac = Random::random_in(0.8f, 1.4f);
 	wchar_t sourse_file_name[50];
 	
 	for (int i = 0; i < farme_num; i++)
 	{
 		IMAGE img_t, img_mask;
 		swprintf(sourse_file_name, 50, L".\\资源文件\\rubbish\\%d\\rubbish_%d.png", type, i);
-		loadimage(&img_t, sourse_file_name, width, height, false);
+		loadimage(&img_t, sourse_file_name, width* sclac, height* sclac, false);
 		swprintf(sourse_file_name, 50, L".\\资源文件\\rubbish\\%d\\rubbish_%d_mask.png", type, i);
-		loadimage(&img_mask, sourse_file_name, width, height, false);
+		loadimage(&img_mask, sourse_file_name, width* sclac, height* sclac, false);
 		r.load_frame(Rubbish::sou_float, img_t, img_mask);
 	}
 	r.position = pos;

@@ -4,6 +4,7 @@ Fish::Fish()
 {
 	img_source.push_back(swim);
 	img_source.push_back(swim_mask);
+	is_shine = false;
 	now_state = null;
 	last_state = null;
 	frame_i = 0;
@@ -37,6 +38,12 @@ void Fish::Update(float dt)
 	frame_timer = frame_timer % frame_dt;
 
 	physical_Move(dt);
+
+	if (is_shine)
+	{
+		light.position = position + Vect2(0, 80);
+		light.Update(dt);
+	}
 }
 
 void Fish::Draw()
@@ -54,6 +61,11 @@ void Fish::DrawInCamera(const Camera &cam)
 	putimage(position.x - cam.position.x + cam.xClient / 2 - img_source[now_source][frame_i].getwidth() / 2,
 		-(position.y - cam.position.y) + cam.yClient / 2 - img_source[now_source][frame_i].getheight() / 2,
 		&img_source[now_source][frame_i], SRCPAINT);
+
+	if (is_shine)
+	{
+		light.DrawInCamera(cam);
+	}
 }
 
 void Fish::load_frame(source s, IMAGE img, IMAGE mask)
@@ -74,4 +86,20 @@ void Fish::set_score(int s)
 int Fish::get_score()
 {
 	return score;
+}
+
+void Fish::shine()
+{
+	is_shine = true;
+	wchar_t sourse_file_name[50];
+	for (int i = 0; i < 2; i++)
+	{
+		IMAGE img_t, img_mask;
+		swprintf(sourse_file_name, 50, L".\\资源文件\\light\\0\\light_%d.jpg", i);
+		loadimage(&img_t, sourse_file_name, 50, 50, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\light\\0\\light_%d_mask.jpg", i);
+		loadimage(&img_mask, sourse_file_name, 50, 50, false);
+		light.load_frame(Light::sou_fly, img_t, img_mask);
+	}
+	light.position = position + Vect2(0, 80);
 }

@@ -18,8 +18,8 @@ public:
 	{
 		one = 0,
 		two,
-		/*three,
-		four,*/
+		three,
+		four,
 		total_rubbish_type
 	};
 

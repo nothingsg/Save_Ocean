@@ -821,8 +821,8 @@ void Game::oc_KeyPrco()
 	}
 	last_key_E = is_key_down('E');
 
-	static int last_key_J = 0;
-	if (is_key_down('J') && !last_key_J)
+	static int last_key_S = 0;
+	if (is_key_down('S') && !last_key_S)
 	{
 		
 		if (player.get_state() == People::sta_catchL || player.get_state() == People::sta_catchR)
@@ -837,7 +837,7 @@ void Game::oc_KeyPrco()
 		}
 			
 	}
-	last_key_J = is_key_down('J');
+	last_key_S = is_key_down('S');
 
 }
 

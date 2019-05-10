@@ -12,10 +12,12 @@
 #include "fish.h"
 #include "Rubbish.h"
 #include "boat.h"
+#include "light.h"
 #include "terrain.h"
 #include "button.h"
 #include "mywindow.h"
 #include "control.h"
+
 
 #define MAX_FISH_NUM 100				//最大鱼数量
 #define FISH_CREAT_RACE 50				//鱼的生成速率

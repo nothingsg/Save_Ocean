@@ -41,7 +41,7 @@ void Fish::Update(float dt)
 
 	if (is_shine)
 	{
-		light.position = position + Vect2(0, 80);
+		light.position = position + Vect2(0, 10);
 		light.Update(dt);
 	}
 }
@@ -96,10 +96,10 @@ void Fish::shine()
 	{
 		IMAGE img_t, img_mask;
 		swprintf(sourse_file_name, 50, L".\\资源文件\\light\\0\\light_%d.jpg", i);
-		loadimage(&img_t, sourse_file_name, 50, 50, false);
+		loadimage(&img_t, sourse_file_name, 20, 20, false);
 		swprintf(sourse_file_name, 50, L".\\资源文件\\light\\0\\light_%d_mask.jpg", i);
-		loadimage(&img_mask, sourse_file_name, 50, 50, false);
+		loadimage(&img_mask, sourse_file_name, 20, 20, false);
 		light.load_frame(Light::sou_fly, img_t, img_mask);
 	}
-	light.position = position + Vect2(0, 80);
+	light.position = position + Vect2(0, 10);
 }

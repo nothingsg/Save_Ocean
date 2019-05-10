@@ -338,14 +338,14 @@ void Game::oc_Update(float dt)
 			case Rubbish::three:
 			{
 				rubbish_farme_num = 1;
-				rubbish_width = 50;
-				rubbish_height = 50;
+				rubbish_width = 20;
+				rubbish_height = 20;
 			}break;
 			case Rubbish::four:
 			{
 				rubbish_farme_num = 1;
-				rubbish_width = 50;
-				rubbish_height = 50;
+				rubbish_width = 20;
+				rubbish_height = 20;
 			}break;
 			default:
 			{
@@ -361,16 +361,11 @@ void Game::oc_Update(float dt)
 	//所有鱼更新
 	for (int i = 0; i < fishs.size(); i++)
 	{
+		
+
 		if (fishs[i].position.x < player.position.x - 3000 || fishs[i].position.x > player.position.x + 3000)
 		{
-			if (fishs[i].is_shine)
-			{
-				Light l = fishs[i].light;
-				l.position = l.position - main_cam.position;
-				l.position.y = -l.position.y;
-				l.fly_to(Vect2(100, 100), 500);
-				lights.push_back(l);
-			}
+			
 			fishs.erase(fishs.begin() + i);
 			continue;
 		}
@@ -423,28 +418,31 @@ void Game::oc_Update(float dt)
 	}break;
 	case People::sta_catchR:case People::sta_catchL:
 	{
-		static int catched_fish = -1;
+		//static int catched_fish = -1;
 		player.velocity = Vect2(0, 0);
 		player.position = wood_boat.position - Vect2(0, PLAYER_OFFSET_B);
 
-		/*if (catched_fish == -1 && player.get_hand_vel().y < 0)
+		if (player.get_hand_vel().y < 0)
 		{
 			for (int i = 0; i < fishs.size(); i++)
 			{
-				if ((fishs[i].position - player.get_hand_pos()).vectorLengthSquared() < 600)
+				if (fishs[i].is_shine)
 				{
-					fishs[i].acceleration = Vect2(0, 0);
-					fishs[i].velocity = Vect2(0, 0);
-					player.Pull();
-					catched_fish = i;
-					break;
+					if ((fishs[i].position - player.get_hand_pos()).vectorLengthSquared() < 600)
+					{
+						fishs[i].is_shine = false;
+						Light l = fishs[i].light;
+						l.position = l.position - main_cam.position + Vect2(oc_cxGame / 2, -oc_cyGame / 2);
+						l.position.y = -l.position.y;
+						l.fly_to(Vect2(100, 100), 500);
+						lights.push_back(l);
+						player.Pull();
+						break;
+					}
 				}
 			}
 		}
-		else if(catched_fish != -1)
-		{
-			fishs[catched_fish].position = player.get_hand_pos();
-		}*/
+		
 
 		static int catched_rubbish = -1;
 		if (catched_rubbish == -1 && player.get_hand_vel().y < 0)

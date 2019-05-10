@@ -32,7 +32,7 @@ void Light::Update(float dt)
 	{
 		physical_Move(dt);
 		float v = velocity.vectorLength();
-		velocity = (obj_pos - position)*v;
+		velocity = (obj_pos - position).normalized() * v;
 		if ((obj_pos - position).vectorLengthSquared() < 100)
 		{
 			last_state = now_state;

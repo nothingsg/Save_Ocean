@@ -19,8 +19,8 @@
 #include "control.h"
 
 
-#define MAX_FISH_NUM 100				//最大鱼数量
-#define FISH_CREAT_RACE 50				//鱼的生成速率
+#define MAX_FISH_NUM 40				//最大鱼数量
+#define FISH_CREAT_RACE 200			//鱼的生成速率
 #define MAX_RUBBISH_NUM 100				//最大垃圾数量
 #define FISH_RUBBISH_RACE 1000			//垃圾生成速率
 
@@ -93,6 +93,12 @@ public:
 		int height,
 		Vect2 pos);
 
+	/*int new_light(
+		Light::light_type type,
+		int farme_num,
+		int width,
+		int height);*/
+
 
 	//调试相关
 	void Debug_text_output();
@@ -124,6 +130,7 @@ private:
 	std::vector<Fish> fishs;
 	std::vector<Fish> head_fish;
 	std::vector<Rubbish> rubbishs;
+	std::vector<Light> lights;
 	Boat wood_boat;
 
 

@@ -112,6 +112,7 @@ private:
 	/*游戏世界数据*/
 	clock_t oc_timer;	//计时器
 	Vect2 gravity;
+	int score;			//玩家得分
 
 	/*所有游戏对象*/
 	//IMAGE test_img;		//测试图片

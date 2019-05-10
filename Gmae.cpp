@@ -575,7 +575,7 @@ void Game::add(int num, bool light)
 	{
 		flaglight = 1;
 	}
-}
+}//增加鱼到图鉴,num为鱼的序号(按fish文件夹中),light==true时图鉴会变亮
 
 void Game::oc_UI_Upedate()
 {

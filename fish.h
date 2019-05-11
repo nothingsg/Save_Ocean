@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "light.h"
 
 class Fish : public GameObject_phy
 {
@@ -33,12 +34,21 @@ public:
 
 	void load_frame(source s, IMAGE img, IMAGE mask);
 	void set_state(state s);
+	void set_score(int s);
+	int get_score();
+	void shine();
+
+	bool is_shine;
+	Light light;
+	fish_type type;
 
 private:
 	state now_state, last_state;
 	source now_source;
 	int frame_i;
-
+	int frame_dt;
+	int score;
+	
 
 	std::vector<std::vector<IMAGE>> img_source;	//存放所有图片资源
 

@@ -331,7 +331,7 @@ void Game::oc_Update(float dt)
 			}break;
 			case Rubbish::two:
 			{
-				rubbish_farme_num = 1;
+				rubbish_farme_num = 2;
 				rubbish_width = 60;
 				rubbish_height = 40;
 			}break;
@@ -361,9 +361,7 @@ void Game::oc_Update(float dt)
 	//所有鱼更新
 	for (int i = 0; i < fishs.size(); i++)
 	{
-		
-
-		if (fishs[i].position.x < player.position.x - 3000 || fishs[i].position.x > player.position.x + 3000)
+		if (fishs[i].position.x < player.position.x - 1500 || fishs[i].position.x > player.position.x + 1500)
 		{
 			
 			fishs.erase(fishs.begin() + i);
@@ -371,10 +369,20 @@ void Game::oc_Update(float dt)
 		}
 		fishs[i].Update(dt);
 	}
+	for (int i = 0; i < head_fish.size(); i++)
+	{
+		if (head_fish[i].position.x < player.position.x - 1500 || head_fish[i].position.x > player.position.x + 1500)
+		{
+
+			head_fish.erase(head_fish.begin() + i);
+			continue;
+		}
+		head_fish[i].Update(dt);
+	}
 	//所有垃圾更新
 	for (int i = 0; i < rubbishs.size(); i++)
 	{
-		if (rubbishs[i].position.x < player.position.x - 2000)
+		if (rubbishs[i].position.x < player.position.x - 1500)
 		{
 			rubbishs.erase(rubbishs.begin() + i);
 			continue;
@@ -387,6 +395,7 @@ void Game::oc_Update(float dt)
 	{
 		if (lights[i].get_state() == Light::sta_stop)
 		{
+			add(lights[i].fish_id);
 			lights.erase(lights.begin() + i);
 			continue;
 		}
@@ -424,17 +433,18 @@ void Game::oc_Update(float dt)
 
 		if (player.get_hand_vel().y < 0)
 		{
-			for (int i = 0; i < fishs.size(); i++)
+			for (int i = 0; i < head_fish.size(); i++)
 			{
-				if (fishs[i].is_shine)
+				if (head_fish[i].is_shine)
 				{
-					if ((fishs[i].position - player.get_hand_pos()).vectorLengthSquared() < 600)
+					if ((head_fish[i].position - player.get_hand_pos()).vectorLengthSquared() < 600)
 					{
-						fishs[i].is_shine = false;
-						Light l = fishs[i].light;
+						head_fish[i].is_shine = false;
+						Light l = head_fish[i].light;
 						l.position = l.position - main_cam.position + Vect2(oc_cxGame / 2, -oc_cyGame / 2);
 						l.position.y = -l.position.y;
-						l.fly_to(Vect2(100, 100), 500);
+						l.fly_to(Vect2(150, 50), 500);
+						
 						lights.push_back(l);
 						player.Pull();
 						break;
@@ -564,6 +574,10 @@ void Game::oc_Draw(const Camera &cam)
 	for (int i = 0; i < fishs.size(); i++)
 	{
 		fishs[i].DrawInCamera(cam);
+	}
+	for (int i = 0; i < head_fish.size(); i++)
+	{
+		head_fish[i].DrawInCamera(cam);
 	}
 	for (int i = 0; i < rubbishs.size(); i++)
 	{
@@ -977,12 +991,19 @@ void Game::new_fish(Fish::fish_type type, int farme_num, int width, int height, 
 		f.load_frame(Fish::sou_swim, img_t, img_mask);
 	}
 	f.position = pos;
+	f.type = type;
 	
-	if (type == Fish::four)
+	if (Random::random_in(0, 100000) < 100000 * HEAD_FISH_RACE)
 	{
 		f.shine();
+		f.set_score(Random::random_in(10, 20));
+		head_fish.push_back(f);
 	}
-	fishs.push_back(f);
+	else
+	{
+		fishs.push_back(f);
+	}
+	
 }
 
 
@@ -991,6 +1012,7 @@ void Game::new_rubbish(Rubbish::rubbish_type type, int farme_num, int width, int
 	
 	Rubbish r;
 	float sclac = Random::random_in(0.8f, 1.4f);
+	float rotate_ang = (type != Rubbish::two) ? Random::random_in(0.0f, 2.0*PI) : 0;
 	wchar_t sourse_file_name[50];
 	
 	for (int i = 0; i < farme_num; i++)
@@ -1000,10 +1022,14 @@ void Game::new_rubbish(Rubbish::rubbish_type type, int farme_num, int width, int
 		loadimage(&img_t, sourse_file_name, width* sclac, height* sclac, false);
 		swprintf(sourse_file_name, 50, L".\\资源文件\\rubbish\\%d\\rubbish_%d_mask.png", type, i);
 		loadimage(&img_mask, sourse_file_name, width* sclac, height* sclac, false);
+		rotateimage(&img_t, &img_t, rotate_ang, BLACK);
+		rotateimage(&img_mask, &img_mask, rotate_ang, WHITE);
+		
 		r.load_frame(Rubbish::sou_float, img_t, img_mask);
 	}
 	r.position = pos;
 	r.velocity = Vect2(Random::random_in(-200, -50), 0);
+	r.set_score(Random::random_in(5, 10));
 	rubbishs.push_back(r);
 }
 

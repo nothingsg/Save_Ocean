@@ -43,7 +43,7 @@ public:
 	void fly_to(Vect2 O_pos, float v);
 	int get_score();
 	state get_state();
-
+	int fish_id;
 
 private:
 	state now_state, last_state;

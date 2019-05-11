@@ -38,6 +38,8 @@
 #define PLAYER_JUMP_VELOCITY 400		//跳跃初速度
 #define BOAT_MOVE_VELOCITY 300			//船移动速度
 
+#define HEAD_FISH_RACE 0.1f			//头鱼的生成机率
+
 enum soure_tpye
 {
 	oc_bkg = 0,

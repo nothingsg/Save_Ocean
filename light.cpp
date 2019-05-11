@@ -48,8 +48,8 @@ void Light::Update(float dt)
 	}
 
 	frame_timer += dt;
-	frame_i = (frame_i + frame_timer / 200) % img_source[now_source].size();
-	frame_timer = frame_timer % 200;
+	frame_i = (frame_i + frame_timer / 500) % img_source[now_source].size();
+	frame_timer = frame_timer % 500;
 
 	
 	

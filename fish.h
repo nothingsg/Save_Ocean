@@ -40,6 +40,7 @@ public:
 
 	bool is_shine;
 	Light light;
+	fish_type type;
 
 private:
 	state now_state, last_state;

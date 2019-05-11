@@ -44,6 +44,8 @@ public:
 	int get_score();
 	state get_state();
 
+	int fish_id;
+
 
 private:
 	state now_state, last_state;

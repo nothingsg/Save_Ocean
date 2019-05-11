@@ -996,7 +996,7 @@ void Game::new_fish(Fish::fish_type type, int farme_num, int width, int height, 
 	if (Random::random_in(0, 100000) < 100000 * HEAD_FISH_RACE)
 	{
 		f.shine();
-		f.set_score = Random::random_in(10, 20);
+		f.set_score(Random::random_in(10, 20));
 		head_fish.push_back(f);
 	}
 	else
@@ -1029,7 +1029,7 @@ void Game::new_rubbish(Rubbish::rubbish_type type, int farme_num, int width, int
 	}
 	r.position = pos;
 	r.velocity = Vect2(Random::random_in(-200, -50), 0);
-	r.set_score = Random::random_in(5, 10);
+	r.set_score(Random::random_in(5, 10));
 	rubbishs.push_back(r);
 }
 

@@ -47,7 +47,7 @@ void Game::oc_GameInit()
 	{
 		p_bar[i].position = Vect2(350, 50 + i * 20);
 		bar_icon[i].position = Vect2(220, 50 + i * 20);
-		score[i] = 99;
+		score[i] = 0;
 		//p_bar[i].set_progress(i * 20);
 	}
 }
@@ -728,7 +728,7 @@ void Game::oc_Draw(const Camera &cam)
 		bar_icon[i].Draw();
 	}
 
-	Debug_text_output();		//输出调试数据
+	//Debug_text_output();		//输出调试数据
 }
 
 /*UI部分*/
@@ -1128,7 +1128,7 @@ void Game::new_fish(Fish::fish_type type, int farme_num, int width, int height, 
 	if (Random::random_in(0, 100000) < 100000 * HEAD_FISH_RACE)
 	{
 		f.shine();
-		f.set_score(Random::random_in(10, 20));
+		f.set_score(Random::random_in(5, 10));
 		head_fish.push_back(f);
 	}
 	else
@@ -1161,7 +1161,7 @@ void Game::new_rubbish(Rubbish::rubbish_type type, int farme_num, int width, int
 	}
 	r.position = pos;
 	r.velocity = Vect2(Random::random_in(-200, -50), 0);
-	r.set_score(Random::random_in(5, 10));
+	r.set_score(Random::random_in(0, 2));
 	rubbishs.push_back(r);
 }
 

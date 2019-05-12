@@ -79,7 +79,7 @@ void Fish::set_state(state s)
 	now_state = s;
 }
 
-void Fish::set_score(int s)
+void Fish::set_score(float s)
 {
 	score = s;
 }

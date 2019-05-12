@@ -39,7 +39,7 @@
 #define PLAYER_JUMP_VELOCITY 400		//跳跃初速度
 #define BOAT_MOVE_VELOCITY 300			//船移动速度
 
-#define HEAD_FISH_RACE 0.9f			//头鱼的生成机率
+#define HEAD_FISH_RACE 0.01f			//头鱼的生成机率
 
 enum soure_tpye
 {
@@ -124,7 +124,7 @@ private:
 	/*游戏世界数据*/
 	clock_t oc_timer;	//计时器
 	Vect2 gravity;
-	int score[5];			//玩家得分
+	float score[5];			//玩家得分
 
 	/*所有游戏对象*/
 	//IMAGE test_img;		//测试图片

@@ -4,7 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <graphics.h>
-#pragma once
+
 #include "tool.h"
 #include "GameObject.h"
 #include "Camera.h"
@@ -14,6 +14,7 @@
 #include "boat.h"
 #include "light.h"
 #include "terrain.h"
+#include "progress_bar.h"
 #include "button.h"
 #include "mywindow.h"
 #include "control.h"
@@ -100,7 +101,7 @@ public:
 		int farme_num,
 		int width,
 		int height);*/
-
+	
 
 	//调试相关
 	void Debug_text_output();
@@ -134,7 +135,8 @@ private:
 	std::vector<Rubbish> rubbishs;
 	std::vector<Light> lights;
 	Boat wood_boat;
-
+	progress_bar p_bar[4];
+	
 
 	Camera main_cam;	//主摄像机
 	

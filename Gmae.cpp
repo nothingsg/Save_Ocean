@@ -215,6 +215,9 @@ void Game::oc_GameLoad()
 		wood_boat.load_frame(Boat::sou_boat_R, img_t, img_mask);
 	}
 
+
+	p_bar[]
+
 	//载入背景图片 9600*5400
 	loadimage(&game_background, L".\\资源文件\\background.jpg", 4800 * 0.9, 2700 * 0.9, true);
 
@@ -759,7 +762,10 @@ void Game::oc_UI_Draw()
 		else
 			loadimage(&img_3, L".\\资源文件\\按钮\\上页.jpg", 50, 30, false);
 		putimage(310, 360, &img_3);
-	}  
+	}
+
+
+
 }
 /*************************************end*******************************************/
 

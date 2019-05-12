@@ -135,6 +135,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mywindow.cpp" />
     <ClCompile Include="people.cpp" />
+    <ClCompile Include="progress_bar.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Rubbish.cpp" />
     <ClCompile Include="terrain.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="Matrix3.h" />
     <ClInclude Include="mywindow.h" />
     <ClInclude Include="people.h" />
+    <ClInclude Include="progress_bar.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Rubbish.h" />
     <ClInclude Include="terrain.h" />

@@ -67,7 +67,7 @@ void Rubbish::set_state(state s)
 	now_state = s;
 }
 
-void Rubbish::set_score(int s)
+void Rubbish::set_score(float s)
 {
 	score = s;
 }

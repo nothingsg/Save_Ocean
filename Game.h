@@ -4,7 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <graphics.h>
-#pragma once
+
 #include "tool.h"
 #include "GameObject.h"
 #include "Camera.h"
@@ -14,6 +14,7 @@
 #include "boat.h"
 #include "light.h"
 #include "terrain.h"
+#include "progress_bar.h"
 #include "button.h"
 #include "mywindow.h"
 #include "control.h"
@@ -38,7 +39,7 @@
 #define PLAYER_JUMP_VELOCITY 400		//跳跃初速度
 #define BOAT_MOVE_VELOCITY 300			//船移动速度
 
-#define HEAD_FISH_RACE 0.1f			//头鱼的生成机率
+#define HEAD_FISH_RACE 0.01f			//头鱼的生成机率
 
 enum soure_tpye
 {
@@ -100,7 +101,7 @@ public:
 		int farme_num,
 		int width,
 		int height);*/
-
+	
 
 	//调试相关
 	void Debug_text_output();
@@ -113,7 +114,8 @@ private:
 	int oc_cyGame;		//游戏窗口高
 	int oc_posxGmae;	//游戏窗口位置x
 	int oc_posyGame;	//游戏窗口位置y
-	bool oc_bPause;		//指示游戏是否暂停
+	bool oc_wh;		
+	bool oc_is_end;
 
 	/*资源列表 暂时没用*/
 	std::vector < std::vector<std::vector<wchar_t*>>> soure_list;
@@ -122,22 +124,27 @@ private:
 	/*游戏世界数据*/
 	clock_t oc_timer;	//计时器
 	Vect2 gravity;
-	int score;			//玩家得分
+	float score[5];			//玩家得分
 
 	/*所有游戏对象*/
 	//IMAGE test_img;		//测试图片
-	IMAGE game_background;
+	IMAGE game_background, game_end_backgroubd;
 	IMAGE oc_window;
 	People player;
+	Fish whale;
 	std::vector<Fish> fishs;
 	std::vector<Fish> head_fish;
 	std::vector<Rubbish> rubbishs;
 	std::vector<Light> lights;
 	Boat wood_boat;
 
+	progress_bar p_bar[5];
+	Light bar_icon[5];
 
 	Camera main_cam;	//主摄像机
 	
+
+
 };
 
 

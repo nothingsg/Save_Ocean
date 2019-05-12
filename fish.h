@@ -34,7 +34,7 @@ public:
 
 	void load_frame(source s, IMAGE img, IMAGE mask);
 	void set_state(state s);
-	void set_score(int s);
+	void set_score(float s);
 	int get_score();
 	void shine();
 
@@ -47,7 +47,7 @@ private:
 	source now_source;
 	int frame_i;
 	int frame_dt;
-	int score;
+	float score;
 	
 
 	std::vector<std::vector<IMAGE>> img_source;	//存放所有图片资源

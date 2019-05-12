@@ -47,9 +47,10 @@ void Game::oc_GameInit()
 	{
 		p_bar[i].position = Vect2(350, 50 + i * 20);
 		bar_icon[i].position = Vect2(220, 50 + i * 20);
-		score[i] = 0;
+		score[i] = 100;
 		//p_bar[i].set_progress(i * 20);
 	}
+	score[4] = 99;
 }
 //游戏资源加载
 void Game::oc_GameLoad()

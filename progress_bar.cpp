@@ -37,11 +37,15 @@ void progress_bar::Draw()
 	now_source = sou_in;
 	putimage(position.x - img_source[now_source][frame_i].getwidth() / 2,
 		position.y - img_source[now_source][frame_i].getheight() / 2,
-		&img_source[now_source + 1][frame_i], SRCAND);
+		img_source[now_source][frame_i].getwidth()*progress / 100,
+		img_source[now_source][frame_i].getheight(),
+		&img_source[now_source + 1][frame_i], 0, 0, SRCAND);
 
 	putimage(position.x - img_source[now_source][frame_i].getwidth() / 2,
 		position.y - img_source[now_source][frame_i].getheight() / 2,
-		&img_source[now_source][frame_i], SRCPAINT);
+		img_source[now_source][frame_i].getwidth()*progress/100,
+		img_source[now_source][frame_i].getheight(),
+		&img_source[now_source][frame_i],0,0, SRCPAINT);
 }
 
 void progress_bar::DrawInCamera(const Camera &cam)

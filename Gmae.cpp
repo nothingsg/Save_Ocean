@@ -9,7 +9,7 @@ Game::Game(int posx, int posy, int width, int height) :main_cam(width, height, 2
 	oc_cyGame = height;
 	oc_posxGmae = posx;
 	oc_posyGame = posy;
-
+	
 }
 
 Game::~Game()
@@ -31,8 +31,8 @@ void Game::oc_GameInit()
 	oc_FPS = 0;
 	oc_timer = 0;
 	dt = 0;
-	oc_bPause = false;
-
+	oc_wh = false;
+	oc_is_end = false;
 	/*afish.position = Vect2(2000, -1200);
 	afish.velocity = Vect2(-100, 0);*/
 	//player.position = Vect2(1000, -880);
@@ -41,6 +41,15 @@ void Game::oc_GameInit()
 	wood_boat.position = Vect2(BOAT_POS_L, SEA_LEVEL);
 	main_cam.position = Vect2(ISLAND_SIDE * 0.8f, ISLAND_HEIGHT);
 	player.acceleration = gravity;
+	whale.position = Vect2(0, SEA_LEVEL);
+
+	for (int i = 0; i < 5; i++)
+	{
+		p_bar[i].position = Vect2(350, 50 + i * 20);
+		bar_icon[i].position = Vect2(220, 50 + i * 20);
+		score[i] = 99;
+		//p_bar[i].set_progress(i * 20);
+	}
 }
 //游戏资源加载
 void Game::oc_GameLoad()
@@ -215,12 +224,85 @@ void Game::oc_GameLoad()
 		wood_boat.load_frame(Boat::sou_boat_R, img_t, img_mask);
 	}
 
+	//鲸鱼资源加载
+	for (int i = 0; i < 3; i++)
+	{
+		IMAGE img_t, img_mask;
+		swprintf(sourse_file_name, 50, L".\\资源文件\\fish\\4\\whale_%d.png", i);
+		loadimage(&img_t, sourse_file_name, 600, 400, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\fish\\4\\whale_%d_mask.png", i);
+		loadimage(&img_mask, sourse_file_name, 600, 400, false);
+		whale.load_frame(Fish::sou_swim, img_t, img_mask);
+	}
 
-	p_bar[]
+	//进度条资源加载
+	for (int i = 0; i < 2; i++)
+	{
+		IMAGE img_t, img_mask;
+		swprintf(sourse_file_name, 50, L".\\资源文件\\progress_bar\\%d\\进度条内容_%d.png", i,i);
+		loadimage(&img_t, sourse_file_name, 250, 20, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\progress_bar\\%d\\进度条内容_%d_mask.png", i,i);
+		loadimage(&img_mask, sourse_file_name, 250, 20, false);
+		p_bar[i].load_frame(progress_bar::sou_in, img_t, img_mask);
+		p_bar[i+2].load_frame(progress_bar::sou_in, img_t, img_mask);
+
+
+		swprintf(sourse_file_name, 50, L".\\资源文件\\progress_bar\\%d\\进度条外框_%d.png", i, i);
+		loadimage(&img_t, sourse_file_name, 250, 20, false);
+		swprintf(sourse_file_name, 50, L".\\资源文件\\progress_bar\\%d\\进度条外框_%d_mask.png", i, i);
+		loadimage(&img_mask, sourse_file_name, 250, 20, false);
+		p_bar[i].load_frame(progress_bar::sou_out, img_t, img_mask);
+		p_bar[i + 2].load_frame(progress_bar::sou_out, img_t, img_mask);
+	}
+
+	swprintf(sourse_file_name, 50, L".\\资源文件\\progress_bar\\%d\\进度条内容_%d.png", 0, 0);
+	loadimage(&img_t, sourse_file_name, 250, 20, true);
+	swprintf(sourse_file_name, 50, L".\\资源文件\\progress_bar\\%d\\进度条内容_%d_mask.png", 0, 0);
+	loadimage(&img_mask, sourse_file_name, 250, 20, true);
+	p_bar[4].load_frame(progress_bar::sou_in, img_t, img_mask);
+	
+	swprintf(sourse_file_name, 50, L".\\资源文件\\progress_bar\\%d\\进度条外框_%d.png", 0, 0);
+	loadimage(&img_t, sourse_file_name, 250, 20, false);
+	swprintf(sourse_file_name, 50, L".\\资源文件\\progress_bar\\%d\\进度条外框_%d_mask.png", 0, 0);
+	loadimage(&img_mask, sourse_file_name, 250, 20, false);
+	p_bar[4].load_frame(progress_bar::sou_out, img_t, img_mask);
+
+	/***************************************************************************************************/
+
+	swprintf(sourse_file_name, 50, L".\\资源文件\\fish\\%d\\fish_%d_R.png", 0, 0);
+	loadimage(&img_t, sourse_file_name, 20, 20, true);
+	swprintf(sourse_file_name, 50, L".\\资源文件\\fish\\%d\\fish_%d_R_mask.png", 0, 0);
+	loadimage(&img_mask, sourse_file_name, 20, 20, true);
+	bar_icon[0].load_frame(Light::sou_fly, img_t, img_mask);
+
+	swprintf(sourse_file_name, 50, L".\\资源文件\\fish\\%d\\fish_%d_R.png", 1, 0);
+	loadimage(&img_t, sourse_file_name, 20, 20, true);
+	swprintf(sourse_file_name, 50, L".\\资源文件\\fish\\%d\\fish_%d_R_mask.png", 1, 0);
+	loadimage(&img_mask, sourse_file_name, 20, 20, true);
+	bar_icon[1].load_frame(Light::sou_fly, img_t, img_mask);
+
+	swprintf(sourse_file_name, 50, L".\\资源文件\\fish\\%d\\fish_%d_R.png", 2, 0);
+	loadimage(&img_t, sourse_file_name, 20, 20, true);
+	swprintf(sourse_file_name, 50, L".\\资源文件\\fish\\%d\\fish_%d_R_mask.png", 2, 0);
+	loadimage(&img_mask, sourse_file_name, 20, 20, true);
+	bar_icon[2].load_frame(Light::sou_fly, img_t, img_mask);
+
+	swprintf(sourse_file_name, 50, L".\\资源文件\\fish\\%d\\fish_%d_R.png", 3, 0);
+	loadimage(&img_t, sourse_file_name, 20, 20, true);
+	swprintf(sourse_file_name, 50, L".\\资源文件\\fish\\%d\\fish_%d_R_mask.png", 3, 0);
+	loadimage(&img_mask, sourse_file_name, 20, 20, true);
+	bar_icon[3].load_frame(Light::sou_fly, img_t, img_mask);
+
+	swprintf(sourse_file_name, 50, L".\\资源文件\\rubbish\\%d\\rubbish_%d.png", 1, 0);
+	loadimage(&img_t, sourse_file_name, 20, 20, true);
+	swprintf(sourse_file_name, 50, L".\\资源文件\\rubbish\\%d\\rubbish_%d_mask.png", 1, 0);
+	loadimage(&img_mask, sourse_file_name, 20, 20, true);
+	bar_icon[4].load_frame(Light::sou_fly, img_t, img_mask);
+	
 
 	//载入背景图片 9600*5400
-	loadimage(&game_background, L".\\资源文件\\background.jpg", 4800 * 0.9, 2700 * 0.9, true);
-
+	loadimage(&game_background, L".\\资源文件\\background\\background.jpg", 4800 * 0.9, 2700 * 0.9, true);
+	loadimage(&game_end_backgroubd, L".\\资源文件\\background\\end_background.png", 1278, 722, true);
 	setbkmode(TRANSPARENT);			//设置文字输出是背景颜色为透明
 	settextcolor(RGB(255, 0, 0));	//设置文字输出颜色为红色
 
@@ -233,7 +315,7 @@ void Game::oc_GameLoop()
 	/*mciSendString(L"open D:\\工程\\VS\\工作室游戏\\Save_Ocean\\资源文件\\background.wav alias backmusic", NULL, 0, NULL);
 	mciSendString(L"play backmusic wait", NULL, 0, NULL);*/
 	
-	while (1)
+	while (!oc_is_end)
 	{
 		Frame_Begin();		//开始当前帧
 		
@@ -247,15 +329,25 @@ void Game::oc_GameLoop()
 		Lock_FPS(60);		//帧数控制
 
 		Frame_End();		//结束当前帧
+
 	}
-	
+	putimage(80, 0, &game_end_backgroubd);
+	FlushBatchDraw();	//显示当前帧
+	while (1)
+	{
+		Sleep(100);
+	}
 }	 
 	
 //游戏数据更新
 void Game::oc_Update(float dt)
 {
-	oc_MouseProc();
-	oc_KeyPrco();
+	if (!oc_wh)
+	{
+		oc_MouseProc();
+		oc_KeyPrco();
+	}
+	
 	
 	//添加新的鱼
 	if (fishs.size() < MAX_FISH_NUM)
@@ -447,7 +539,7 @@ void Game::oc_Update(float dt)
 						l.position = l.position - main_cam.position + Vect2(oc_cxGame / 2, -oc_cyGame / 2);
 						l.position.y = -l.position.y;
 						l.fly_to(Vect2(150, 50), 500);
-						
+						score[head_fish[i].type] += head_fish[i].get_score();
 						lights.push_back(l);
 						player.Pull();
 						break;
@@ -479,10 +571,13 @@ void Game::oc_Update(float dt)
 
 		if (player.get_hand_pos().y >= player.position.y - 20)
 		{
+			
 			player.set_state(People::sta_boatingR);
 			if (catched_rubbish != -1)
 			{
+				score[4] += rubbishs[catched_rubbish].get_score();
 				rubbishs.erase(rubbishs.begin() + catched_rubbish);
+				
 				catched_rubbish = -1;
 			}
 			
@@ -537,9 +632,17 @@ void Game::oc_Update(float dt)
 	}
 		break;
 	}
-	
 
 	main_cam.position.x = player.position.x;
+	
+	if (score[0] >= 100 && score[1] >= 100 && score[2] >= 100 && score[3] >= 100 && score[4] >= 100)
+	{
+		oc_wh = true;
+		main_cam.position = whale.position;
+		whale.velocity = Vect2(500, 0);
+		whale.Update(dt);
+	}
+	
 	if (main_cam.position.x - main_cam.xClient / 2 < 0)
 	{
 		main_cam.position.x = main_cam.xClient / 2;
@@ -558,6 +661,17 @@ void Game::oc_Update(float dt)
 		main_cam.position.y = -game_background.getheight() + main_cam.xClient / 2;
 	}
 	/************************************************************************************************************/
+	for (int i = 0; i < 5; i++)
+	{
+		p_bar[i].set_progress(score[i]);
+	}
+
+	
+	
+	if (whale.position.x > FECTORY_POS_X + 100)
+	{
+		oc_is_end = true;
+	}
 
 	
 }
@@ -597,11 +711,23 @@ void Game::oc_Draw(const Camera &cam)
 			lights[i].Draw();
 		}
 	}
+	if (oc_wh)
+	{
+		whale.DrawInCamera(cam);
+	}
+	
 	
 	wood_boat.DrawInCamera(cam);
 	player.DrawInCamera(cam);
+
 	
 	
+	for (int i = 0; i < 5; i++)
+	{
+		p_bar[i].Draw();
+		bar_icon[i].Draw();
+	}
+
 	Debug_text_output();		//输出调试数据
 }
 

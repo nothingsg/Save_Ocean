@@ -33,7 +33,7 @@ void Fish::Update(float dt)
 	}
 	
 	frame_timer += dt;
-	frame_dt = 15000.0f / fabs(velocity.x);
+	frame_dt = 300;
 	frame_i = (frame_i + frame_timer / frame_dt) % img_source[now_source].size();
 	frame_timer = frame_timer % frame_dt;
 
